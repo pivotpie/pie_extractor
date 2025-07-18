@@ -1,0 +1,9 @@
+This is a simple text file that will be used as a test image.
+It contains some sample text that a vision model might analyze.
+
+Sample content:
+- Line 1: Test content for vision model
+- Line 2: Testing fallback functionality
+- Line 3: This is not actually an image, but will be used to test the fallback mechanism
+
+End of test content.

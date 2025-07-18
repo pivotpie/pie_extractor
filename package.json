@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "@clerk/clerk-react": "^5.35.2",
+    "@clerk/types": "^4.67.0"
+  }
+}

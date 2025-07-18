@@ -1,0 +1,354 @@
+import logging
+from datetime import datetime, timedelta
+from typing import Any, Dict, Optional
+
+from fastapi import APIRouter, Depends, HTTPException, Request, status
+from fastapi.responses import RedirectResponse, JSONResponse
+from sqlalchemy.orm import Session
+
+from .. import models, schemas
+from ..core import security, oauth as oauth_utils
+from ..core.config import settings
+from ..core.oauth import OAuthException, generate_oauth_state, verify_oauth_state
+from ..database import get_db
+from ..core.security import create_access_token
+
+router = APIRouter()
+logger = logging.getLogger(__name__)
+
+def get_oauth_redirect_uri(provider: str) -> str:
+    """
+    Get the OAuth redirect URI for a provider
+    
+    Args:
+        provider: OAuth provider name (e.g., 'github', 'google')
+        
+    Returns:
+        str: The full redirect URI for the provider
+    """
+    return f"{settings.API_V1_STR}/auth/oauth/{provider}/callback"
+
+@router.get("/github")
+async def github_login(request: Request):
+    """
+    Initiate GitHub OAuth flow
+    
+    Args:
+        request: The incoming FastAPI request
+        
+    Returns:
+        Redirect to GitHub OAuth authorization page
+    """
+    try:
+        logger.info("Initiating GitHub OAuth flow")
+        logger.debug(f"GitHub Client ID: {'Configured' if settings.GITHUB_CLIENT_ID else 'Not configured'}")
+        logger.debug(f"GitHub Client Secret: {'Configured' if settings.GITHUB_CLIENT_SECRET else 'Not configured'}")
+        
+        if not settings.GITHUB_CLIENT_ID or not settings.GITHUB_CLIENT_SECRET:
+            error_msg = "GitHub OAuth is not properly configured"
+            logger.error(error_msg)
+            raise OAuthException(error_msg)
+        
+        # Generate state and get redirect URI
+        redirect_uri = get_oauth_redirect_uri('github')
+        full_redirect_uri = f"{settings.API_BASE_URL}{redirect_uri}"
+        
+        # Generate and store state in session
+        state = generate_oauth_state(request)
+        logger.debug(f"Generated OAuth state: {state}")
+        
+        logger.debug(f"Generated state: {state}")
+        logger.debug(f"Redirect URI: {redirect_uri}")
+        logger.debug(f"Full redirect URI: {full_redirect_uri}")
+        
+        oauth_states[state] = {
+            'provider': 'github',
+            'expires_at': expires_at,
+            'redirect_uri': redirect_uri
+        }
+        
+        # Generate authorization URL
+        logger.info("Creating OAuth authorization URL")
+        try:
+            auth_url = await oauth_utils.oauth.github.authorize_redirect(
+                request=request,
+                redirect_uri=full_redirect_uri,
+                state=state
+            )
+            logger.info(f"Redirecting to GitHub OAuth: {auth_url}")
+            return auth_url
+            
+        except Exception as auth_error:
+            logger.error(f"Error creating OAuth URL: {str(auth_error)}", exc_info=True)
+            raise OAuthException(f"Failed to create OAuth URL: {str(auth_error)}")
+        
+    except OAuthException as e:
+        logger.error(f"GitHub OAuth error: {str(e)}", exc_info=True)
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=str(e)
+        )
+    except Exception as e:
+        logger.error(f"Unexpected error in GitHub login: {str(e)}", exc_info=True)
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"An unexpected error occurred: {str(e)}"
+        )
+
+@router.get("/github/callback")
+async def github_callback(
+    request: Request,
+    code: Optional[str] = None,
+    state: Optional[str] = None,
+    error: Optional[str] = None,
+    error_description: Optional[str] = None,
+    db: Session = Depends(get_db)
+):
+    """
+    Handle GitHub OAuth callback
+    
+    Args:
+        request: The incoming request
+        code: The authorization code from GitHub
+        state: The state parameter for CSRF protection
+        error: Error code if OAuth failed
+        error_description: Error description if OAuth failed
+        db: Database session
+        
+    Returns:
+        Redirect to frontend with token or error
+    """
+    try:
+        # Check for OAuth errors
+        if error:
+            raise OAuthException(
+                f"GitHub OAuth error: {error_description or 'Unknown error'}"
+            )
+        
+        # Verify state
+        if not state or state not in oauth_states:
+            raise OAuthException("Invalid OAuth state")
+        
+        state_data = oauth_states.pop(state)
+        if not verify_oauth_state(state, state, state_data['expires_at']):
+            raise OAuthException("Expired or invalid OAuth state")
+        
+        # Get access token
+        token = await oauth_utils.oauth.github.authorize_access_token(
+            request,
+            state=state
+        )
+        
+        if not token or 'access_token' not in token:
+            raise OAuthException("Failed to get access token from GitHub")
+        
+        # Get user info
+        user_info = await oauth_utils.get_github_user_info(token["access_token"])
+        
+        # Get or create user
+        user = await get_or_create_user(db, user_info, 'github')
+        
+        # Create access token
+        access_token = create_access_token(
+            data={"sub": user.email},
+            expires_delta=timedelta(minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES)
+        )
+        
+        # Redirect to frontend with token
+        frontend_url = f"{settings.FRONTEND_URL}/auth/callback?token={access_token}"
+        return RedirectResponse(url=frontend_url)
+        
+    except OAuthException as e:
+        logger.error(f"GitHub OAuth error: {str(e)}")
+        frontend_url = f"{settings.FRONTEND_URL}/auth/error?message={str(e)}"
+        return RedirectResponse(url=frontend_url)
+    except Exception as e:
+        logger.error(f"Unexpected error in GitHub callback: {str(e)}")
+        frontend_url = f"{settings.FRONTEND_URL}/auth/error?message=An unexpected error occurred"
+        return RedirectResponse(url=frontend_url)
+
+@router.get("/google")
+async def google_login(request: Request):
+    """
+    Initiate Google OAuth flow
+    
+    Args:
+        request: The incoming FastAPI request
+        
+    Returns:
+        Redirect to Google OAuth authorization page
+    """
+    try:
+        if not settings.GOOGLE_CLIENT_ID or not settings.GOOGLE_CLIENT_SECRET:
+            raise OAuthException("Google OAuth is not configured")
+        
+        # Generate and store state
+        state, expires_at = generate_oauth_state()
+        oauth_states[state] = {
+            'provider': 'google',
+            'expires_at': expires_at,
+            'redirect_uri': get_oauth_redirect_uri('google')
+        }
+        
+        # Generate authorization URL
+        redirect_uri = f"{settings.API_BASE_URL}{get_oauth_redirect_uri('google')}"
+        
+        return await oauth_utils.oauth.google.authorize_redirect(
+            request=request,
+            redirect_uri=redirect_uri,
+            state=state,
+            access_type='offline',
+            prompt='select_account'
+        )
+        
+    except OAuthException as e:
+        logger.error(f"Google OAuth error: {str(e)}")
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=str(e)
+        )
+    except Exception as e:
+        logger.error(f"Unexpected error in Google login: {str(e)}")
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="An unexpected error occurred"
+        )
+
+@router.get("/google/callback")
+async def google_callback(
+    request: Request,
+    code: Optional[str] = None,
+    state: Optional[str] = None,
+    error: Optional[str] = None,
+    error_description: Optional[str] = None,
+    db: Session = Depends(get_db)
+):
+    """
+    Handle Google OAuth callback
+    
+    Args:
+        request: The incoming request
+        code: The authorization code from Google
+        state: The state parameter for CSRF protection
+        error: Error code if OAuth failed
+        error_description: Error description if OAuth failed
+        db: Database session
+        
+    Returns:
+        Redirect to frontend with token or error
+    """
+    try:
+        # Check for OAuth errors
+        if error:
+            raise OAuthException(
+                f"Google OAuth error: {error_description or 'Unknown error'}"
+            )
+        
+        # Verify state
+        if not state or state not in oauth_states:
+            raise OAuthException("Invalid OAuth state")
+        
+        state_data = oauth_states.pop(state)
+        if not verify_oauth_state(state, state, state_data['expires_at']):
+            raise OAuthException("Expired or invalid OAuth state")
+        
+        # Get access token
+        token = await oauth_utils.oauth.google.authorize_access_token(
+            request,
+            state=state
+        )
+        
+        if not token or 'access_token' not in token:
+            raise OAuthException("Failed to get access token from Google")
+        
+        # Get user info
+        user_info = await oauth_utils.get_google_user_info(token["access_token"])
+        
+        # Get or create user
+        user = await get_or_create_user(db, user_info, 'google')
+        
+        # Create access token
+        access_token = create_access_token(
+            data={"sub": user.email},
+            expires_delta=timedelta(minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES)
+        )
+        
+        # Redirect to frontend with token
+        frontend_url = f"{settings.FRONTEND_URL}/auth/callback?token={access_token}"
+        return RedirectResponse(url=frontend_url)
+        
+    except OAuthException as e:
+        logger.error(f"Google OAuth error: {str(e)}")
+        frontend_url = f"{settings.FRONTEND_URL}/auth/error?message={str(e)}"
+        return RedirectResponse(url=frontend_url)
+    except Exception as e:
+        logger.error(f"Unexpected error in Google callback: {str(e)}")
+        frontend_url = f"{settings.FRONTEND_URL}/auth/error?message=An unexpected error occurred"
+        return RedirectResponse(url=frontend_url)
+
+async def get_or_create_user(
+    db: Session, 
+    user_info: Dict[str, Any], 
+    provider: str
+) -> models.User:
+    """
+    Get or create a user from OAuth provider data
+    
+    Args:
+        db: Database session
+        user_info: User info from OAuth provider
+        provider: OAuth provider name (e.g., 'github', 'google')
+        
+    Returns:
+        User model instance
+    """
+    try:
+        email = user_info.get('email')
+        if not email:
+            raise OAuthException(f"No email provided by {provider}")
+        
+        # Check if user exists
+        user = db.query(models.User).filter(
+            models.User.email == email
+        ).first()
+        
+        if not user:
+            # Create new user
+            user_data = {
+                'email': email,
+                'full_name': user_info.get('name') or email.split('@')[0],
+                'is_active': True,
+                'is_superuser': False,
+                'avatar_url': user_info.get('avatar_url', ''),
+                f"{provider}_id": user_info.get(f"{provider}_id", '')
+            }
+            
+            # Create user in database
+            user = models.User(**user_data)
+            db.add(user)
+            db.commit()
+            db.refresh(user)
+            
+            logger.info(f"Created new user via {provider}: {email}")
+        else:
+            # Update user info if needed
+            update_data = {}
+            if not user.avatar_url and 'avatar_url' in user_info:
+                update_data['avatar_url'] = user_info['avatar_url']
+            if not user.full_name and 'name' in user_info:
+                update_data['full_name'] = user_info['name']
+            
+            if update_data:
+                for key, value in update_data.items():
+                    setattr(user, key, value)
+                db.commit()
+                db.refresh(user)
+            
+            logger.info(f"Logged in existing user via {provider}: {email}")
+        
+        return user
+        
+    except Exception as e:
+        db.rollback()
+        logger.error(f"Error in get_or_create_user: {str(e)}")
+        raise(e)
