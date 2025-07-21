@@ -13,6 +13,7 @@ import sys
 import time
 from typing import Dict, List, Optional, Any
 from datetime import datetime
+from pathlib import Path
 
 # Configure logging
 logging.basicConfig(
@@ -59,6 +60,7 @@ class PPQChunkedClient:
         self.retry_count = 3
         self.retry_delay = 15  # seconds between retries
         self.backoff_multiplier = 1.5  # exponential backoff
+        self.chunk_save_path = "."  # Default save path for chunks
     
     def get_current_timestamp(self) -> str:
         """Get current timestamp in ISO format."""
@@ -380,98 +382,228 @@ Return ONLY the complete tab3_tables JSON structure with all identified tables."
         return json.loads(clean_json)
     
     def chunk_5_semantic_search(self, vision_data: str, doc_type: str) -> Dict[str, Any]:
-        """Chunk 5: Semantic Search Data Generation"""
-        
-        system_msg = "You are a search optimization expert. Generate comprehensive searchable content with precise location mapping."
-        
-        user_prompt = f"""Generate searchable content for this {doc_type}. Return EXACTLY this JSON structure:
+        """Chunk 5: Optimized Semantic Search Data Generation (No spatial metadata)"""
+
+        system_msg = "You are a search optimization expert. Generate structured, searchable content based on the document's extracted text. Focus only on what improves semantic matching."
+
+        user_prompt = f"""Generate semantic search data for a {doc_type}. Use ONLY this simplified structure:
 
 {{
   "semantic_search_data": {{
     "searchable_content": {{
-      "full_text_index": "Complete concatenated searchable text from entire document",
+      "full_text_index": "Concatenated clean text from the entire document",
       "structured_entities": [
         {{
           "entity_text": "Company Name",
           "entity_type": "organization",
           "context": "Vendor information",
-          "bbox": {{"x": 240, "y": 120, "width": 400, "height": 60}},
-          "confidence": 0.98,
           "related_terms": ["Company", "Corp", "LLC"]
         }},
         {{
           "entity_text": "$1,500.00",
           "entity_type": "currency",
           "context": "Total amount",
-          "bbox": {{"x": 0, "y": 0, "width": 0, "height": 0}},
-          "confidence": 0.95,
           "related_terms": ["total", "amount", "1500", "fifteen hundred"]
         }}
       ]
     }},
     "search_categories": {{
-      "contact_information": {{
-        "items": [
-          {{"text": "email@example.com", "type": "email", "bbox": {{"x": 0, "y": 0, "width": 0, "height": 0}}}},
-          {{"text": "(555) 123-4567", "type": "phone", "bbox": {{"x": 0, "y": 0, "width": 0, "height": 0}}}}
-        ]
-      }},
-      "financial_data": {{
-        "items": [
-          {{"text": "$1,500.00", "type": "total_amount", "bbox": {{"x": 0, "y": 0, "width": 0, "height": 0}}}},
-          {{"text": "$150.00", "type": "tax_amount", "bbox": {{"x": 0, "y": 0, "width": 0, "height": 0}}}}
-        ]
-      }},
-      "dates_and_deadlines": {{
-        "items": [
-          {{"text": "2025-01-15", "type": "document_date", "bbox": {{"x": 0, "y": 0, "width": 0, "height": 0}}}},
-          {{"text": "2025-02-15", "type": "due_date", "bbox": {{"x": 0, "y": 0, "width": 0, "height": 0}}}}
-        ]
-      }},
-      "identifiers_and_references": {{
-        "items": [
-          {{"text": "INV-2025-001", "type": "invoice_number", "bbox": {{"x": 0, "y": 0, "width": 0, "height": 0}}}},
-          {{"text": "PO-12345", "type": "purchase_order", "bbox": {{"x": 0, "y": 0, "width": 0, "height": 0}}}}
-        ]
-      }}
+      "contact_information": [
+        {{"text": "email@example.com", "type": "email"}},
+        {{"text": "(555) 123-4567", "type": "phone"}}
+      ],
+      "financial_data": [
+        {{"text": "$1,500.00", "type": "total_amount"}},
+        {{"text": "$150.00", "type": "tax_amount"}}
+      ],
+      "dates_and_deadlines": [
+        {{"text": "2025-01-15", "type": "document_date"}},
+        {{"text": "2025-02-15", "type": "due_date"}}
+      ],
+      "identifiers_and_references": [
+        {{"text": "INV-2025-001", "type": "invoice_number"}},
+        {{"text": "PO-12345", "type": "purchase_order"}}
+      ]
     }},
     "keyword_mapping": {{
       "primary_keywords": ["invoice", "payment", "total", "amount"],
-      "secondary_keywords": ["services", "tax", "due", "net"],
-      "location_keywords": ["header", "footer", "line_items", "totals"],
-      "coordinate_ranges": {{
-        "header_region": {{"x_range": [0, 2480], "y_range": [0, 400]}},
-        "body_region": {{"x_range": [0, 2480], "y_range": [400, 1400]}},
-        "footer_region": {{"x_range": [0, 2480], "y_range": [1400, 3508]}}
-      }}
+      "secondary_keywords": ["services", "tax", "due", "net"]
     }}
   }}
 }}
 
 Instructions:
-- Extract ALL searchable text and entities (minimum 20 entities)
-- Use ACTUAL coordinates from vision data
-- Create comprehensive search categories
-- Generate related terms for better search matching
-- Map keywords to document regions
-- Return ONLY valid JSON. Escape all line breaks and special characters properly using JSON syntax. Do NOT include unescaped newlines or tabs inside string values.
+- Focus on entity names, types, and context only (no coordinates or confidence).
+- Use at least 20 relevant structured entities.
+- Remove all bbox, coordinate_ranges, and other UI-specific metadata.
+- Optimize for embedding-based search (content-rich, unambiguous, varied vocabulary).
+- Return ONLY valid JSON. Escape characters as needed.
 
-Vision Data for search indexing:
+Here's the extracted document text for processing:
 {vision_data}
 
-Return ONLY the complete semantic_search_data JSON structure."""
+Return only the semantic_search_data JSON object."""
 
-        print("🔄 Chunk 5: Semantic Search Data...")
-        response = self.make_api_request_with_retry(system_msg, user_prompt, max_tokens=20000, chunk_name="Semantic Search")
+        print("🔄 Chunk 5: Semantic Search Data (Optimized)...")
+        response = self.make_api_request_with_retry(system_msg, user_prompt, max_tokens=12000, chunk_name="Semantic Search")
         clean_json = self.extract_json_from_response(response)
         return json.loads(clean_json)
-    
+
     def chunk_6_database_format(self, vision_data: str, doc_type: str) -> Dict[str, Any]:
-        """Chunk 6: Database-Ready Format"""
+        """Chunk 6: Database-Ready Format (Using Previous Chunks Data)"""
         
-        system_msg = "You are a database optimization specialist. Generate database-ready format for efficient storage and querying."
+        def load_previous_chunks_data():
+            """Load and combine data from all previous chunks"""
+            try:
+                combined_data = {}
+                
+                # Try to load chunk1 (classification)
+                try:
+                    with open("chunk1_classification.json", "r", encoding="utf-8") as f:
+                        chunk1_data = json.load(f)
+                        combined_data.update(chunk1_data)
+                except:
+                    pass
+                
+                # Try to load chunk2 (content)
+                try:
+                    with open("chunk2_content.json", "r", encoding="utf-8") as f:
+                        chunk2_data = json.load(f)
+                        combined_data.update(chunk2_data)
+                except:
+                    pass
+                
+                # Try to load chunk5 (semantic search)
+                try:
+                    with open("chunk5_search.json", "r", encoding="utf-8") as f:
+                        chunk5_data = json.load(f)
+                        combined_data.update(chunk5_data)
+                except:
+                    pass
+                    
+                return combined_data if combined_data else None
+            except Exception as e:
+                print(f"❌ Error loading previous chunks: {e}")
+                return None
+
+        def build_database_format_from_chunks(combined_data: Dict[str, Any]) -> Dict[str, Any]:
+            """Build database format using actual chunk data structure"""
+            metadata = {
+                "id": f"doc_{int(time.time())}",
+                "type": doc_type,
+                "created_at": self.get_current_timestamp(),
+                "processed_at": self.get_current_timestamp(),
+                "status": "processed",
+                "confidence_score": 0.94
+            }
+
+            # Extract fields from tab1_content
+            extracted_fields = []
+            tab1_content = combined_data.get("tab1_content", {})
+            
+            # Process all field categories from tab1_content
+            for category_name, category_data in tab1_content.items():
+                if isinstance(category_data, dict):
+                    for field_name, field_info in category_data.items():
+                        if isinstance(field_info, dict) and "value" in field_info:
+                            extracted_fields.append({
+                                "field_name": field_name,
+                                "field_value": field_info.get("value", ""),
+                                "field_type": self._infer_field_type(field_info.get("value", "")),
+                                "confidence": field_info.get("confidence", 0.0),
+                                "bbox": self._format_bbox(field_info.get("bbox", {})),
+                                "category": category_name
+                            })
+
+            # Extract search terms from semantic_search_data
+            search_index_data = []
+            semantic_data = combined_data.get("semantic_search_data", {})
+            
+            if semantic_data:
+                doc_id = metadata["id"]
+                
+                # Process structured entities
+                entities = semantic_data.get("searchable_content", {}).get("structured_entities", [])
+                for entity in entities:
+                    search_index_data.append({
+                        "term": entity.get("entity_text", ""),
+                        "document_id": doc_id,
+                        "entity_type": entity.get("entity_type", "unknown"),
+                        "context": entity.get("context", ""),
+                        "relevance": 0.9
+                    })
+                
+                # Process search categories
+                search_categories = semantic_data.get("search_categories", {})
+                for category, items in search_categories.items():
+                    if isinstance(items, list):
+                        for item in items:
+                            if isinstance(item, dict) and "text" in item:
+                                search_index_data.append({
+                                    "term": item["text"],
+                                    "document_id": doc_id,
+                                    "category": category,
+                                    "type": item.get("type", "unknown"),
+                                    "relevance": 0.8
+                                })
+                
+                # Process primary keywords
+                keywords = semantic_data.get("keyword_mapping", {})
+                for keyword in keywords.get("primary_keywords", []):
+                    search_index_data.append({
+                        "term": keyword,
+                        "document_id": doc_id,
+                        "keyword_type": "primary",
+                        "relevance": 0.7
+                    })
+                
+                for keyword in keywords.get("secondary_keywords", []):
+                    search_index_data.append({
+                        "term": keyword,
+                        "document_id": doc_id,
+                        "keyword_type": "secondary",
+                        "relevance": 0.6
+                    })
+
+            return {
+                "database_ready_format": {
+                    "document_metadata": metadata,
+                    "extracted_fields": extracted_fields,
+                    "search_index_data": search_index_data
+                }
+            }
+
+        print("🔄 Chunk 6: Database Format Generation (Using Previous Chunks)...")
         
-        user_prompt = f"""Generate database-optimized format for this {doc_type}. Return EXACTLY this JSON structure:
+        # Try to build from previous chunks first
+        combined_data = load_previous_chunks_data()
+        
+        if combined_data:
+            try:
+                print(f"✅ Found data from previous chunks, building database format...")
+                result = build_database_format_from_chunks(combined_data)
+                
+                # Log statistics
+                db_format = result.get("database_ready_format", {})
+                field_count = len(db_format.get("extracted_fields", []))
+                search_count = len(db_format.get("search_index_data", []))
+                print(f"📊 Generated {field_count} fields and {search_count} search terms")
+                
+                return result
+                
+            except Exception as manual_err:
+                print(f"⚠️ Manual parsing failed: {manual_err}. Falling back to LLM...")
+        else:
+            print("⚠️ No previous chunk data found. Using LLM fallback...")
+
+        # Enhanced LLM fallback with more detailed prompt
+        system_msg = "You are a database optimization specialist. Extract ALL relevant fields and search terms from the document data to create a comprehensive database-ready format."
+
+        user_prompt = f"""Extract comprehensive database-ready format from this {doc_type}. 
+
+IMPORTANT: Extract ALL fields, values, dates, names, amounts, and terms from the provided document data.
+
+Return EXACTLY this JSON structure:
 
 {{
   "database_ready_format": {{
@@ -484,35 +616,68 @@ Return ONLY the complete semantic_search_data JSON structure."""
       "confidence_score": 0.94
     }},
     "extracted_fields": [
-      {{"field_name": "document_number", "field_value": "INV-001", "field_type": "string", "confidence": 0.95, "bbox": "240,120,400,60"}},
-      {{"field_name": "total_amount", "field_value": 1500.00, "field_type": "decimal", "confidence": 0.98, "bbox": "2000,1500,480,120"}},
-      {{"field_name": "document_date", "field_value": "2025-01-15", "field_type": "date", "confidence": 0.95, "bbox": "1600,460,700,200"}}
+      // Extract EVERY field from the document with proper data types
+      {{"field_name": "performance_review_period", "field_value": "annually", "field_type": "string", "confidence": 0.98, "bbox": "54,72,635,56", "category": "fields_and_values"}},
+      {{"field_name": "working_hours_per_week", "field_value": 40, "field_type": "integer", "confidence": 0.98, "bbox": "54,303,635,57", "category": "form_fields"}}
+      // Include ALL other fields from the document
     ],
     "search_index_data": [
-      {{"term": "invoice", "document_id": "doc_id", "positions": [{{"x": 900, "y": 320, "w": 600, "h": 70}}], "relevance": 0.9}},
-      {{"term": "total", "document_id": "doc_id", "positions": [{{"x": 2000, "y": 1500, "w": 480, "h": 120}}], "relevance": 0.8}},
-      {{"term": "company", "document_id": "doc_id", "positions": [{{"x": 240, "y": 120, "w": 400, "h": 60}}], "relevance": 0.7}}
+      // Extract ALL searchable terms, entity names, keywords
+      {{"term": "performance review", "document_id": "doc_id", "entity_type": "process", "context": "Annual assessment", "relevance": 0.9}},
+      {{"term": "training reimbursement", "document_id": "doc_id", "entity_type": "policy", "context": "Cost recovery policy", "relevance": 0.9}},
+      {{"term": "40 hours per week", "document_id": "doc_id", "entity_type": "work_schedule", "context": "Working hours", "relevance": 0.8}}
+      // Include ALL other searchable terms
     ]
   }}
 }}
 
 Instructions:
-- Create optimized field extraction for database storage
-- Generate searchable index terms with positions
-- Use proper data types (string, decimal, date, integer)
-- Include relevance scoring for search terms
-- Serialize coordinates as comma-separated strings
-- Return ONLY valid JSON. Escape all line breaks and special characters properly using JSON syntax. Do NOT include unescaped newlines or tabs inside string values.
+- Extract EVERY field, value, amount, date, and term from the document
+- Use proper data types: string, integer, decimal, date, boolean
+- Include ALL entities mentioned in the semantic search data
+- Format bbox as comma-separated coordinates
+- Generate comprehensive search index with ALL relevant terms
+- Include confidence scores and categories where available
+- Return ONLY valid JSON
 
-Vision Data for database optimization:
-{vision_data}
+Document data to process:
+{vision_data[:8000]}  
 
-Return ONLY the complete database_ready_format JSON structure."""
+Return the complete database_ready_format JSON with ALL extracted data."""
 
-        print("🔄 Chunk 6: Database Format Generation...")
-        response = self.make_api_request_with_retry(system_msg, user_prompt, max_tokens=12000, chunk_name="Database Format")
+        response = self.make_api_request_with_retry(system_msg, user_prompt, max_tokens=15000, chunk_name="Database Format")
         clean_json = self.extract_json_from_response(response)
         return json.loads(clean_json)
+    
+    def _infer_field_type(self, value: str) -> str:
+        """Infer field type from value"""
+        if not value:
+            return "string"
+        
+        value_str = str(value).strip()
+        
+        # Check for numeric values
+        if value_str.replace(".", "").replace(",", "").replace("-", "").isdigit():
+            return "decimal" if "." in value_str else "integer"
+        
+        # Check for dates (basic patterns)
+        if any(pattern in value_str.lower() for pattern in ["january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december"]):
+            return "date"
+        
+        if any(pattern in value_str for pattern in ["-", "/"]) and any(char.isdigit() for char in value_str):
+            return "date"
+        
+        # Check for boolean-like values
+        if value_str.lower() in ["true", "false", "yes", "no"]:
+            return "boolean"
+            
+        return "string"
+    
+    def _format_bbox(self, bbox_dict: Dict) -> str:
+        """Format bbox dictionary to string"""
+        if isinstance(bbox_dict, dict):
+            return f"{bbox_dict.get('x', 0)},{bbox_dict.get('y', 0)},{bbox_dict.get('width', 0)},{bbox_dict.get('height', 0)}"
+        return "0,0,0,0"
     
     def process_document_in_chunks(self, vision_data: str) -> Dict[str, Any]:
         """Process document using chunked approach with self-contained prompts."""

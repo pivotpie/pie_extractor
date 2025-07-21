@@ -1,7 +1,7 @@
 {
   "document_classification": {
-    "primary_type": "business",
-    "specific_type": "invoice",
+    "primary_type": "legal",
+    "specific_type": "contract",
     "confidence": 0.98,
     "supported_tabs": [
       "tab1_content",
@@ -9,154 +9,276 @@
       "tab3_tables",
       "semantic_search"
     ],
-    "processing_timestamp": "2025-07-21T13:31:45.499863Z"
+    "processing_timestamp": "2025-07-21T15:21:57.172617Z"
   },
   "tab1_content": {
     "fields_and_values": {
-      "header_fields": {
-        "document_number": {
-          "value": "326430",
-          "bbox": {
-            "x": 1600,
-            "y": 460,
-            "width": 700,
-            "height": 200
-          },
-          "confidence": 0.97
+      "Performance Review Period": {
+        "value": "annually (assessment period to be considered from January to December)",
+        "bbox": {
+          "x": 54,
+          "y": 72,
+          "width": 635,
+          "height": 56
         },
-        "document_date": {
-          "value": "2025-04-18",
-          "bbox": {
-            "x": 1600,
-            "y": 460,
-            "width": 700,
-            "height": 200
-          },
-          "confidence": 0.97
-        },
-        "due_date": {
-          "value": "",
-          "bbox": {
-            "x": 0,
-            "y": 0,
-            "width": 0,
-            "height": 0
-          },
-          "confidence": 0.0
-        }
+        "confidence": 0.98
       },
-      "vendor_info": {
-        "company_name": {
-          "value": "XYZ equipment and Stuff Co. LLC.",
-          "bbox": {
-            "x": 240,
-            "y": 120,
-            "width": 400,
-            "height": 60
-          },
-          "confidence": 0.98
+      "Performance Bonus Eligibility": {
+        "value": "minimum service period of 6 months and both the Employee's and team's contribution and the Company's overall performance",
+        "bbox": {
+          "x": 54,
+          "y": 72,
+          "width": 635,
+          "height": 56
         },
-        "address": {
-          "value": "AL QUDS STREET, AJMAN, United Arab Emirates Tel : 067424208 A/C:1012309640301 Fax : 067428202 TRN : 104034579300003",
-          "bbox": {
-            "x": 1600,
-            "y": 120,
-            "width": 780,
-            "height": 120
-          },
-          "confidence": 0.95
-        },
-        "contact_info": {
-          "value": "Tel : 067424208 Fax : 067428202",
-          "bbox": {
-            "x": 1600,
-            "y": 120,
-            "width": 780,
-            "height": 120
-          },
-          "confidence": 0.85
-        }
+        "confidence": 0.98
       },
-      "customer_info": {
-        "company_name": {
-          "value": "Hello world Co. LLC.",
-          "bbox": {
-            "x": 100,
-            "y": 480,
-            "width": 500,
-            "height": 120
-          },
-          "confidence": 0.96
+      "Training Recovery Policy 1": {
+        "value": "If the employee resigned before completing 12 months, he/she will pay 100% of the total value of training.",
+        "bbox": {
+          "x": 72,
+          "y": 208,
+          "width": 604,
+          "height": 53
         },
-        "address": {
-          "value": "TRN # 12345678901112",
-          "bbox": {
-            "x": 100,
-            "y": 480,
-            "width": 500,
-            "height": 120
-          },
-          "confidence": 0.9
-        }
+        "confidence": 0.99
       },
-      "financial_totals": {
-        "subtotal": {
-          "value": "150.00",
-          "bbox": {
-            "x": 2000,
-            "y": 1500,
-            "width": 480,
-            "height": 120
-          },
-          "confidence": 0.97
+      "Training Recovery Policy 2": {
+        "value": "His/her tenure from 13 months to 24 months will pay 50% of the total value of training.",
+        "bbox": {
+          "x": 72,
+          "y": 208,
+          "width": 604,
+          "height": 53
         },
-        "tax_amount": {
-          "value": "7.14",
-          "bbox": {
-            "x": 2000,
-            "y": 1500,
-            "width": 480,
-            "height": 120
-          },
-          "confidence": 0.97
-        },
-        "total_amount": {
-          "value": "150.00",
-          "bbox": {
-            "x": 2000,
-            "y": 1500,
-            "width": 480,
-            "height": 120
-          },
-          "confidence": 0.97
-        }
+        "confidence": 0.99
       },
-      "payment_terms": {
-        "payment_method": {
-          "value": "Cash",
-          "bbox": {
-            "x": 1600,
-            "y": 460,
-            "width": 700,
-            "height": 200
-          },
-          "confidence": 0.85
+      "Training Recovery Policy 3": {
+        "value": "If the employee exceeds 24 months of service, he or she will not be obligated to pay any of the training costs incurred during his or her 6 months training plan.",
+        "bbox": {
+          "x": 72,
+          "y": 208,
+          "width": 604,
+          "height": 53
         },
-        "currency": {
-          "value": "AED",
-          "bbox": {
-            "x": 100,
-            "y": 1500,
-            "width": 500,
-            "height": 60
-          },
-          "confidence": 0.9
-        }
+        "confidence": 0.99
+      },
+      "Normal Working Hours": {
+        "value": "The Employee will be required to work 40 hours per week",
+        "bbox": {
+          "x": 54,
+          "y": 303,
+          "width": 635,
+          "height": 57
+        },
+        "confidence": 0.98
+      },
+      "Flexible Working Agreement": {
+        "value": "responsibilities for a position at this level will necessitate a flexible approach to working beyond these hours as necessary, at no extra payment",
+        "bbox": {
+          "x": 54,
+          "y": 303,
+          "width": 635,
+          "height": 57
+        },
+        "confidence": 0.98
+      },
+      "Leave Approval Requirement": {
+        "value": "The Employee must obtain prior written approval to taking any paid or unpaid leave.",
+        "bbox": {
+          "x": 54,
+          "y": 303,
+          "width": 635,
+          "height": 57
+        },
+        "confidence": 0.98
+      },
+      "Code of Conduct Compliance": {
+        "value": "The Employee will be required at all times to comply with the Company's rules, Code of Conduct, regulations and procedures, including its Quality Assurance and Environment, Health and Safety standards and procedures for the duration of his / her employment with the Company.",
+        "bbox": {
+          "x": 54,
+          "y": 406,
+          "width": 635,
+          "height": 37
+        },
+        "confidence": 0.98
+      },
+      "Transfer/Relocation Terms": {
+        "value": "The Employee may be transferred by the Company to any other department, function, store or associate Company(s) in the UAE / GCC countries, at its discretion. The Company may award an \"up-lift\" allowance in case of differences in the costs of living between the transfer locations.",
+        "bbox": {
+          "x": 54,
+          "y": 491,
+          "width": 635,
+          "height": 34
+        },
+        "confidence": 0.98
+      },
+      "Business Travel Policy": {
+        "value": "The Employee will travel on Economy Class fare for all overseas travels related to business. The Company will reimburse or advance funds to the Employee for all reasonable travel, entertainment and miscellaneous expenses incurred in connection with the performance of his/her duties under this Agreement and in accordance with the Company's business travel policy. Business travels within UAE will be reimbursed based on mileage allowance per km basis as per your grade.",
+        "bbox": {
+          "x": 54,
+          "y": 572,
+          "width": 635,
+          "height": 55
+        },
+        "confidence": 0.98
       }
     },
-    "financial_dashboard": {},
-    "form_fields": {},
-    "legal_summary": {},
-    "general_summary": {}
+    "financial_dashboard": {
+      "Performance Bonus": {
+        "value": "may result in an adjustment to your remuneration and/or the award of a performance bonus depending on a minimum service period of 6 months and both the Employee's and team's contribution and the Company's overall performance",
+        "bbox": {
+          "x": 54,
+          "y": 72,
+          "width": 635,
+          "height": 56
+        },
+        "confidence": 0.98
+      },
+      "Training Reimbursement Amounts": {
+        "value": "100% if resigned before 12 months, 50% if tenure is 13 to 24 months, nothing if more than 24 months",
+        "bbox": {
+          "x": 72,
+          "y": 208,
+          "width": 604,
+          "height": 53
+        },
+        "confidence": 0.99
+      },
+      "Business Travel Reimbursement": {
+        "value": "Company will reimburse or advance funds for all reasonable travel, entertainment and miscellaneous expenses; within UAE reimbursed based on mileage allowance per km as per your grade",
+        "bbox": {
+          "x": 54,
+          "y": 572,
+          "width": 635,
+          "height": 55
+        },
+        "confidence": 0.98
+      },
+      "Relocation Allowance": {
+        "value": "may award an \"up-lift\" allowance in case of differences in the costs of living between the transfer locations",
+        "bbox": {
+          "x": 54,
+          "y": 491,
+          "width": 635,
+          "height": 34
+        },
+        "confidence": 0.98
+      }
+    },
+    "form_fields": {
+      "Annual Performance Review": {
+        "value": "Yes",
+        "bbox": {
+          "x": 54,
+          "y": 72,
+          "width": 635,
+          "height": 56
+        },
+        "confidence": 0.98
+      },
+      "Mandatory Code of Conduct Agreement": {
+        "value": "Yes",
+        "bbox": {
+          "x": 54,
+          "y": 406,
+          "width": 635,
+          "height": 37
+        },
+        "confidence": 0.98
+      },
+      "Leave Written Approval Required": {
+        "value": "Yes",
+        "bbox": {
+          "x": 54,
+          "y": 303,
+          "width": 635,
+          "height": 57
+        },
+        "confidence": 0.98
+      },
+      "Flexible Hours Agreement": {
+        "value": "Yes",
+        "bbox": {
+          "x": 54,
+          "y": 303,
+          "width": 635,
+          "height": 57
+        },
+        "confidence": 0.98
+      }
+    },
+    "legal_summary": {
+      "Performance Review and Adjustment": {
+        "value": "Performance reviewed annually, possible salary/bonus adjustment, eligibility depends on at least 6 months service and performance at individual/team/company levels.",
+        "bbox": {
+          "x": 54,
+          "y": 72,
+          "width": 635,
+          "height": 56
+        },
+        "confidence": 0.98
+      },
+      "Training Cost Recovery Terms": {
+        "value": "Resignation before 12 months: pay 100% of training; 13-24 months: 50%; beyond 24 months: no reimbursement required.",
+        "bbox": {
+          "x": 72,
+          "y": 208,
+          "width": 604,
+          "height": 53
+        },
+        "confidence": 0.99
+      },
+      "Working Hours Obligation": {
+        "value": "Must work 40 hours/week; expected to work beyond hours as needed, at no extra pay; leave requires prior written approval.",
+        "bbox": {
+          "x": 54,
+          "y": 303,
+          "width": 635,
+          "height": 57
+        },
+        "confidence": 0.98
+      },
+      "Code of Conduct Clause": {
+        "value": "Employee must comply with all company rules and codes, including Quality Assurance and EHS, throughout employment.",
+        "bbox": {
+          "x": 54,
+          "y": 406,
+          "width": 635,
+          "height": 37
+        },
+        "confidence": 0.98
+      },
+      "Transfer/Relocation Clause": {
+        "value": "Company may transfer employee within UAE/GCC; may pay allowance if cost-of-living differs.",
+        "bbox": {
+          "x": 54,
+          "y": 491,
+          "width": 635,
+          "height": 34
+        },
+        "confidence": 0.98
+      },
+      "Business Travel Clause": {
+        "value": "Travel on Economy Class for business trips; all reasonable business expenses reimbursed in line with company policy.",
+        "bbox": {
+          "x": 54,
+          "y": 572,
+          "width": 635,
+          "height": 55
+        },
+        "confidence": 0.98
+      }
+    },
+    "general_summary": {
+      "value": "The contract details annual performance reviews that may affect remuneration and bonus, with bonuses dependent on length and quality of service. Employees who resign before 24 months may have to repay training costs. Work is based on 40 hours per week, with flexibility and no extra pay for overtime. Leave requires prior written approval. Employees must comply with all company rules and standards. Transfers within the company or GCC are possible, with potential allowances for increased living costs. Business travel is reimbursed per company policy and must be in economy class, with local travel within the UAE paid by mileage.",
+      "bbox": {
+        "x": 36,
+        "y": 40,
+        "width": 653,
+        "height": 587
+      },
+      "confidence": 0.98
+    }
   }
 }

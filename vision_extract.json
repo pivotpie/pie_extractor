@@ -1,65 +1,65 @@
 {
-  "document_type": "invoice",
-  "document_confidence": 0.95,
-  "page_dimensions": {"width": 2480, "height": 3508},
+  "document_type": "contract",
+  "document_confidence": 0.98,
+  "page_dimensions": {"width": 724, "height": 1024},
   "text_blocks": [
     {
       "id": "block_1",
-      "text": "XYZ equipment and Stuff Co. LLC.",
-      "bbox": {"x": 240, "y": 120, "width": 400, "height": 60},
-      "type": "company_name",
-      "confidence": 0.98,
+      "text": "5. Performance - Salary Review / Bonus",
+      "bbox": {"x": 36, "y": 40, "width": 330, "height": 24},
+      "type": "heading",
+      "confidence": 0.99,
       "reading_order": 1,
       "font_properties": {
-        "estimated_size": 14,
-        "bold": true,
+        "estimated_size": 13,
+        "bold": false,
         "italic": false,
-        "alignment": "center"
+        "alignment": "left"
       },
       "semantic_role": "header",
-      "parent_section": "header",
+      "parent_section": "body",
       "relationships": []
     },
     {
       "id": "block_2",
-      "text": "AL QUDS STREET, AJMAN, United Arab Emirates\nTel : 067424208 A/C:1012309640301 Fax : 067428202 TRN : 104034579300003",
-      "bbox": {"x": 1600, "y": 120, "width": 780, "height": 120},
-      "type": "address",
-      "confidence": 0.95,
+      "text": "The Company encourages a performance-based culture. Your performance will be reviewed annually (assessment period to be considered from January to December) which may result in an adjustment to your remuneration and/or the award of a performance bonus depending on a minimum service period of 6 months and both the Employee's and team's contribution and the Company's overall performance.",
+      "bbox": {"x": 54, "y": 72, "width": 635, "height": 56},
+      "type": "paragraph",
+      "confidence": 0.98,
       "reading_order": 2,
       "font_properties": {
         "estimated_size": 12,
         "bold": false,
         "italic": false,
-        "alignment": "right"
+        "alignment": "left"
       },
-      "semantic_role": "header",
-      "parent_section": "header",
-      "relationships": []
+      "semantic_role": "body",
+      "parent_section": "body",
+      "relationships": ["follows:block_1"]
     },
     {
       "id": "block_3",
-      "text": "TAX INVOICE / فاتورة ضريبية",
-      "bbox": {"x": 900, "y": 320, "width": 600, "height": 70},
-      "type": "document_title",
-      "confidence": 0.98,
+      "text": "6. Training Policy",
+      "bbox": {"x": 36, "y": 140, "width": 170, "height": 24},
+      "type": "heading",
+      "confidence": 0.99,
       "reading_order": 3,
       "font_properties": {
-        "estimated_size": 16,
-        "bold": true,
+        "estimated_size": 13,
+        "bold": false,
         "italic": false,
-        "alignment": "center"
+        "alignment": "left"
       },
       "semantic_role": "header",
-      "parent_section": "header",
-      "relationships": []
+      "parent_section": "body",
+      "relationships": ["follows:block_2"]
     },
     {
       "id": "block_4",
-      "text": "To,\nHello world Co. LLC.\nTRN # 12345678901112",
-      "bbox": {"x": 100, "y": 480, "width": 500, "height": 120},
-      "type": "address",
-      "confidence": 0.96,
+      "text": "In the event the employee undergoes our advanced training program with the company, it is understood that if within a period of less than two years of service the employee resigns the right to recover the value of training as follows:",
+      "bbox": {"x": 54, "y": 172, "width": 635, "height": 33},
+      "type": "paragraph",
+      "confidence": 0.98,
       "reading_order": 4,
       "font_properties": {
         "estimated_size": 12,
@@ -69,14 +69,14 @@
       },
       "semantic_role": "body",
       "parent_section": "body",
-      "relationships": []
+      "relationships": ["follows:block_3"]
     },
     {
       "id": "block_5",
-      "text": "Date\n18/04/2025\nINV. NO.\n326430\nPayment By\nCash\nReference\nHusain\nSales Person\nPage\nPage 1 of 1",
-      "bbox": {"x": 1600, "y": 460, "width": 700, "height": 200},
-      "type": "metadata",
-      "confidence": 0.97,
+      "text": "1. If the employee resigned before completing 12 months, he/she will pay 100% of the total value of training.\n2. His/her tenure from 13 months to 24 months will pay 50% of the total value of training.\n3. If the employee exceeds 24 months of service, he or she will not be obligated to pay any of the training costs incurred during his or her 6 months training plan.",
+      "bbox": {"x": 72, "y": 208, "width": 604, "height": 53},
+      "type": "list",
+      "confidence": 0.99,
       "reading_order": 5,
       "font_properties": {
         "estimated_size": 12,
@@ -86,99 +86,99 @@
       },
       "semantic_role": "body",
       "parent_section": "body",
-      "relationships": []
+      "relationships": ["follows:block_4"]
     },
     {
       "id": "block_6",
-      "text": "NO.\nDESCRIPTION\nQty\nUOM\nU. Price\nVAT\nAmount",
-      "bbox": {"x": 100, "y": 680, "width": 2280, "height": 40},
-      "type": "table_header",
+      "text": "7. Working Pattern",
+      "bbox": {"x": 36, "y": 271, "width": 165, "height": 24},
+      "type": "heading",
       "confidence": 0.99,
       "reading_order": 6,
       "font_properties": {
-        "estimated_size": 12,
-        "bold": true,
+        "estimated_size": 13,
+        "bold": false,
         "italic": false,
-        "alignment": "center"
+        "alignment": "left"
       },
-      "semantic_role": "table_data",
-      "parent_section": "table_1",
-      "relationships": []
+      "semantic_role": "header",
+      "parent_section": "body",
+      "relationships": ["follows:block_5"]
     },
     {
       "id": "block_7",
-      "text": "1\nCARBON BOYU 500G AC500\n4\nEa\n10.00\n2.00\n40.00",
-      "bbox": {"x": 100, "y": 730, "width": 2280, "height": 40},
-      "type": "table_row",
+      "text": "The Employee will be required to work 40 hours per week, but it is anticipated that the responsibilities for a position at this level will necessitate a flexible approach to working beyond these hours as necessary, at no extra payment. If meetings and timings extend beyond work hours, however, be intimated to the Employee, depending upon the scheduling of the shift and the amendments thereof, as necessitated by the nature of operations. The Employee must obtain prior written approval to taking any paid or unpaid leave.",
+      "bbox": {"x": 54, "y": 303, "width": 635, "height": 57},
+      "type": "paragraph",
       "confidence": 0.98,
       "reading_order": 7,
       "font_properties": {
         "estimated_size": 12,
         "bold": false,
         "italic": false,
-        "alignment": "center"
+        "alignment": "left"
       },
-      "semantic_role": "table_data",
-      "parent_section": "table_1",
-      "relationships": []
+      "semantic_role": "body",
+      "parent_section": "body",
+      "relationships": ["follows:block_6"]
     },
     {
       "id": "block_8",
-      "text": "2\nACRYLIC ISOLATION BOX BAOJIAITE 15X15X15 CM H1515\n2\nEa\n25.00\n2.50\n50.00",
-      "bbox": {"x": 100, "y": 780, "width": 2280, "height": 40},
-      "type": "table_row",
-      "confidence": 0.98,
+      "text": "8. Compliance with Company Standard",
+      "bbox": {"x": 36, "y": 374, "width": 312, "height": 24},
+      "type": "heading",
+      "confidence": 0.99,
       "reading_order": 8,
       "font_properties": {
-        "estimated_size": 12,
+        "estimated_size": 13,
         "bold": false,
         "italic": false,
-        "alignment": "center"
+        "alignment": "left"
       },
-      "semantic_role": "table_data",
-      "parent_section": "table_1",
-      "relationships": []
+      "semantic_role": "header",
+      "parent_section": "body",
+      "relationships": ["follows:block_7"]
     },
     {
       "id": "block_9",
-      "text": "3\nTHERMOMETER LAGUNA\n1\nEa\n10.00\n1.00\n20.00",
-      "bbox": {"x": 100, "y": 830, "width": 2280, "height": 40},
-      "type": "table_row",
+      "text": "The Employee will be required at all times to comply with the Company's rules, Code of Conduct, regulations and procedures, including its Quality Assurance and Environment, Health and Safety standards and procedures for the duration of his / her employment with the Company.",
+      "bbox": {"x": 54, "y": 406, "width": 635, "height": 37},
+      "type": "paragraph",
       "confidence": 0.98,
       "reading_order": 9,
       "font_properties": {
         "estimated_size": 12,
         "bold": false,
         "italic": false,
-        "alignment": "center"
+        "alignment": "left"
       },
-      "semantic_role": "table_data",
-      "parent_section": "table_1",
-      "relationships": []
+      "semantic_role": "body",
+      "parent_section": "body",
+      "relationships": ["follows:block_8"]
     },
     {
       "id": "block_10",
-      "text": "4\nNET BAG XYC6\n8\nEa\n5.00\n2.00\n40.00",
-      "bbox": {"x": 100, "y": 880, "width": 2280, "height": 40},
-      "type": "table_row",
-      "confidence": 0.98,
+      "text": "9. Relocation",
+      "bbox": {"x": 36, "y": 459, "width": 125, "height": 24},
+      "type": "heading",
+      "confidence": 0.99,
       "reading_order": 10,
       "font_properties": {
-        "estimated_size": 12,
+        "estimated_size": 13,
         "bold": false,
         "italic": false,
-        "alignment": "center"
+        "alignment": "left"
       },
-      "semantic_role": "table_data",
-      "parent_section": "table_1",
-      "relationships": []
+      "semantic_role": "header",
+      "parent_section": "body",
+      "relationships": ["follows:block_9"]
     },
     {
       "id": "block_11",
-      "text": "Total Amount :\nOne Hundred Fifty Dirhams Only",
-      "bbox": {"x": 100, "y": 1500, "width": 500, "height": 60},
-      "type": "total_amount",
-      "confidence": 0.97,
+      "text": "The Employee may be transferred by the Company to any other department, function, store or associate Company(s) in the UAE / GCC countries, at its discretion. The Company may award an \"up-lift\" allowance in case of differences in the costs of living between the transfer locations.",
+      "bbox": {"x": 54, "y": 491, "width": 635, "height": 34},
+      "type": "paragraph",
+      "confidence": 0.98,
       "reading_order": 11,
       "font_properties": {
         "estimated_size": 12,
@@ -186,26 +186,43 @@
         "italic": false,
         "alignment": "left"
       },
-      "semantic_role": "summary",
-      "parent_section": "footer",
-      "relationships": []
+      "semantic_role": "body",
+      "parent_section": "body",
+      "relationships": ["follows:block_10"]
     },
     {
       "id": "block_12",
-      "text": "Sub Total\n150.00\nDiscount\n7.14\nTotal VAT\n7.14\nGrand Total\n150.00",
-      "bbox": {"x": 2000, "y": 1500, "width": 480, "height": 120},
-      "type": "total_amount",
-      "confidence": 0.97,
+      "text": "10. Business Travels",
+      "bbox": {"x": 36, "y": 540, "width": 180, "height": 24},
+      "type": "heading",
+      "confidence": 0.99,
       "reading_order": 12,
+      "font_properties": {
+        "estimated_size": 13,
+        "bold": false,
+        "italic": false,
+        "alignment": "left"
+      },
+      "semantic_role": "header",
+      "parent_section": "body",
+      "relationships": ["follows:block_11"]
+    },
+    {
+      "id": "block_13",
+      "text": "The Employee will travel on Economy Class fare for all overseas travels related to business. The Company will reimburse or advance funds to the Employee for all reasonable travel, entertainment and miscellaneous expenses incurred in connection with the performance of his/her duties under this Agreement and in accordance with the Company's business travel policy. Business travels within UAE will be reimbursed based on mileage allowance per km basis as per your grade.",
+      "bbox": {"x": 54, "y": 572, "width": 635, "height": 55},
+      "type": "paragraph",
+      "confidence": 0.98,
+      "reading_order": 13,
       "font_properties": {
         "estimated_size": 12,
         "bold": false,
         "italic": false,
-        "alignment": "right"
+        "alignment": "left"
       },
-      "semantic_role": "summary",
-      "parent_section": "footer",
-      "relationships": []
+      "semantic_role": "body",
+      "parent_section": "body",
+      "relationships": ["follows:block_12"]
     }
   ]
 }
