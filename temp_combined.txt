@@ -1,0 +1,331 @@
+﻿VISION EXTRACTION DATA:
+{
+    "document_type": "installation_guide",
+    "document_confidence": 0.95,
+    "page_dimensions": {"width": 2480, "height": 3508},
+    "text_blocks": [
+      {
+        "id": "block_1",
+        "text": "HG323RGW Quick Installation Guide",
+        "bbox": {"x": 1520, "y": 150, "width": 600, "height": 50},
+        "type": "document_title",
+        "confidence": 0.95,
+        "reading_order": 1,
+        "font_properties": {
+          "estimated_size": 16,
+          "bold": true,
+          "italic": false,
+          "alignment": "right"
+        },
+        "semantic_role": "header",
+        "parent_section": "header",
+        "relationships": []
+      },
+      {
+        "id": "block_2",
+        "text": "RST\n1. Press RST button over 10 seconds, onu can restore factory defaults and reboot.\n2. Press RST button quickly, onu reboot.", 
+        "bbox": {"x": 80, "y": 230, "width": 700, "height": 80},
+        "type": "paragraph",
+        "confidence": 0.95,
+        "reading_order": 2,
+        "font_properties": {
+          "estimated_size": 12,
+          "bold": false,
+          "italic": false,
+          "alignment": "left"
+        },
+        "semantic_role": "body",
+        "parent_section": "body",
+        "relationships": []
+      },
+      {
+        "id": "block_3",
+        "text": "PWR\nConnect with power adapter. DC12V, 1A",
+        "bbox": {"x": 820, "y": 260, "width": 400, "height": 50},
+        "type": "paragraph",
+        "confidence": 0.95,
+        "reading_order": 3,
+        "font_properties": {
+          "estimated_size": 12,
+          "bold": false,
+          "italic": false,
+          "alignment": "left"
+        },
+        "semantic_role": "body",
+        "parent_section": "body",
+        "relationships": []
+      },
+      {
+        "id": "block_4",
+        "text": "Table 2 Interface/Button Panel",
+        "bbox": {"x": 890, "y": 300, "width": 400, "height": 50},
+        "type": "table_header",
+        "confidence": 0.95,
+        "reading_order": 4,
+        "font_properties": {
+          "estimated_size": 12,
+          "bold": true,
+          "italic": false,
+          "alignment": "center"
+        },
+        "semantic_role": "body",
+        "parent_section": "body",
+        "relationships": ["follows:block_3"]
+      },
+      {
+        "id": "block_5",
+        "text": "2. Packing List",
+        "bbox": {"x": 80, "y": 370, "width": 400, "height": 30},
+        "type": "heading",
+        "confidence": 0.95,
+        "reading_order": 5,
+        "font_properties": {
+          "estimated_size": 14,
+          "bold": true,
+          "italic": false,
+          "alignment": "left"
+        },
+        "semantic_role": "body",
+        "parent_section": "body",
+        "relationships": []
+      },
+      {
+        "id": "block_6",
+        "text": "Contents     Quantity\nHG323RGW     1 pcs\nPower adapter 1 pcs\nUser Manual   1 pcs",
+        "bbox": {"x": 120, "y": 410, "width": 800, "height": 100},
+        "type": "table_row",
+        "confidence": 0.95,
+        "reading_order": 6,
+        "font_properties": {
+          "estimated_size": 12,
+          "bold": false,
+          "italic": false,
+          "alignment": "left"
+        },
+        "semantic_role": "table_data",
+        "parent_section": "body",
+        "relationships": ["follows:block_5"]
+      },
+      {
+        "id": "block_7",
+        "text": "3. Certification",
+        "bbox": {"x": 80, "y": 530, "width": 400, "height": 30},
+        "type": "heading",
+        "confidence": 0.95,
+        "reading_order": 7,
+        "font_properties": {
+          "estimated_size": 14,
+          "bold": true,
+          "italic": false,
+          "alignment": "left"
+        },
+        "semantic_role": "body",
+        "parent_section": "body",
+        "relationships": []
+      },
+      {
+        "id": "block_8",
+        "text": "CERTIFICATION\nCHECKER PCA PASS",
+        "bbox": {"x": 110, "y": 570, "width": 400, "height": 120},
+        "type": "table_row",
+        "confidence": 0.95,
+        "reading_order": 8,
+        "font_properties": {
+          "estimated_size": 12,
+          "bold": false,
+          "italic": false,
+          "alignment": "left"
+        },
+        "semantic_role": "table_data",
+        "parent_section": "body",
+        "relationships": ["follows:block_7"]
+      },
+      {
+        "id": "block_9",
+        "text": "4. Hardware Installation",
+        "bbox": {"x": 80, "y": 720, "width": 400, "height": 30},
+        "type": "heading",
+        "confidence": 0.95,
+        "reading_order": 9,
+        "font_properties": {
+          "estimated_size": 14,
+          "bold": true,
+          "italic": false,
+          "alignment": "left"
+        },
+        "semantic_role": "body",
+        "parent_section": "body",
+        "relationships": []
+      },
+      {
+        "id": "block_10",
+        "text": "Installation Environment Requirements\nONU equipment must be installed in the interior, and to ensure the following conditions:\nâ€¢ Confirmation at the ONU installation at sufficient space to facilitate cooling machine.\nâ€¢ ONU suitable operating temperature of -5 Â°C-55 Â°C humidity 10% to 90%.\nâ€¢ Device workplace should avoid radio transmitters, radar stations, and high-frequency interference from power equipment.",      
+        "bbox": {"x": 100, "y": 760, "width": 1200, "height": 160},
+        "type": "paragraph",
+        "confidence": 0.95,
+        "reading_order": 10,
+        "font_properties": {
+          "estimated_size": 12,
+          "bold": false,
+          "italic": false,
+          "alignment": "left"
+        },
+        "semantic_role": "body",
+        "parent_section": "body",
+        "relationships": ["follows:block_9"]
+      },
+      {
+        "id": "block_11",
+        "text": "Equipment Installation\n1. Installed on the desktop\nPlace the machine on a clean bench, this installation is relatively simple,\nyou can observe the following operation:\nâ€¢ Ensure the smooth workbench.\nâ€¢ Give enough space around the device for heat dissipation.\nâ€¢ Do not place any object on the device",
+        "bbox": {"x": 100, "y": 940, "width": 1200, "height": 160},
+        "type": "paragraph",
+        "confidence": 0.95,
+        "reading_order": 11,
+        "font_properties": {
+          "estimated_size": 12,
+          "bold": false,
+          "italic": false,
+          "alignment": "left"
+        },
+        "semantic_role": "body",
+        "parent_section": "body",
+        "relationships": ["follows:block_10"]
+      },
+      {
+        "id": "block_12",
+        "text": "2. Mounted on the wall\nâ€¢ Observation ONU equipment chassis two cruciform recess, in accordance with the position of the groove, installed two screws in the wall.\nâ€¢ The original selected two mounting screws gently snap into recesses aligned.\nâ€¢ Slowly let go, so that the device under the support of the screw hanging on the wall.",
+        "bbox": {"x": 100, "y": 1120, "width": 1200, "height": 140},
+        "type": "paragraph",
+        "confidence": 0.95,
+        "reading_order": 12,
+        "font_properties": {
+          "estimated_size": 12,
+          "bold": false,
+          "italic": false,
+          "alignment": "left"
+        },
+        "semantic_role": "body",
+        "parent_section": "body",
+        "relationships": ["follows:block_11"]
+      },
+      {
+        "id": "block_13",
+        "text": "3. Connect fiber, network cable and power adapter to the corresponding interfaces, and turn on the power.",
+        "bbox": {"x": 100, "y": 1270, "width": 1200, "height": 30},
+        "type": "paragraph",
+        "confidence": 0.95,
+        "reading_order": 13,
+        "font_properties": {
+          "estimated_size": 12,
+          "bold": false,
+          "italic": false,
+          "alignment": "left"
+        },
+        "semantic_role": "body",
+        "parent_section": "body",
+        "relationships": ["follows:block_12"]
+      }
+    ]
+  }
+
+
+PROCESSING INSTRUCTIONS:
+You are an advanced document intelligence system. Analyze the provided vision-extracted text blocks to create comprehensive document understanding, detailed summaries, and extensive bullet points for full-text search capabilities.
+
+INPUT: JSON data from vision extraction containing semantic text blocks with coordinates and metadata
+
+TASKS:
+1. **Document Analysis**: Deep understanding of document purpose, structure, and key information
+2. **Content Reconstruction**: Rebuild complete document flow and context
+3. **Comprehensive Summarization**: Create detailed summaries with key insights
+4. **Extensive Bullet Points**: Generate searchable bullet points covering all document aspects
+5. **Entity Extraction**: Identify and catalog all important entities, dates, amounts, etc.
+6. **Relationship Mapping**: Map relationships between different document sections
+
+OUTPUT FORMAT:
+{
+  "document_analysis": {
+    "type": "extracted document type",
+    "purpose": "document primary purpose/intent",
+    "structure_analysis": "detailed structure breakdown",
+    "key_sections": ["list of main document sections"],
+    "complexity_score": 0.85,
+    "completeness_assessment": "assessment of extraction completeness"
+  },
+  
+  "executive_summary": {
+    "main_purpose": "primary document purpose in 1-2 sentences",
+    "key_parties": ["involved parties/entities"],
+    "critical_information": ["most important facts/figures"],
+    "action_items": ["if any actions are required"],
+    "time_sensitive_elements": ["dates, deadlines, etc."]
+  },
+  
+  "detailed_summary": {
+    "comprehensive_overview": "detailed 3-4 paragraph summary",
+    "section_summaries": [
+      {
+        "section_name": "header/body/footer/etc",
+        "content_summary": "detailed summary of this section",
+        "key_information": ["important points from this section"]
+      }
+    ]
+  },
+  
+  "extensive_bullet_points": {
+    "all_textual_content": [
+      "â€¢ Every significant text element as searchable bullet point",
+      "â€¢ Include all names, addresses, phone numbers, emails",
+      "â€¢ All monetary amounts with context",
+      "â€¢ All dates with their significance", 
+      "â€¢ All product/service descriptions",
+      "â€¢ All terms, conditions, and policies mentioned",
+      "â€¢ All instructions or procedures listed",
+      "â€¢ All technical specifications or details",
+      "â€¢ All legal or regulatory information"
+    ],
+    "entities_and_metadata": [
+      "â€¢ Person names: [extracted names with roles]",
+      "â€¢ Company/Organization names: [all mentioned entities]",
+      "â€¢ Addresses: [complete addresses with context]",
+      "â€¢ Contact information: [phones, emails, websites]",
+      "â€¢ Financial data: [amounts, currencies, payment terms]",
+      "â€¢ Dates and times: [all temporal information]",
+      "â€¢ Reference numbers: [invoice numbers, IDs, codes]",
+      "â€¢ Product/Service codes: [SKUs, model numbers, etc.]"
+    ]
+  },
+  
+  "search_optimization": {
+    "primary_keywords": ["main searchable terms"],
+    "secondary_keywords": ["supporting search terms"],
+    "semantic_tags": ["conceptual tags for semantic search"],
+    "full_text_index": "complete searchable text concatenation",
+    "search_categories": ["invoice_data", "contact_info", "financial", "dates", "products"]
+  },
+  
+  "quality_assessment": {
+    "extraction_confidence": 0.92,
+    "missing_information": ["any gaps or unclear areas"],
+    "data_completeness": "percentage of expected data extracted",
+    "recommendations": ["suggestions for better processing"]
+  }
+}
+
+BULLET POINT REQUIREMENTS:
+- Create 50-100+ comprehensive bullet points covering ALL document content
+- Each bullet point should be specific and searchable
+- Include contextual information (not just raw data)
+- Cover every piece of meaningful text from the document
+- Make bullet points granular enough for precise search
+- Include variations of terms for better searchability
+- Preserve numerical data with full context
+- Extract and bulletize all procedural or instructional content
+
+CRITICAL SUCCESS FACTORS:
+- Comprehensive coverage - miss nothing important
+- Search-optimized language and structure
+- Detailed enough for complete document reconstruction from bullet points
+- Preserve all quantitative data with context
+- Include both explicit and implicit information
+- Enable both keyword and semantic search capabilities

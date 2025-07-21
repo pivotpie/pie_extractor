@@ -8,12 +8,17 @@ import argparse
 import logging
 import os
 import sys
+import json
 from pathlib import Path
 from typing import Optional
 
 # Load environment variables from .env file
 from dotenv import load_dotenv
-load_dotenv()
+
+try:
+    load_dotenv()
+except UnicodeDecodeError:
+    print("Warning: Could not load .env file due to encoding issues. Using command line arguments.")
 
 # Add parent directory to path to allow importing from openrouter_manager
 sys.path.append(str(Path(__file__).parent.parent))
@@ -24,8 +29,11 @@ from openrouter_manager.client import OpenRouterClient
 print(f"Current directory: {os.getcwd()}")
 print(f"File exists: {os.path.exists('.env')}")
 print(f"Before load: {os.environ.get('OPENROUTER_API_KEY')}")
-load_dotenv()
-print(f"After load: {os.environ.get('OPENROUTER_API_KEY')}")
+try:
+    load_dotenv()
+    print(f"After load: {os.environ.get('OPENROUTER_API_KEY')}")
+except UnicodeDecodeError:
+    print("Warning: Could not load .env file due to encoding issues.")
 
 # Configure logging
 logging.basicConfig(
@@ -33,6 +41,83 @@ logging.basicConfig(
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
 )
 logger = logging.getLogger(__name__)
+
+def load_file_content(file_path: str) -> str:
+    """Load content from a file with proper error handling.
+    
+    Args:
+        file_path: Path to the file to load
+        
+    Returns:
+        Content of the file as string
+        
+    Raises:
+        FileNotFoundError: If file doesn't exist
+        Exception: For other file reading errors
+    """
+    try:
+        with open(file_path, 'r', encoding='utf-8') as f:
+            return f.read().strip()
+    except FileNotFoundError:
+        raise FileNotFoundError(f"File '{file_path}' not found.")
+    except Exception as e:
+        raise Exception(f"Error reading file '{file_path}': {e}")
+
+def process_file_parameter(param_value: str) -> str:
+    """Process parameter that might be a file reference or combined files.
+    
+    Supports:
+    - @file.txt - Load single file
+    - @file1.json+file2.txt - Load and combine multiple files  
+    - @vision_extract.json+prompt_text.txt - Specific for vision+prompt combination
+    
+    Args:
+        param_value: Parameter value to process
+        
+    Returns:
+        Processed content (either original value or file content)
+    """
+    if not param_value or not param_value.startswith('@'):
+        return param_value
+    
+    # Remove the @ symbol
+    file_spec = param_value[1:]
+    
+    # Handle multiple files separated by +
+    if '+' in file_spec:
+        file_paths = file_spec.split('+')
+        combined_content = []
+        
+        for i, file_path in enumerate(file_paths):
+            file_path = file_path.strip()
+            try:
+                content = load_file_content(file_path)
+                
+                # Add appropriate labels for common combinations
+                if file_path.endswith('.json') and any(f.endswith('.txt') for f in file_paths):
+                    combined_content.append(f"VISION EXTRACTION DATA:\n{content}")
+                elif file_path.endswith('.txt') and any(f.endswith('.json') for f in file_paths):
+                    combined_content.append(f"PROCESSING INSTRUCTIONS:\n{content}")
+                else:
+                    combined_content.append(f"FILE {i+1} ({file_path}):\n{content}")
+                    
+                print(f"✓ Loaded content from file: {file_path}")
+                
+            except Exception as e:
+                print(f"Error loading file '{file_path}': {e}")
+                raise
+        
+        return '\n\n'.join(combined_content)
+    
+    # Handle single file
+    else:
+        try:
+            content = load_file_content(file_spec)
+            print(f"✓ Loaded content from file: {file_spec}")
+            return content
+        except Exception as e:
+            print(f"Error: {e}")
+            raise
 
 def process_text_example(client: OpenRouterClient, prompt: str) -> None:
     """Example of processing text with automatic model selection.
@@ -42,7 +127,8 @@ def process_text_example(client: OpenRouterClient, prompt: str) -> None:
         prompt: Text to process
     """
     print("\n=== Processing Text ===")
-    print(f"Input: {prompt}")
+    print(f"Input length: {len(prompt)} characters")
+    print(f"Input preview: {prompt[:200]}{'...' if len(prompt) > 200 else ''}")
     
     try:
         print("DEBUG: Getting best model for reasoning...")
@@ -145,11 +231,21 @@ def main():
     # Load environment variables first
     load_dotenv(override=True)  # Force reload to ensure we have the latest
     
-    parser = argparse.ArgumentParser(description="OpenRouter dynamic model selection example")
+    parser = argparse.ArgumentParser(
+        description="OpenRouter dynamic model selection example",
+        epilog="""
+File Loading Examples:
+  --text @file.txt                        Load text from single file
+  --text @vision_extract.json+prompt_text.txt   Combine vision data and prompt
+  --prompt @prompt_instructions.txt       Load prompt from file
+  --text @data.json                       Load JSON data as text
+        """,
+        formatter_class=argparse.RawDescriptionHelpFormatter
+    )
     parser.add_argument(
         "--text",
         type=str,
-        help="Text to process (for text processing example)",
+        help="Text to process. Use @file.txt to load from file, or @file1+file2 to combine files",
         default="Explain the concept of quantum entanglement in simple terms."
     )
     parser.add_argument(
@@ -161,7 +257,7 @@ def main():
     parser.add_argument(
         "--prompt",
         type=str,
-        help="Custom prompt for image processing",
+        help="Custom prompt. Use @file.txt to load from file",
         default=None
     )
     parser.add_argument(
@@ -183,6 +279,20 @@ def main():
     )
     
     args = parser.parse_args()
+    
+    # Process file parameters for both --text and --prompt
+    try:
+        # Handle text file loading (supports single files and combinations)
+        if args.text and args.text.startswith('@'):
+            args.text = process_file_parameter(args.text)
+        
+        # Handle prompt file loading (existing functionality extended)
+        if args.prompt and args.prompt.startswith('@'):
+            args.prompt = process_file_parameter(args.prompt)
+            
+    except Exception as e:
+        print(f"Error processing file parameters: {e}")
+        return 1
     
     # Debug: Print environment and args
     logger.debug("Environment variables loaded: %s", 

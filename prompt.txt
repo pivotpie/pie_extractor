@@ -1,0 +1,61 @@
+Analyze this document image and extract text content organized as logical semantic units (paragraphs, headings, items, etc.) with precise geometric information.
+
+EXTRACTION RULES:
+1. **Semantic Grouping**: Group related words into complete logical units:
+   - Complete paragraphs (not individual words)
+   - Full headings and titles
+   - Document Tables as table_header and table_rows
+   - Complete invoice line items line by line with its quantity and price
+   - Other Sections (Invoice Number, Date, etc.) as single blocks
+   - Entire addresses as single blocks
+   - Full sentences and phrases
+   
+2. **Document Type Identification**: Automatically classify document type first
+
+3. **Bounding Box Calculation**: Calculate encompassing bounding box for each complete logical unit
+
+4. **Hierarchy Detection**: Identify text hierarchy and relationships
+
+For each semantic text unit, provide:
+1. Complete text content (full paragraphs/sentences/items)
+2. Encompassing bounding box coordinates (x, y, width, height) in pixels
+3. Semantic type classification 
+4. Confidence level (0.0-1.0)
+5. Font characteristics and formatting
+6. Reading order sequence
+7. Relationship to other elements
+
+Output format:
+{
+  "document_type": "invoice|receipt|contract|letter|form|report|other",
+  "document_confidence": 0.95,
+  "page_dimensions": {"width": 2480, "height": 3508},
+  "text_blocks": [
+    {
+      "id": "block_1",
+      "text": "complete semantic text unit",
+      "bbox": {"x": 100, "y": 50, "width": 400, "height": 60},
+      "type": "document_title|company_name|address|paragraph|table_header|table_row|invoice_item|total_amount|date|signature|footer",
+      "confidence": 0.95,
+      "reading_order": 1,
+      "font_properties": {
+        "estimated_size": 12,
+        "bold": true,
+        "italic": false,
+        "alignment": "left|center|right"
+      },
+      "semantic_role": "header|body|metadata|table_data|summary",
+      "parent_section": "header|body|footer|table_1|address_block",
+      "relationships": ["follows:block_0", "contains:sub_block_2"]
+    }
+  ]
+}
+
+CRITICAL REQUIREMENTS:
+- Extract COMPLETE semantic units, not fragmented words
+- Calculate accurate encompassing bounding boxes for grouped content
+- Identify document type with confidence score
+- Maintain logical reading flow and hierarchy
+- Group table cells into complete rows/items
+- Preserve formatting context (bold, size, alignment)
+- NO explanatory text - JSON response only

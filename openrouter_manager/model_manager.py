@@ -46,7 +46,7 @@ class ModelManager:
     # Preferred models by category (using free models where possible)
     PREFERRED_MODELS = {
         "vision": [
-            "meta-llama/llama-3.2-11b-vision-instruct:free",  # Primary vision model
+            "deepseek/deepseek-chat-v3-0324:free",  # Primary vision model
             "nousresearch/nous-hermes-2-vision-01:free",      # Fallback vision model
             "google/gemini-pro-vision:free"                   # Additional fallback
         ],
