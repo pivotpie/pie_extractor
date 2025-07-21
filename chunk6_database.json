@@ -1,0 +1,1234 @@
+{
+  "document_classification": {
+    "primary_type": "business",
+    "specific_type": "invoice",
+    "confidence": 0.98,
+    "supported_tabs": [
+      "tab1_content",
+      "tab2_summary",
+      "tab3_tables",
+      "semantic_search"
+    ],
+    "processing_timestamp": "2025-07-21T13:31:45.499863Z"
+  },
+  "tab1_content": {
+    "fields_and_values": {
+      "header_fields": {
+        "document_number": {
+          "value": "326430",
+          "bbox": {
+            "x": 1600,
+            "y": 460,
+            "width": 700,
+            "height": 200
+          },
+          "confidence": 0.97
+        },
+        "document_date": {
+          "value": "2025-04-18",
+          "bbox": {
+            "x": 1600,
+            "y": 460,
+            "width": 700,
+            "height": 200
+          },
+          "confidence": 0.97
+        },
+        "due_date": {
+          "value": "",
+          "bbox": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0
+          },
+          "confidence": 0.0
+        }
+      },
+      "vendor_info": {
+        "company_name": {
+          "value": "XYZ equipment and Stuff Co. LLC.",
+          "bbox": {
+            "x": 240,
+            "y": 120,
+            "width": 400,
+            "height": 60
+          },
+          "confidence": 0.98
+        },
+        "address": {
+          "value": "AL QUDS STREET, AJMAN, United Arab Emirates Tel : 067424208 A/C:1012309640301 Fax : 067428202 TRN : 104034579300003",
+          "bbox": {
+            "x": 1600,
+            "y": 120,
+            "width": 780,
+            "height": 120
+          },
+          "confidence": 0.95
+        },
+        "contact_info": {
+          "value": "Tel : 067424208 Fax : 067428202",
+          "bbox": {
+            "x": 1600,
+            "y": 120,
+            "width": 780,
+            "height": 120
+          },
+          "confidence": 0.85
+        }
+      },
+      "customer_info": {
+        "company_name": {
+          "value": "Hello world Co. LLC.",
+          "bbox": {
+            "x": 100,
+            "y": 480,
+            "width": 500,
+            "height": 120
+          },
+          "confidence": 0.96
+        },
+        "address": {
+          "value": "TRN # 12345678901112",
+          "bbox": {
+            "x": 100,
+            "y": 480,
+            "width": 500,
+            "height": 120
+          },
+          "confidence": 0.9
+        }
+      },
+      "financial_totals": {
+        "subtotal": {
+          "value": "150.00",
+          "bbox": {
+            "x": 2000,
+            "y": 1500,
+            "width": 480,
+            "height": 120
+          },
+          "confidence": 0.97
+        },
+        "tax_amount": {
+          "value": "7.14",
+          "bbox": {
+            "x": 2000,
+            "y": 1500,
+            "width": 480,
+            "height": 120
+          },
+          "confidence": 0.97
+        },
+        "total_amount": {
+          "value": "150.00",
+          "bbox": {
+            "x": 2000,
+            "y": 1500,
+            "width": 480,
+            "height": 120
+          },
+          "confidence": 0.97
+        }
+      },
+      "payment_terms": {
+        "payment_method": {
+          "value": "Cash",
+          "bbox": {
+            "x": 1600,
+            "y": 460,
+            "width": 700,
+            "height": 200
+          },
+          "confidence": 0.85
+        },
+        "currency": {
+          "value": "AED",
+          "bbox": {
+            "x": 100,
+            "y": 1500,
+            "width": 500,
+            "height": 60
+          },
+          "confidence": 0.9
+        }
+      }
+    },
+    "financial_dashboard": {},
+    "form_fields": {},
+    "legal_summary": {},
+    "general_summary": {}
+  },
+  "tab2_summary_insights": {
+    "executive_summary": {
+      "main_purpose": "This document is a tax invoice issued for the sale of goods from XYZ equipment and Stuff Co. LLC. to Hello world Co. LLC, providing evidence of a business transaction including payment and tax details.",
+      "key_parties": [
+        "XYZ equipment and Stuff Co. LLC.",
+        "Hello world Co. LLC."
+      ],
+      "critical_information": [
+        "Invoice Number: 326430",
+        "Date: 18/04/2025",
+        "Total Amount: 150.00 AED",
+        "Total VAT: 7.14 AED",
+        "Payment Method: Cash"
+      ],
+      "action_items": [
+        "Confirm receipt of goods and services by Hello world Co. LLC.",
+        "Verify proper payment of 150.00 AED via cash.",
+        "Ensure tax compliance and accounting reconciliation.",
+        "File invoice for record-keeping and audit purposes."
+      ],
+      "time_sensitive_elements": [
+        "Invoice Date: 18/04/2025"
+      ],
+      "document_status": "complete"
+    },
+    "detailed_analysis": {
+      "comprehensive_overview": "This tax invoice serves as formal documentation of a completed sale transaction between XYZ equipment and Stuff Co. LLC. and Hello world Co. LLC. The document is designed to comply with tax regulations, displaying value-added tax and both seller and buyer tax registration numbers (TRN), reinforcing regulatory compliance and transparency. Key elements include item descriptions, quantities, unit prices, VAT per line, and overall totals. Payment has been specified as cash, which clears liability at the point of sale and reduces collection risk.\n\nA thorough breakdown of the invoice shows all expected sections: a clear and prominent header with company details and document status (tax invoice), a body identifying the buyer and referencing relevant transaction metadata (invoice number, date, sales person), and a detailed line-item table with quantities, product descriptions, pricing, VAT, and subtotals. The totals section consolidates the financials for straightforward verification and bookkeeping.\n\nBusiness implications include clear accountability for goods delivered, legal recognition of the taxable supply, and facilitating both companies' input and output VAT claims for regulatory reporting. The transaction demonstrates operational efficiency, strong documentation practices, and adherence to UAE tax requirements. As the payment method is cash, there is immediate settlement, reducing short-term financial risk but necessitating proper cash handling controls.\n\nThe document's completeness, structured data, and high extraction confidence suggest minimal risk of dispute and reliable bookkeeping and compliance foundations for both parties. There are no visible outstanding amounts or ambiguous terms, which enhances operational clarity and audit readiness.",
+      "section_breakdown": [
+        {
+          "section_name": "Header",
+          "content_summary": "Contains seller's company name, address, contact details (phone, fax, account number), and the document title 'TAX INVOICE' in English and Arabic.",
+          "key_insights": [
+            "Clear identification of issuing party with location and TRN.",
+            "High document authenticity via bilingual tax invoice status."
+          ],
+          "data_quality": "Data is high quality, legible, and complete; company and tax information is present with high confidence."
+        },
+        {
+          "section_name": "Body",
+          "content_summary": "Lists recipient (buyer) details, including company name (Hello world Co. LLC.), TRN, invoice date, invoice number, payment method (cash), reference, and sales person.",
+          "key_insights": [
+            "Recipient is fully identified with TRN, supporting regulatory traceability.",
+            "Payment and reference metadata give transactional context and support downstream reconciliation."
+          ],
+          "data_quality": "Section is clear, with high confidence in information extraction; no critical data elements are missing."
+        },
+        {
+          "section_name": "Table",
+          "content_summary": "Details sold items across four rows: product description, quantity (Qty), unit of measure (Ea), unit price, VAT per line, and total amount.",
+          "key_insights": [
+            "Line items explicitly state VAT and net amounts per row, supporting VAT calculation and auditing.",
+            "Itemization supports inventory and procurement tracking."
+          ],
+          "data_quality": "Comprehensive and clear with no visible omissions; well-aligned data with strong extraction confidence."
+        },
+        {
+          "section_name": "Footer",
+          "content_summary": "Presents the consolidated totals, including sub total, discount, total VAT, and grand total. Also states amount in words ('One Hundred Fifty Dirhams Only').",
+          "key_insights": [
+            "Totals are internally consistent; amount in words helps prevent payment disputes.",
+            "Discount and VAT fields are accounted for, supporting transparent calculations."
+          ],
+          "data_quality": "Totals are clearly presented and reconcile with line items; overall data quality is robust."
+        }
+      ]
+    },
+    "business_insights": {
+      "compliance_status": "The invoice demonstrates strong compliance with UAE VAT regulations: tax invoice status is declared, TRNs for both parties are included, VAT amounts are itemized, and totals are transparent.",
+      "risk_indicators": [
+        "Manual cash handling can carry reconciliation and theft risks if proper controls are not enforced.",
+        "Minor ambiguity regarding the reason and allocation of the discount line (7.14 AED), though net totals reconcile."
+      ],
+      "opportunities": [
+        "Well-structured documentation facilitates speedy audits and regulatory reviews.",
+        "Prompt cash collection improves working capital and reduces bad debt risk.",
+        "Opportunity to digitize record-keeping or automate invoicing for future efficiency."
+      ],
+      "data_confidence": "Very high; critical data and calculations are legible, consistent, and complete with a 0.92 extraction confidence."
+    },
+    "processing_metadata": {
+      "extraction_confidence": 0.92,
+      "missing_information": [
+        "No explicit due date or payment terms beyond 'Cash' provided, though immediate payment is implied.",
+        "No explicit contact person for the buyer; 'Reference: Husain' may serve but lacks designation."
+      ],
+      "data_completeness_percentage": 95,
+      "recommendations": [
+        "Explicitly list payment terms in future invoices, even for cash.",
+        "Clarify roles of listed parties, such as buyer contact/reference.",
+        "Digitize records for enhanced search and auditability.",
+        "Include unique identifiers (e.g., barcode or QR code) for faster verification."
+      ]
+    }
+  },
+  "tab3_tables": {
+    "identified_tables": [
+      {
+        "table_id": "table_1",
+        "table_type": "invoice_items",
+        "table_title": "Invoice Line Items",
+        "bbox": {
+          "x": 100,
+          "y": 680,
+          "width": 2280,
+          "height": 240
+        },
+        "column_headers": [
+          "NO.",
+          "DESCRIPTION",
+          "Qty",
+          "UOM",
+          "U. Price",
+          "VAT",
+          "Amount"
+        ],
+        "rows": [
+          {
+            "NO.": "1",
+            "DESCRIPTION": "CARBON BOYU 500G AC500",
+            "Qty": "4",
+            "UOM": "Ea",
+            "U. Price": "10.00",
+            "VAT": "2.00",
+            "Amount": "40.00"
+          },
+          {
+            "NO.": "2",
+            "DESCRIPTION": "ACRYLIC ISOLATION BOX BAOJIAITE 15X15X15 CM H1515",
+            "Qty": "2",
+            "UOM": "Ea",
+            "U. Price": "25.00",
+            "VAT": "2.50",
+            "Amount": "50.00"
+          },
+          {
+            "NO.": "3",
+            "DESCRIPTION": "THERMOMETER LAGUNA",
+            "Qty": "1",
+            "UOM": "Ea",
+            "U. Price": "10.00",
+            "VAT": "1.00",
+            "Amount": "20.00"
+          },
+          {
+            "NO.": "4",
+            "DESCRIPTION": "NET BAG XYC6",
+            "Qty": "8",
+            "UOM": "Ea",
+            "U. Price": "5.00",
+            "VAT": "2.00",
+            "Amount": "40.00"
+          }
+        ],
+        "table_metadata": {
+          "total_rows": 4,
+          "total_columns": 7,
+          "has_totals_row": true,
+          "data_types": {
+            "NO.": "numeric",
+            "DESCRIPTION": "text",
+            "Qty": "numeric",
+            "UOM": "text",
+            "U. Price": "numeric",
+            "VAT": "numeric",
+            "Amount": "currency"
+          }
+        }
+      },
+      {
+        "table_id": "table_2",
+        "table_type": "other",
+        "table_title": "Invoice Summary",
+        "bbox": {
+          "x": 2000,
+          "y": 1500,
+          "width": 480,
+          "height": 120
+        },
+        "column_headers": [
+          "Label",
+          "Value"
+        ],
+        "rows": [
+          {
+            "Label": "Sub Total",
+            "Value": "150.00"
+          },
+          {
+            "Label": "Discount",
+            "Value": "7.14"
+          },
+          {
+            "Label": "Total VAT",
+            "Value": "7.14"
+          },
+          {
+            "Label": "Grand Total",
+            "Value": "150.00"
+          }
+        ],
+        "table_metadata": {
+          "total_rows": 4,
+          "total_columns": 2,
+          "has_totals_row": true,
+          "data_types": {
+            "Label": "text",
+            "Value": "currency"
+          }
+        }
+      }
+    ],
+    "table_relationships": [
+      {
+        "primary_table": "table_1",
+        "related_fields": [
+          "Sub Total",
+          "Grand Total",
+          "Total VAT",
+          "Discount"
+        ],
+        "calculation_validation": "The line item 'Amount' values sum to 150.00, which matches the 'Sub Total' and 'Grand Total' fields in the summary table. VAT and Discount fields each show 7.14, but since 'Sub Total' and 'Grand Total' are both 150.00, the actual discount and VAT appear to offset each other. Calculations are consistent."
+      }
+    ]
+  },
+  "semantic_search_data": {
+    "searchable_content": {
+      "full_text_index": "XYZ equipment and Stuff Co. LLC. AL QUDS STREET, AJMAN, United Arab Emirates Tel : 067424208 A/C:1012309640301 Fax : 067428202 TRN : 104034579300003 TAX INVOICE / فاتورة ضريبية To, Hello world Co. LLC. TRN # 12345678901112 Date 18/04/2025 INV. NO. 326430 Payment By Cash Reference Husain Sales Person Page Page 1 of 1 NO. DESCRIPTION Qty UOM U. Price VAT Amount 1 CARBON BOYU 500G AC500 4 Ea 10.00 2.00 40.00 2 ACRYLIC ISOLATION BOX BAOJIAITE 15X15X15 CM H1515 2 Ea 25.00 2.50 50.00 3 THERMOMETER LAGUNA 1 Ea 10.00 1.00 20.00 4 NET BAG XYC6 8 Ea 5.00 2.00 40.00 Total Amount : One Hundred Fifty Dirhams Only Sub Total 150.00 Discount 7.14 Total VAT 7.14 Grand Total 150.00",
+      "structured_entities": [
+        {
+          "entity_text": "XYZ equipment and Stuff Co. LLC.",
+          "entity_type": "organization",
+          "context": "Vendor information",
+          "bbox": {
+            "x": 240,
+            "y": 120,
+            "width": 400,
+            "height": 60
+          },
+          "confidence": 0.98,
+          "related_terms": [
+            "Company",
+            "Corp",
+            "LLC",
+            "XYZ",
+            "equipment",
+            "Stuff",
+            "vendor"
+          ]
+        },
+        {
+          "entity_text": "AL QUDS STREET, AJMAN, United Arab Emirates",
+          "entity_type": "address",
+          "context": "Vendor address",
+          "bbox": {
+            "x": 1600,
+            "y": 120,
+            "width": 780,
+            "height": 120
+          },
+          "confidence": 0.95,
+          "related_terms": [
+            "location",
+            "address",
+            "AJMAN",
+            "United Arab Emirates",
+            "AL QUDS STREET"
+          ]
+        },
+        {
+          "entity_text": "067424208",
+          "entity_type": "phone",
+          "context": "Vendor phone",
+          "bbox": {
+            "x": 1600,
+            "y": 140,
+            "width": 120,
+            "height": 30
+          },
+          "confidence": 0.98,
+          "related_terms": [
+            "telephone",
+            "tel",
+            "contact number"
+          ]
+        },
+        {
+          "entity_text": "1012309640301",
+          "entity_type": "account_number",
+          "context": "Vendor bank account",
+          "bbox": {
+            "x": 1720,
+            "y": 170,
+            "width": 190,
+            "height": 30
+          },
+          "confidence": 0.96,
+          "related_terms": [
+            "account",
+            "A/C",
+            "bank",
+            "bank account"
+          ]
+        },
+        {
+          "entity_text": "067428202",
+          "entity_type": "fax",
+          "context": "Vendor fax",
+          "bbox": {
+            "x": 1920,
+            "y": 200,
+            "width": 120,
+            "height": 30
+          },
+          "confidence": 0.96,
+          "related_terms": [
+            "fax",
+            "facsimile"
+          ]
+        },
+        {
+          "entity_text": "104034579300003",
+          "entity_type": "tax_registration_number",
+          "context": "Vendor TRN",
+          "bbox": {
+            "x": 2040,
+            "y": 230,
+            "width": 200,
+            "height": 30
+          },
+          "confidence": 0.97,
+          "related_terms": [
+            "TRN",
+            "tax number",
+            "tax registration"
+          ]
+        },
+        {
+          "entity_text": "TAX INVOICE",
+          "entity_type": "document_title",
+          "context": "Invoice title",
+          "bbox": {
+            "x": 900,
+            "y": 320,
+            "width": 600,
+            "height": 70
+          },
+          "confidence": 0.98,
+          "related_terms": [
+            "invoice",
+            "tax invoice",
+            "فاتورة ضريبية",
+            "document title"
+          ]
+        },
+        {
+          "entity_text": "فاتورة ضريبية",
+          "entity_type": "document_title_arabic",
+          "context": "Invoice title Arabic",
+          "bbox": {
+            "x": 900,
+            "y": 320,
+            "width": 600,
+            "height": 70
+          },
+          "confidence": 0.98,
+          "related_terms": [
+            "tax invoice",
+            "invoice",
+            "document title"
+          ]
+        },
+        {
+          "entity_text": "Hello world Co. LLC.",
+          "entity_type": "organization",
+          "context": "Customer company name",
+          "bbox": {
+            "x": 100,
+            "y": 500,
+            "width": 380,
+            "height": 40
+          },
+          "confidence": 0.97,
+          "related_terms": [
+            "customer",
+            "Company",
+            "Hello world",
+            "LLC"
+          ]
+        },
+        {
+          "entity_text": "12345678901112",
+          "entity_type": "tax_registration_number",
+          "context": "Customer TRN",
+          "bbox": {
+            "x": 100,
+            "y": 540,
+            "width": 300,
+            "height": 40
+          },
+          "confidence": 0.97,
+          "related_terms": [
+            "TRN",
+            "tax number",
+            "customer tax"
+          ]
+        },
+        {
+          "entity_text": "18/04/2025",
+          "entity_type": "date",
+          "context": "Document issue date",
+          "bbox": {
+            "x": 1600,
+            "y": 500,
+            "width": 140,
+            "height": 30
+          },
+          "confidence": 0.97,
+          "related_terms": [
+            "date",
+            "invoice date",
+            "issue date",
+            "18 Apr 2025",
+            "April 18th 2025"
+          ]
+        },
+        {
+          "entity_text": "326430",
+          "entity_type": "invoice_number",
+          "context": "Document invoice number",
+          "bbox": {
+            "x": 1600,
+            "y": 530,
+            "width": 140,
+            "height": 30
+          },
+          "confidence": 0.98,
+          "related_terms": [
+            "invoice number",
+            "INV NO",
+            "document number"
+          ]
+        },
+        {
+          "entity_text": "Cash",
+          "entity_type": "payment_method",
+          "context": "Payment type",
+          "bbox": {
+            "x": 1600,
+            "y": 560,
+            "width": 100,
+            "height": 30
+          },
+          "confidence": 0.97,
+          "related_terms": [
+            "payment method",
+            "cash",
+            "paid by cash"
+          ]
+        },
+        {
+          "entity_text": "Husain",
+          "entity_type": "reference_person",
+          "context": "Reference",
+          "bbox": {
+            "x": 1600,
+            "y": 590,
+            "width": 100,
+            "height": 30
+          },
+          "confidence": 0.97,
+          "related_terms": [
+            "reference",
+            "contact",
+            "named person"
+          ]
+        },
+        {
+          "entity_text": "NO.",
+          "entity_type": "table_column",
+          "context": "Line items table header",
+          "bbox": {
+            "x": 100,
+            "y": 680,
+            "width": 90,
+            "height": 40
+          },
+          "confidence": 0.99,
+          "related_terms": [
+            "no",
+            "number",
+            "item no",
+            "serial"
+          ]
+        },
+        {
+          "entity_text": "DESCRIPTION",
+          "entity_type": "table_column",
+          "context": "Line items table header",
+          "bbox": {
+            "x": 190,
+            "y": 680,
+            "width": 350,
+            "height": 40
+          },
+          "confidence": 0.99,
+          "related_terms": [
+            "description",
+            "item description",
+            "details"
+          ]
+        },
+        {
+          "entity_text": "Qty",
+          "entity_type": "table_column",
+          "context": "Line items table header",
+          "bbox": {
+            "x": 540,
+            "y": 680,
+            "width": 100,
+            "height": 40
+          },
+          "confidence": 0.99,
+          "related_terms": [
+            "quantity",
+            "qty",
+            "qnty",
+            "amount"
+          ]
+        },
+        {
+          "entity_text": "UOM",
+          "entity_type": "table_column",
+          "context": "Line items table header",
+          "bbox": {
+            "x": 640,
+            "y": 680,
+            "width": 110,
+            "height": 40
+          },
+          "confidence": 0.99,
+          "related_terms": [
+            "unit of measure",
+            "UOM",
+            "units"
+          ]
+        },
+        {
+          "entity_text": "U. Price",
+          "entity_type": "table_column",
+          "context": "Line items table header",
+          "bbox": {
+            "x": 750,
+            "y": 680,
+            "width": 190,
+            "height": 40
+          },
+          "confidence": 0.99,
+          "related_terms": [
+            "unit price",
+            "price",
+            "U. Price"
+          ]
+        },
+        {
+          "entity_text": "VAT",
+          "entity_type": "table_column",
+          "context": "Line items table header",
+          "bbox": {
+            "x": 940,
+            "y": 680,
+            "width": 120,
+            "height": 40
+          },
+          "confidence": 0.99,
+          "related_terms": [
+            "tax",
+            "vat",
+            "value added tax"
+          ]
+        },
+        {
+          "entity_text": "Amount",
+          "entity_type": "table_column",
+          "context": "Line items table header",
+          "bbox": {
+            "x": 1060,
+            "y": 680,
+            "width": 200,
+            "height": 40
+          },
+          "confidence": 0.99,
+          "related_terms": [
+            "amount",
+            "total",
+            "line total"
+          ]
+        },
+        {
+          "entity_text": "CARBON BOYU 500G AC500",
+          "entity_type": "product_description",
+          "context": "Line item 1 description",
+          "bbox": {
+            "x": 200,
+            "y": 730,
+            "width": 400,
+            "height": 40
+          },
+          "confidence": 0.98,
+          "related_terms": [
+            "product",
+            "material",
+            "CARBON",
+            "BOYU",
+            "AC500"
+          ]
+        },
+        {
+          "entity_text": "ACRYLIC ISOLATION BOX BAOJIAITE 15X15X15 CM H1515",
+          "entity_type": "product_description",
+          "context": "Line item 2 description",
+          "bbox": {
+            "x": 200,
+            "y": 780,
+            "width": 800,
+            "height": 40
+          },
+          "confidence": 0.98,
+          "related_terms": [
+            "product",
+            "acrylic",
+            "isolation box",
+            "BAOJIAITE",
+            "H1515"
+          ]
+        },
+        {
+          "entity_text": "THERMOMETER LAGUNA",
+          "entity_type": "product_description",
+          "context": "Line item 3 description",
+          "bbox": {
+            "x": 200,
+            "y": 830,
+            "width": 300,
+            "height": 40
+          },
+          "confidence": 0.98,
+          "related_terms": [
+            "product",
+            "thermometer",
+            "LAGUNA"
+          ]
+        },
+        {
+          "entity_text": "NET BAG XYC6",
+          "entity_type": "product_description",
+          "context": "Line item 4 description",
+          "bbox": {
+            "x": 200,
+            "y": 880,
+            "width": 200,
+            "height": 40
+          },
+          "confidence": 0.98,
+          "related_terms": [
+            "product",
+            "bag",
+            "NET BAG",
+            "XYC6"
+          ]
+        },
+        {
+          "entity_text": "150.00",
+          "entity_type": "currency",
+          "context": "Grand Total",
+          "bbox": {
+            "x": 2280,
+            "y": 1560,
+            "width": 200,
+            "height": 40
+          },
+          "confidence": 0.97,
+          "related_terms": [
+            "grand total",
+            "total",
+            "amount",
+            "150",
+            "one hundred fifty"
+          ]
+        },
+        {
+          "entity_text": "7.14",
+          "entity_type": "currency",
+          "context": "VAT amount",
+          "bbox": {
+            "x": 2280,
+            "y": 1530,
+            "width": 200,
+            "height": 40
+          },
+          "confidence": 0.96,
+          "related_terms": [
+            "tax",
+            "vat",
+            "7.14"
+          ]
+        },
+        {
+          "entity_text": "7.14",
+          "entity_type": "currency",
+          "context": "Discount amount",
+          "bbox": {
+            "x": 2280,
+            "y": 1510,
+            "width": 200,
+            "height": 40
+          },
+          "confidence": 0.96,
+          "related_terms": [
+            "discount",
+            "amount"
+          ]
+        },
+        {
+          "entity_text": "Page 1 of 1",
+          "entity_type": "pagination",
+          "context": "Page count",
+          "bbox": {
+            "x": 1600,
+            "y": 590,
+            "width": 200,
+            "height": 30
+          },
+          "confidence": 0.96,
+          "related_terms": [
+            "page",
+            "pagination"
+          ]
+        }
+      ]
+    },
+    "search_categories": {
+      "contact_information": {
+        "items": [
+          {
+            "text": "067424208",
+            "type": "phone",
+            "bbox": {
+              "x": 1600,
+              "y": 140,
+              "width": 120,
+              "height": 30
+            }
+          },
+          {
+            "text": "067428202",
+            "type": "fax",
+            "bbox": {
+              "x": 1920,
+              "y": 200,
+              "width": 120,
+              "height": 30
+            }
+          },
+          {
+            "text": "AL QUDS STREET, AJMAN, United Arab Emirates",
+            "type": "address",
+            "bbox": {
+              "x": 1600,
+              "y": 120,
+              "width": 780,
+              "height": 120
+            }
+          }
+        ]
+      },
+      "financial_data": {
+        "items": [
+          {
+            "text": "150.00",
+            "type": "grand_total",
+            "bbox": {
+              "x": 2280,
+              "y": 1560,
+              "width": 200,
+              "height": 40
+            }
+          },
+          {
+            "text": "7.14",
+            "type": "tax_amount",
+            "bbox": {
+              "x": 2280,
+              "y": 1530,
+              "width": 200,
+              "height": 40
+            }
+          },
+          {
+            "text": "7.14",
+            "type": "discount_amount",
+            "bbox": {
+              "x": 2280,
+              "y": 1510,
+              "width": 200,
+              "height": 40
+            }
+          },
+          {
+            "text": "1012309640301",
+            "type": "account_number",
+            "bbox": {
+              "x": 1720,
+              "y": 170,
+              "width": 190,
+              "height": 30
+            }
+          }
+        ]
+      },
+      "dates_and_deadlines": {
+        "items": [
+          {
+            "text": "18/04/2025",
+            "type": "document_date",
+            "bbox": {
+              "x": 1600,
+              "y": 500,
+              "width": 140,
+              "height": 30
+            }
+          }
+        ]
+      },
+      "identifiers_and_references": {
+        "items": [
+          {
+            "text": "326430",
+            "type": "invoice_number",
+            "bbox": {
+              "x": 1600,
+              "y": 530,
+              "width": 140,
+              "height": 30
+            }
+          },
+          {
+            "text": "104034579300003",
+            "type": "tax_registration_number",
+            "bbox": {
+              "x": 2040,
+              "y": 230,
+              "width": 200,
+              "height": 30
+            }
+          },
+          {
+            "text": "12345678901112",
+            "type": "tax_registration_number",
+            "bbox": {
+              "x": 100,
+              "y": 540,
+              "width": 300,
+              "height": 40
+            }
+          },
+          {
+            "text": "Husain",
+            "type": "reference_person",
+            "bbox": {
+              "x": 1600,
+              "y": 590,
+              "width": 100,
+              "height": 30
+            }
+          }
+        ]
+      },
+      "line_items": {
+        "items": [
+          {
+            "text": "CARBON BOYU 500G AC500",
+            "type": "product_description",
+            "bbox": {
+              "x": 200,
+              "y": 730,
+              "width": 400,
+              "height": 40
+            }
+          },
+          {
+            "text": "ACRYLIC ISOLATION BOX BAOJIAITE 15X15X15 CM H1515",
+            "type": "product_description",
+            "bbox": {
+              "x": 200,
+              "y": 780,
+              "width": 800,
+              "height": 40
+            }
+          },
+          {
+            "text": "THERMOMETER LAGUNA",
+            "type": "product_description",
+            "bbox": {
+              "x": 200,
+              "y": 830,
+              "width": 300,
+              "height": 40
+            }
+          },
+          {
+            "text": "NET BAG XYC6",
+            "type": "product_description",
+            "bbox": {
+              "x": 200,
+              "y": 880,
+              "width": 200,
+              "height": 40
+            }
+          }
+        ]
+      }
+    },
+    "keyword_mapping": {
+      "primary_keywords": [
+        "invoice",
+        "payment",
+        "total",
+        "amount",
+        "tax",
+        "grand total",
+        "date",
+        "company",
+        "customer",
+        "reference",
+        "cash",
+        "line item"
+      ],
+      "secondary_keywords": [
+        "services",
+        "VAT",
+        "discount",
+        "TRN",
+        "reference",
+        "UOM",
+        "Qty",
+        "description",
+        "page",
+        "number"
+      ],
+      "location_keywords": [
+        "header",
+        "footer",
+        "line_items",
+        "totals",
+        "customer_information",
+        "vendor_information"
+      ],
+      "coordinate_ranges": {
+        "header_region": {
+          "x_range": [
+            0,
+            2480
+          ],
+          "y_range": [
+            0,
+            400
+          ]
+        },
+        "body_region": {
+          "x_range": [
+            0,
+            2480
+          ],
+          "y_range": [
+            400,
+            1400
+          ]
+        },
+        "footer_region": {
+          "x_range": [
+            0,
+            2480
+          ],
+          "y_range": [
+            1400,
+            3508
+          ]
+        }
+      }
+    }
+  },
+  "database_ready_format": {
+    "document_metadata": {
+      "id": "doc_1753085175",
+      "type": "invoice",
+      "created_at": "2025-07-21T13:36:15.526118Z",
+      "processed_at": "2025-07-21T13:36:15.526156Z",
+      "status": "processed",
+      "confidence_score": 0.94
+    },
+    "extracted_fields": [
+      {
+        "field_name": "document_number",
+        "field_value": "326430",
+        "field_type": "string",
+        "confidence": 0.97,
+        "bbox": "1600,460,700,200"
+      },
+      {
+        "field_name": "total_amount",
+        "field_value": 150.0,
+        "field_type": "decimal",
+        "confidence": 0.97,
+        "bbox": "2000,1500,480,120"
+      },
+      {
+        "field_name": "document_date",
+        "field_value": "2025-04-18",
+        "field_type": "date",
+        "confidence": 0.97,
+        "bbox": "1600,460,700,200"
+      },
+      {
+        "field_name": "company_name",
+        "field_value": "XYZ equipment and Stuff Co. LLC.",
+        "field_type": "string",
+        "confidence": 0.98,
+        "bbox": "240,120,400,60"
+      }
+    ],
+    "search_index_data": [
+      {
+        "term": "invoice",
+        "document_id": "doc_1753085175",
+        "positions": [
+          {
+            "x": 900,
+            "y": 320,
+            "w": 600,
+            "h": 70
+          }
+        ],
+        "relevance": 0.9
+      },
+      {
+        "term": "total",
+        "document_id": "doc_1753085175",
+        "positions": [
+          {
+            "x": 2000,
+            "y": 1500,
+            "w": 480,
+            "h": 120
+          }
+        ],
+        "relevance": 0.8
+      },
+      {
+        "term": "company",
+        "document_id": "doc_1753085175",
+        "positions": [
+          {
+            "x": 240,
+            "y": 120,
+            "w": 400,
+            "h": 60
+          }
+        ],
+        "relevance": 0.7
+      }
+    ]
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "document_classification": {
+    "primary_type": "business",
+    "specific_type": "invoice",
+    "confidence": 0.98,
+    "supported_tabs": [
+      "tab1_content",
+      "tab2_summary",
+      "tab3_tables",
+      "semantic_search"
+    ],
+    "processing_timestamp": "2025-07-21T13:31:45.499863Z"
+  }
+}

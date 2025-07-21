@@ -10,6 +10,7 @@ Pillow>=10.0.0
 rich>=13.0.0
 scikit-learn>=1.3.0        # For TF-IDF in hybrid search
 numpy>=1.24.0              # For scientific computing
+json5>=0.12.0
 
 
 # Development Dependencies
