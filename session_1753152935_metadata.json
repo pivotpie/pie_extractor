@@ -1,0 +1,13 @@
+{
+  "session_id": "session_1753152935",
+  "doc_type": "invoice",
+  "vision_data_length": 6224,
+  "immediate_completed_at": "2025-07-22T08:26:52.307891Z",
+  "chunks_completed": [
+    "classification",
+    "structured_content",
+    "summary_insights",
+    "tables"
+  ],
+  "background_status": "pending"
+}

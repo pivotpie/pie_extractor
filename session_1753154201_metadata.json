@@ -1,0 +1,19 @@
+{
+  "session_id": "session_1753154201",
+  "doc_type": "installation_guide",
+  "vision_data_length": 8398,
+  "immediate_completed_at": "2025-07-22T08:48:40.167403Z",
+  "chunks_completed": [
+    "classification",
+    "structured_content",
+    "summary_insights",
+    "tables"
+  ],
+  "background_status": "completed",
+  "background_started_at": "2025-07-22T08:49:32.148928Z",
+  "background_completed_at": "2025-07-22T08:50:12.225218Z",
+  "background_chunks": [
+    "semantic_search",
+    "database_format"
+  ]
+}

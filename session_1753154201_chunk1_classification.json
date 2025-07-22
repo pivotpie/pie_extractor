@@ -1,0 +1,14 @@
+{
+  "document_classification": {
+    "primary_type": "general",
+    "specific_type": "installation_guide",
+    "confidence": 0.99,
+    "supported_tabs": [
+      "tab1_content",
+      "tab2_summary",
+      "tab3_tables",
+      "semantic_search"
+    ],
+    "processing_timestamp": "2025-07-22T08:47:17.806862Z"
+  }
+}

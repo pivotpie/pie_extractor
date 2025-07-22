@@ -1,0 +1,322 @@
+{
+  "semantic_search_data": {
+    "searchable_content": {
+      "full_text_index": "HG323RGW Quick Installation Guide. RST: 1. Press RST button over 10 seconds, onu can restore factory defaults and reboot. 2. Press RST button quickly, onu reboot. PWR: Connect with power adapter. DC12V, 1A. Table 2 Interface/Button Panel. 2. Packing List. Contents Quantity Contents Quantity HG323RGW 1 pcs Power adapter 1 pcs User Manual 1 pcs. 3. Certification. CERTIFICATION CERTIFICATION CHECKER PCA PASS. 4. Hardware Installation. Installation Environment Requirements: ONU equipment must be installed in the interior, and to ensure the following conditions: - Confirmation at the ONU installation at sufficient space to facilitate cooling machine. - ONU suitable operating temperature of -5°C-55°C humidity 10% to 90%. - Device workplace should avoid radio transmitters, radar stations, and high-frequency interference from power equipment. Equipment Installation: 1. installed on the desktop Place the machine on a clean bench, this installation is relatively simple, you can observe the following operation: - Ensure the smooth workbench. - Give enough space around the device for heat dissipation. - Do not place any object on the device. 2. mounted on the wall - Observation ONU equipment chassis two cruciform recess, in accordance with the position of the groove, installed two screws in the wall. - The original selected two mounting screws gently snap into recesses aligned. - Slowly let go, so that the device under the support of the screw hanging on the wall. 3. Connect fiber, network cable and power adapter to the corresponding interfaces, and turn on the power.",
+      "structured_entities": [
+        {
+          "entity_text": "HG323RGW",
+          "entity_type": "device_model",
+          "context": "ONU product model",
+          "related_terms": [
+            "ONU",
+            "terminal",
+            "device",
+            "HG323",
+            "installation"
+          ]
+        },
+        {
+          "entity_text": "Quick Installation Guide",
+          "entity_type": "document_type",
+          "context": "Document title",
+          "related_terms": [
+            "user guide",
+            "installation manual",
+            "setup guide",
+            "instructions"
+          ]
+        },
+        {
+          "entity_text": "RST button",
+          "entity_type": "hardware_control",
+          "context": "Factory reset and reboot control",
+          "related_terms": [
+            "reset",
+            "hardware button",
+            "reboot button",
+            "restore defaults"
+          ]
+        },
+        {
+          "entity_text": "PWR",
+          "entity_type": "power_connection",
+          "context": "Device power interface",
+          "related_terms": [
+            "power",
+            "power adapter",
+            "DC input",
+            "electric supply"
+          ]
+        },
+        {
+          "entity_text": "DC12V, 1A",
+          "entity_type": "power_specification",
+          "context": "Power adapter requirement",
+          "related_terms": [
+            "adapter",
+            "output voltage",
+            "ampere",
+            "input power"
+          ]
+        },
+        {
+          "entity_text": "Packing List",
+          "entity_type": "section_title",
+          "context": "Section listing included parts",
+          "related_terms": [
+            "contents",
+            "in the box",
+            "accessories",
+            "kit"
+          ]
+        },
+        {
+          "entity_text": "Power adapter",
+          "entity_type": "accessory",
+          "context": "Powering device",
+          "related_terms": [
+            "DC adapter",
+            "power supply",
+            "plug",
+            "charger"
+          ]
+        },
+        {
+          "entity_text": "User Manual",
+          "entity_type": "manual",
+          "context": "Documentation included",
+          "related_terms": [
+            "instructions",
+            "booklet",
+            "documentation",
+            "guide"
+          ]
+        },
+        {
+          "entity_text": "Certification",
+          "entity_type": "section_title",
+          "context": "Product certification information",
+          "related_terms": [
+            "compliance",
+            "certified",
+            "test results",
+            "approval"
+          ]
+        },
+        {
+          "entity_text": "CHECKER PCA PASS",
+          "entity_type": "certification_status",
+          "context": "Quality control pass",
+          "related_terms": [
+            "passed",
+            "approved",
+            "compliance check",
+            "test passed"
+          ]
+        },
+        {
+          "entity_text": "Hardware Installation",
+          "entity_type": "section_title",
+          "context": "Physical device setup",
+          "related_terms": [
+            "installation guide",
+            "setup",
+            "mounting",
+            "hardware setup"
+          ]
+        },
+        {
+          "entity_text": "Installation Environment Requirements",
+          "entity_type": "section_title",
+          "context": "Environmental setup criteria",
+          "related_terms": [
+            "prerequisites",
+            "location requirements",
+            "site conditions",
+            "environment"
+          ]
+        },
+        {
+          "entity_text": "ONU",
+          "entity_type": "device_type",
+          "context": "Optical Network Unit",
+          "related_terms": [
+            "HG323RGW",
+            "network terminal",
+            "fiber ONU",
+            "customer-premises equipment"
+          ]
+        },
+        {
+          "entity_text": "-5°C-55°C",
+          "entity_type": "operating_temperature",
+          "context": "Device operating temperature range",
+          "related_terms": [
+            "temperature",
+            "climate",
+            "operational",
+            "thermal"
+          ]
+        },
+        {
+          "entity_text": "humidity 10% to 90%",
+          "entity_type": "operating_humidity",
+          "context": "Permissible humidity range",
+          "related_terms": [
+            "humidity range",
+            "environmental",
+            "air moisture",
+            "climate"
+          ]
+        },
+        {
+          "entity_text": "radio transmitters",
+          "entity_type": "environmental_interference_source",
+          "context": "Interference sources to avoid",
+          "related_terms": [
+            "EMI",
+            "electromagnetic",
+            "interference",
+            "RF sources"
+          ]
+        },
+        {
+          "entity_text": "radar stations",
+          "entity_type": "environmental_interference_source",
+          "context": "Potential interfering equipment",
+          "related_terms": [
+            "radar",
+            "EM noise",
+            "signal interference",
+            "RF"
+          ]
+        },
+        {
+          "entity_text": "power equipment",
+          "entity_type": "environmental_interference_source",
+          "context": "Electrical interference risk",
+          "related_terms": [
+            "power supplies",
+            "transformers",
+            "high-voltage",
+            "electrical noise"
+          ]
+        },
+        {
+          "entity_text": "installed on the desktop",
+          "entity_type": "mounting_method",
+          "context": "Desktop installation procedure",
+          "related_terms": [
+            "table",
+            "placement",
+            "desktop mounting",
+            "countertop"
+          ]
+        },
+        {
+          "entity_text": "mounted on the wall",
+          "entity_type": "mounting_method",
+          "context": "Wall mounting procedure",
+          "related_terms": [
+            "wall installation",
+            "bracket",
+            "wall mount",
+            "vertical mounting"
+          ]
+        },
+        {
+          "entity_text": "two cruciform recess",
+          "entity_type": "mounting_feature",
+          "context": "Wall mount hardware detail",
+          "related_terms": [
+            "notch",
+            "screw recess",
+            "bracket slot",
+            "groove"
+          ]
+        },
+        {
+          "entity_text": "mounting screws",
+          "entity_type": "hardware_component",
+          "context": "Wall installation accessory",
+          "related_terms": [
+            "fastener",
+            "screw",
+            "hardware",
+            "wall anchor"
+          ]
+        },
+        {
+          "entity_text": "fiber cable",
+          "entity_type": "connection_type",
+          "context": "Connectivity required",
+          "related_terms": [
+            "fiber optic",
+            "cable",
+            "connection",
+            "network cable"
+          ]
+        },
+        {
+          "entity_text": "network cable",
+          "entity_type": "connection_type",
+          "context": "Connectivity required",
+          "related_terms": [
+            "Ethernet",
+            "RJ-45",
+            "LAN",
+            "wired network"
+          ]
+        },
+        {
+          "entity_text": "turn on the power",
+          "entity_type": "setup_step",
+          "context": "Device startup procedure",
+          "related_terms": [
+            "power on",
+            "start",
+            "activate",
+            "energize"
+          ]
+        }
+      ]
+    },
+    "search_categories": {
+      "contact_information": [],
+      "financial_data": [],
+      "dates_and_deadlines": [],
+      "identifiers_and_references": [
+        {
+          "text": "HG323RGW",
+          "type": "device_model"
+        }
+      ]
+    },
+    "keyword_mapping": {
+      "primary_keywords": [
+        "installation",
+        "ONU",
+        "hardware setup",
+        "device mounting",
+        "power adapter",
+        "reset",
+        "environment requirements",
+        "operating temperature",
+        "network cable",
+        "fiber cable"
+      ],
+      "secondary_keywords": [
+        "certification",
+        "CHK PASS",
+        "user manual",
+        "packing list",
+        "interface panel",
+        "PWR",
+        "RST button",
+        "wall mounting",
+        "desktop installation",
+        "humidity"
+      ]
+    }
+  }
+}

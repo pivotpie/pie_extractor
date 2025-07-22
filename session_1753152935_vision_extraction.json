@@ -1,0 +1,348 @@
+{
+  "document_type": "image",
+  "page_number": 1,
+  "text_blocks": [
+    {
+      "text": "INVOICE",
+      "bbox": {
+        "x": 110,
+        "y": 65,
+        "width": 240,
+        "height": 55
+      },
+      "confidence": 0.99,
+      "type": "heading"
+    },
+    {
+      "text": "Invoice No: 25789",
+      "bbox": {
+        "x": 120,
+        "y": 140,
+        "width": 200,
+        "height": 35
+      },
+      "confidence": 0.98,
+      "type": "paragraph"
+    },
+    {
+      "text": "Date: 2024-06-30",
+      "bbox": {
+        "x": 120,
+        "y": 185,
+        "width": 180,
+        "height": 30
+      },
+      "confidence": 0.97,
+      "type": "paragraph"
+    },
+    {
+      "text": "Bill To:",
+      "bbox": {
+        "x": 120,
+        "y": 230,
+        "width": 85,
+        "height": 35
+      },
+      "confidence": 0.98,
+      "type": "heading"
+    },
+    {
+      "text": "John Doe\n123 Main St\nSpringfield, IL 62704",
+      "bbox": {
+        "x": 120,
+        "y": 270,
+        "width": 270,
+        "height": 85
+      },
+      "confidence": 0.97,
+      "type": "paragraph"
+    },
+    {
+      "text": "Description",
+      "bbox": {
+        "x": 120,
+        "y": 390,
+        "width": 170,
+        "height": 35
+      },
+      "confidence": 0.98,
+      "type": "table_cell"
+    },
+    {
+      "text": "Qty",
+      "bbox": {
+        "x": 360,
+        "y": 390,
+        "width": 90,
+        "height": 35
+      },
+      "confidence": 0.98,
+      "type": "table_cell"
+    },
+    {
+      "text": "Unit Price",
+      "bbox": {
+        "x": 470,
+        "y": 390,
+        "width": 160,
+        "height": 35
+      },
+      "confidence": 0.98,
+      "type": "table_cell"
+    },
+    {
+      "text": "Total",
+      "bbox": {
+        "x": 650,
+        "y": 390,
+        "width": 110,
+        "height": 35
+      },
+      "confidence": 0.98,
+      "type": "table_cell"
+    },
+    {
+      "text": "Consulting Services",
+      "bbox": {
+        "x": 120,
+        "y": 445,
+        "width": 210,
+        "height": 35
+      },
+      "confidence": 0.97,
+      "type": "table_cell"
+    },
+    {
+      "text": "10",
+      "bbox": {
+        "x": 380,
+        "y": 445,
+        "width": 40,
+        "height": 35
+      },
+      "confidence": 0.96,
+      "type": "table_cell"
+    },
+    {
+      "text": "$120.00",
+      "bbox": {
+        "x": 480,
+        "y": 445,
+        "width": 110,
+        "height": 35
+      },
+      "confidence": 0.97,
+      "type": "table_cell"
+    },
+    {
+      "text": "$1,200.00",
+      "bbox": {
+        "x": 660,
+        "y": 445,
+        "width": 120,
+        "height": 35
+      },
+      "confidence": 0.97,
+      "type": "table_cell"
+    },
+    {
+      "text": "Web Design",
+      "bbox": {
+        "x": 120,
+        "y": 490,
+        "width": 170,
+        "height": 30
+      },
+      "confidence": 0.96,
+      "type": "table_cell"
+    },
+    {
+      "text": "1",
+      "bbox": {
+        "x": 380,
+        "y": 490,
+        "width": 25,
+        "height": 30
+      },
+      "confidence": 0.96,
+      "type": "table_cell"
+    },
+    {
+      "text": "$800.00",
+      "bbox": {
+        "x": 480,
+        "y": 490,
+        "width": 100,
+        "height": 30
+      },
+      "confidence": 0.96,
+      "type": "table_cell"
+    },
+    {
+      "text": "$800.00",
+      "bbox": {
+        "x": 660,
+        "y": 490,
+        "width": 105,
+        "height": 30
+      },
+      "confidence": 0.96,
+      "type": "table_cell"
+    },
+    {
+      "text": "Subtotal",
+      "bbox": {
+        "x": 480,
+        "y": 560,
+        "width": 110,
+        "height": 28
+      },
+      "confidence": 0.97,
+      "type": "table_cell"
+    },
+    {
+      "text": "$2,000.00",
+      "bbox": {
+        "x": 660,
+        "y": 560,
+        "width": 110,
+        "height": 28
+      },
+      "confidence": 0.97,
+      "type": "table_cell"
+    },
+    {
+      "text": "Tax (10%)",
+      "bbox": {
+        "x": 480,
+        "y": 600,
+        "width": 110,
+        "height": 28
+      },
+      "confidence": 0.97,
+      "type": "table_cell"
+    },
+    {
+      "text": "$200.00",
+      "bbox": {
+        "x": 660,
+        "y": 600,
+        "width": 100,
+        "height": 28
+      },
+      "confidence": 0.97,
+      "type": "table_cell"
+    },
+    {
+      "text": "Total Due",
+      "bbox": {
+        "x": 480,
+        "y": 640,
+        "width": 110,
+        "height": 32
+      },
+      "confidence": 0.98,
+      "type": "table_cell"
+    },
+    {
+      "text": "$2,200.00",
+      "bbox": {
+        "x": 660,
+        "y": 640,
+        "width": 120,
+        "height": 32
+      },
+      "confidence": 0.98,
+      "type": "table_cell"
+    },
+    {
+      "text": "Payment is due within 30 days.",
+      "bbox": {
+        "x": 120,
+        "y": 710,
+        "width": 360,
+        "height": 40
+      },
+      "confidence": 0.97,
+      "type": "paragraph"
+    }
+  ],
+  "tables": [
+    {
+      "bbox": {
+        "x": 110,
+        "y": 390,
+        "width": 670,
+        "height": 285
+      },
+      "rows": [
+        {
+          "cells": [
+            "Description",
+            "Qty",
+            "Unit Price",
+            "Total"
+          ]
+        },
+        {
+          "cells": [
+            "Consulting Services",
+            "10",
+            "$120.00",
+            "$1,200.00"
+          ]
+        },
+        {
+          "cells": [
+            "Web Design",
+            "1",
+            "$800.00",
+            "$800.00"
+          ]
+        },
+        {
+          "cells": [
+            "Subtotal",
+            "",
+            "",
+            "$2,000.00"
+          ]
+        },
+        {
+          "cells": [
+            "Tax (10%)",
+            "",
+            "",
+            "$200.00"
+          ]
+        },
+        {
+          "cells": [
+            "Total Due",
+            "",
+            "",
+            "$2,200.00"
+          ]
+        }
+      ]
+    }
+  ],
+  "structure": {
+    "headings": [
+      "INVOICE",
+      "Bill To:"
+    ],
+    "paragraphs": [
+      "Invoice No: 25789",
+      "Date: 2024-06-30",
+      "John Doe\n123 Main St\nSpringfield, IL 62704",
+      "Payment is due within 30 days."
+    ],
+    "lists": [],
+    "metadata": {
+      "page_layout": "single_column",
+      "orientation": "portrait"
+    }
+  },
+  "confidence": 0.97
+}

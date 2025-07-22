@@ -1,0 +1,1238 @@
+{
+  "session_id": "session_1753155008",
+  "background_result": {
+    "semantic_search_data": {
+      "searchable_content": {
+        "full_text_index": "INVOICE ROYAL AQUARIA AQUARIUM & DISPLAY CASES TRADING L.L.C Unique Adventure Business Center, PR-1005, Port Saeed, Dubai, United Arab Emirates. Customer Name : Mr Mahamoud Ahmed Ali Address Line 1 : Flat 310, Fox Hill 8 Emirate : United Arab Emirates Mobile No : +971-0553793792 Email Id : mahmoud@mail.com Invoice # : ACC-SINV-2025-00064 Date : 01-04-2025 Payment Due Date : 01-04-2025 Grand Total : د.إ 7,688.80 In Words : AED Seven Thousand, Six Hundred And Eighty Eight and Eighty Fils only. No Description Qty Rate Discount (%) Discount Amount Amount 1 Aquarium Maintenance Visit 8.0 د.إ 750.00 0.0% 0.00 د.إ د.إ 6,000.00 2 AF Power Elixir 2000ml 1.0 د.إ 262.50 0.0% 0.00 د.إ 262.50 د.إ 3 Ocean Nutrition Formula One Marine Pellets 100g Small 1.0 د.إ 50.50 0.0% 0.00 د.إ 50.50 د.إ 4 Ocean Nutrition Formula Two Marine Pellets 100g Medium 1.0 د.إ 58.80 0.0% 0.00 د.إ 58.80 د.إ 5 CORAL PRO SALT 25 KG(750 L) COMMERCIAL SACK 2.0 د.إ 329.00 0.0% 0.00 د.إ 658.00 د.إ 6 SeaChem Iodine 250ml 1.0 د.إ 86.00 0.0% 0.00 د.إ 86.00 د.إ 7 KH/ALKALINITY FOUNDATION B - 1L 1.0 د.إ 115.00 0.0% 0.00 د.إ 115.00 د.إ 8 SeaChem Reef Glue 4.0 د.إ 17.00 0.0% 0.00 د.إ 68.00 د.إ 9 25 Meter Hose 1.0 د.إ 150.00 0.0% 0.00 د.إ 150.00 د.إ 10 ICP Water Test 1.0 د.إ 240.00 0.0% 0.00 د.إ 240.00 د.إ Sales Person Signature Customer Signature Total: 7,688.80 د.إ Additional Discount %: 0 Additional Discount Amount: 0.00 د.إ Gross Total: 7,688.80 د.إ Bank Details Account Title : ROYAL AQUARIA AQUARIUM AND DISPLAY CASES TRADING L.L.C IBAN : AE980030014015857920003 Account Number : 14015857920003 BIC / SWIFT : ADCBAEAAAXX Bank : ABU DHABI COMMERCIAL BANK Dubai - U.A.E Disclaimer: Royal Aquaria and its staff are not to be held responsible nor shall we be held liable for loss of property, injury or death arising from faulty equipment or for the equipment itself. This includes but is not limited to; the aquarium, aquarium stand, lighting fixtures, pumps, heater, filter, etc. Water and electricity are a deadly mix and it is the sole responsibility of the aquarium owner to provide adequate protection for children, and other persons or pets, including themselves from the danger of electrocution. It is recommended that aquarium owners have licensed electricians install a GFI interrupter to help this regard. Many aquarium additives are toxic and should be kept away from children and pets. In no way will Royal Aquaria or its staff be held responsible be it otherwise written or implied for harm becoming another resulting from circumstances outside of our control. Royal Aquaria and staff will also not be held responsible for any Livestock deaths due to factors beyond our control and also resulting from the incompatibility between certain species or tank mates. Phone No : +971 50 143 0740, Email : info@royalaquaria.com, Website : www.royalaquaria.com",
+        "structured_entities": [
+          {
+            "entity_text": "ROYAL AQUARIA AQUARIUM & DISPLAY CASES TRADING L.L.C",
+            "entity_type": "organization",
+            "context": "Vendor information; Seller company",
+            "related_terms": [
+              "Royal Aquaria",
+              "Aquarium trading",
+              "Display cases",
+              "L.L.C",
+              "company",
+              "seller",
+              "supplier"
+            ]
+          },
+          {
+            "entity_text": "Unique Adventure Business Center, PR-1005, Port Saeed, Dubai, United Arab Emirates.",
+            "entity_type": "address",
+            "context": "Vendor company address",
+            "related_terms": [
+              "company address",
+              "seller address",
+              "business location",
+              "Dubai",
+              "UAE",
+              "United Arab Emirates"
+            ]
+          },
+          {
+            "entity_text": "Mr Mahamoud Ahmed Ali",
+            "entity_type": "person",
+            "context": "Customer name; invoice recipient",
+            "related_terms": [
+              "customer",
+              "client",
+              "recipient",
+              "buyer",
+              "Mr Mahamoud",
+              "contact person"
+            ]
+          },
+          {
+            "entity_text": "Flat 310, Fox Hill 8",
+            "entity_type": "address",
+            "context": "Customer address line 1",
+            "related_terms": [
+              "customer address",
+              "recipient address",
+              "delivery location",
+              "buyer address"
+            ]
+          },
+          {
+            "entity_text": "United Arab Emirates",
+            "entity_type": "country",
+            "context": "Vendor and customer country; invoice location",
+            "related_terms": [
+              "UAE",
+              "Emirate",
+              "national country",
+              "location"
+            ]
+          },
+          {
+            "entity_text": "+971-0553793792",
+            "entity_type": "phone_number",
+            "context": "Customer phone number",
+            "related_terms": [
+              "customer contact",
+              "mobile",
+              "recipient phone",
+              "buyer phone"
+            ]
+          },
+          {
+            "entity_text": "mahmoud@mail.com",
+            "entity_type": "email",
+            "context": "Customer email address",
+            "related_terms": [
+              "customer contact",
+              "email address",
+              "recipient email"
+            ]
+          },
+          {
+            "entity_text": "ACC-SINV-2025-00064",
+            "entity_type": "invoice_number",
+            "context": "Invoice identifier",
+            "related_terms": [
+              "invoice ID",
+              "document number",
+              "invoice reference",
+              "ACC-SINV",
+              "bill number"
+            ]
+          },
+          {
+            "entity_text": "01-04-2025",
+            "entity_type": "date",
+            "context": "Invoice issue date and payment due date",
+            "related_terms": [
+              "invoice date",
+              "issue date",
+              "document date",
+              "due date",
+              "April 1 2025"
+            ]
+          },
+          {
+            "entity_text": "د.إ 7,688.80",
+            "entity_type": "currency",
+            "context": "Grand Total; total amount due; gross and net total",
+            "related_terms": [
+              "total",
+              "amount due",
+              "grand total",
+              "net amount",
+              "gross total",
+              "AED 7688.80"
+            ]
+          },
+          {
+            "entity_text": "AED Seven Thousand, Six Hundred And Eighty Eight and Eighty Fils only",
+            "entity_type": "amount_in_words",
+            "context": "Total amount in words",
+            "related_terms": [
+              "amount in text",
+              "in words",
+              "written total"
+            ]
+          },
+          {
+            "entity_text": "Aquarium Maintenance Visit",
+            "entity_type": "service",
+            "context": "Invoice item description",
+            "related_terms": [
+              "maintenance",
+              "aquarium service",
+              "service visit",
+              "labor",
+              "item 1"
+            ]
+          },
+          {
+            "entity_text": "8.0",
+            "entity_type": "quantity",
+            "context": "Service quantity for maintenance visit",
+            "related_terms": [
+              "qty",
+              "number of visits",
+              "amount",
+              "item quantity"
+            ]
+          },
+          {
+            "entity_text": "د.إ 750.00",
+            "entity_type": "currency",
+            "context": "Rate per quantity for maintenance service",
+            "related_terms": [
+              "unit price",
+              "rate",
+              "price per",
+              "service rate"
+            ]
+          },
+          {
+            "entity_text": "AF Power Elixir 2000ml",
+            "entity_type": "product",
+            "context": "Invoice item; chemical product line",
+            "related_terms": [
+              "item 2",
+              "Elixir",
+              "Power Elixir",
+              "aquarium additive"
+            ]
+          },
+          {
+            "entity_text": "Ocean Nutrition Formula One Marine Pellets 100g Small",
+            "entity_type": "product",
+            "context": "Invoice item; fish food",
+            "related_terms": [
+              "item 3",
+              "marine pellets",
+              "fish food"
+            ]
+          },
+          {
+            "entity_text": "Ocean Nutrition Formula Two Marine Pellets 100g Medium",
+            "entity_type": "product",
+            "context": "Invoice item; fish food",
+            "related_terms": [
+              "item 4",
+              "marine pellets",
+              "fish food"
+            ]
+          },
+          {
+            "entity_text": "CORAL PRO SALT 25 KG(750 L) COMMERCIAL SACK",
+            "entity_type": "product",
+            "context": "Invoice item; aquarium salt pack",
+            "related_terms": [
+              "item 5",
+              "Coral Pro",
+              "commercial salt",
+              "sea salt"
+            ]
+          },
+          {
+            "entity_text": "SeaChem Iodine 250ml",
+            "entity_type": "product",
+            "context": "Invoice item; aquarium supplement",
+            "related_terms": [
+              "item 6",
+              "Iodine",
+              "SeaChem",
+              "supplement"
+            ]
+          },
+          {
+            "entity_text": "KH/ALKALINITY FOUNDATION B - 1L",
+            "entity_type": "product",
+            "context": "Invoice item; alkalinity chemical",
+            "related_terms": [
+              "item 7",
+              "alkalinity",
+              "foundation B",
+              "KH additive"
+            ]
+          },
+          {
+            "entity_text": "SeaChem Reef Glue",
+            "entity_type": "product",
+            "context": "Invoice item; adhesive",
+            "related_terms": [
+              "item 8",
+              "reef glue",
+              "SeaChem glue",
+              "adhesive"
+            ]
+          },
+          {
+            "entity_text": "25 Meter Hose",
+            "entity_type": "product",
+            "context": "Invoice item; equipment",
+            "related_terms": [
+              "item 9",
+              "hose",
+              "aquarium hose",
+              "25m hose"
+            ]
+          },
+          {
+            "entity_text": "ICP Water Test",
+            "entity_type": "product",
+            "context": "Invoice item; laboratory test",
+            "related_terms": [
+              "item 10",
+              "test",
+              "water analysis",
+              "ICP test"
+            ]
+          },
+          {
+            "entity_text": "0.0%",
+            "entity_type": "discount_percentage",
+            "context": "Individual item discount percent",
+            "related_terms": [
+              "discount",
+              "percentage off",
+              "no discount"
+            ]
+          },
+          {
+            "entity_text": "0.00 د.إ",
+            "entity_type": "currency",
+            "context": "Discount amount per item and additional discount listed",
+            "related_terms": [
+              "discount amount",
+              "amount off",
+              "deduction"
+            ]
+          },
+          {
+            "entity_text": "Bank Details",
+            "entity_type": "label",
+            "context": "Remittance; payment instructions section",
+            "related_terms": [
+              "bank info",
+              "payment details",
+              "account information",
+              "wire instructions"
+            ]
+          },
+          {
+            "entity_text": "ABU DHABI COMMERCIAL BANK",
+            "entity_type": "organization",
+            "context": "Payee bank name",
+            "related_terms": [
+              "bank",
+              "ADC",
+              "bank name",
+              "financial institution"
+            ]
+          },
+          {
+            "entity_text": "AE980030014015857920003",
+            "entity_type": "iban",
+            "context": "Vendor IBAN",
+            "related_terms": [
+              "IBAN",
+              "bank IBAN",
+              "account number",
+              "international bank number"
+            ]
+          },
+          {
+            "entity_text": "14015857920003",
+            "entity_type": "bank_account",
+            "context": "Vendor bank account number",
+            "related_terms": [
+              "account number",
+              "bank details",
+              "payment account"
+            ]
+          },
+          {
+            "entity_text": "ADCBAEAAAXX",
+            "entity_type": "swift_bic",
+            "context": "Vendor bank SWIFT/BIC code",
+            "related_terms": [
+              "SWIFT",
+              "BIC",
+              "bank code",
+              "international transfer"
+            ]
+          },
+          {
+            "entity_text": "info@royalaquaria.com",
+            "entity_type": "email",
+            "context": "Vendor email contact",
+            "related_terms": [
+              "seller email",
+              "company contact",
+              "info email"
+            ]
+          },
+          {
+            "entity_text": "+971 50 143 0740",
+            "entity_type": "phone_number",
+            "context": "Vendor phone contact",
+            "related_terms": [
+              "phone",
+              "company phone",
+              "contact number",
+              "business phone"
+            ]
+          },
+          {
+            "entity_text": "www.royalaquaria.com",
+            "entity_type": "website",
+            "context": "Vendor website",
+            "related_terms": [
+              "website",
+              "company site",
+              "web address",
+              "home page"
+            ]
+          },
+          {
+            "entity_text": "Customer Signature",
+            "entity_type": "signature_field",
+            "context": "Signature section for customer",
+            "related_terms": [
+              "client signature",
+              "buyer sign",
+              "recipient signature"
+            ]
+          },
+          {
+            "entity_text": "Sales Person Signature",
+            "entity_type": "signature_field",
+            "context": "Signature section for sales person",
+            "related_terms": [
+              "sales representative",
+              "agent signature",
+              "employee sign"
+            ]
+          }
+        ]
+      },
+      "search_categories": {
+        "contact_information": [
+          {
+            "text": "info@royalaquaria.com",
+            "type": "email"
+          },
+          {
+            "text": "mahmoud@mail.com",
+            "type": "email"
+          },
+          {
+            "text": "+971 50 143 0740",
+            "type": "phone"
+          },
+          {
+            "text": "+971-0553793792",
+            "type": "phone"
+          },
+          {
+            "text": "www.royalaquaria.com",
+            "type": "website"
+          }
+        ],
+        "financial_data": [
+          {
+            "text": "د.إ 7,688.80",
+            "type": "total_amount"
+          },
+          {
+            "text": "د.إ 7,688.80",
+            "type": "gross_total"
+          },
+          {
+            "text": "0.00 د.إ",
+            "type": "total_discount"
+          },
+          {
+            "text": "0.00 د.إ",
+            "type": "item_discount"
+          },
+          {
+            "text": "د.إ 6,000.00",
+            "type": "line_total"
+          },
+          {
+            "text": "د.إ 262.50",
+            "type": "line_total"
+          },
+          {
+            "text": "د.إ 50.50",
+            "type": "line_total"
+          },
+          {
+            "text": "د.إ 58.80",
+            "type": "line_total"
+          },
+          {
+            "text": "د.إ 658.00",
+            "type": "line_total"
+          },
+          {
+            "text": "د.إ 86.00",
+            "type": "line_total"
+          },
+          {
+            "text": "د.إ 115.00",
+            "type": "line_total"
+          },
+          {
+            "text": "د.إ 68.00",
+            "type": "line_total"
+          },
+          {
+            "text": "د.إ 150.00",
+            "type": "line_total"
+          },
+          {
+            "text": "د.إ 240.00",
+            "type": "line_total"
+          }
+        ],
+        "dates_and_deadlines": [
+          {
+            "text": "01-04-2025",
+            "type": "document_date"
+          },
+          {
+            "text": "01-04-2025",
+            "type": "due_date"
+          }
+        ],
+        "identifiers_and_references": [
+          {
+            "text": "ACC-SINV-2025-00064",
+            "type": "invoice_number"
+          },
+          {
+            "text": "AE980030014015857920003",
+            "type": "iban"
+          },
+          {
+            "text": "14015857920003",
+            "type": "bank_account"
+          },
+          {
+            "text": "ADCBAEAAAXX",
+            "type": "swift_bic"
+          }
+        ]
+      },
+      "keyword_mapping": {
+        "primary_keywords": [
+          "invoice",
+          "total",
+          "amount",
+          "payment",
+          "customer",
+          "vendor",
+          "bank",
+          "account",
+          "IBAN",
+          "SWIFT",
+          "invoice number",
+          "issue date",
+          "due date",
+          "signature",
+          "address",
+          "product",
+          "service",
+          "quantity",
+          "discount",
+          "maintenance",
+          "grand total"
+        ],
+        "secondary_keywords": [
+          "gross",
+          "net",
+          "item",
+          "line total",
+          "rate",
+          "unit price",
+          "contact",
+          "website",
+          "email",
+          "phone",
+          "sales",
+          "description",
+          "currency",
+          "words",
+          "remittance",
+          "delivery",
+          "order",
+          "percent",
+          "test",
+          "supplement"
+        ]
+      }
+    },
+    "database_ready_format": {
+      "document_metadata": {
+        "id": "doc_session_1753155008_1753155513",
+        "session_id": "session_1753155008",
+        "type": "invoice",
+        "created_at": "2025-07-22T09:08:33.624420Z",
+        "processed_at": "2025-07-22T09:08:33.624435Z",
+        "status": "processed",
+        "confidence_score": 0.94
+      },
+      "extracted_fields": [],
+      "search_index_data": [
+        {
+          "term": "ROYAL AQUARIA AQUARIUM & DISPLAY CASES TRADING L.L.C",
+          "document_id": "doc_session_1753155008_1753155513",
+          "entity_type": "organization",
+          "context": "Vendor information; Seller company",
+          "relevance": 0.9
+        },
+        {
+          "term": "Unique Adventure Business Center, PR-1005, Port Saeed, Dubai, United Arab Emirates.",
+          "document_id": "doc_session_1753155008_1753155513",
+          "entity_type": "address",
+          "context": "Vendor company address",
+          "relevance": 0.9
+        },
+        {
+          "term": "Mr Mahamoud Ahmed Ali",
+          "document_id": "doc_session_1753155008_1753155513",
+          "entity_type": "person",
+          "context": "Customer name; invoice recipient",
+          "relevance": 0.9
+        },
+        {
+          "term": "Flat 310, Fox Hill 8",
+          "document_id": "doc_session_1753155008_1753155513",
+          "entity_type": "address",
+          "context": "Customer address line 1",
+          "relevance": 0.9
+        },
+        {
+          "term": "United Arab Emirates",
+          "document_id": "doc_session_1753155008_1753155513",
+          "entity_type": "country",
+          "context": "Vendor and customer country; invoice location",
+          "relevance": 0.9
+        },
+        {
+          "term": "+971-0553793792",
+          "document_id": "doc_session_1753155008_1753155513",
+          "entity_type": "phone_number",
+          "context": "Customer phone number",
+          "relevance": 0.9
+        },
+        {
+          "term": "mahmoud@mail.com",
+          "document_id": "doc_session_1753155008_1753155513",
+          "entity_type": "email",
+          "context": "Customer email address",
+          "relevance": 0.9
+        },
+        {
+          "term": "ACC-SINV-2025-00064",
+          "document_id": "doc_session_1753155008_1753155513",
+          "entity_type": "invoice_number",
+          "context": "Invoice identifier",
+          "relevance": 0.9
+        },
+        {
+          "term": "01-04-2025",
+          "document_id": "doc_session_1753155008_1753155513",
+          "entity_type": "date",
+          "context": "Invoice issue date and payment due date",
+          "relevance": 0.9
+        },
+        {
+          "term": "د.إ 7,688.80",
+          "document_id": "doc_session_1753155008_1753155513",
+          "entity_type": "currency",
+          "context": "Grand Total; total amount due; gross and net total",
+          "relevance": 0.9
+        },
+        {
+          "term": "AED Seven Thousand, Six Hundred And Eighty Eight and Eighty Fils only",
+          "document_id": "doc_session_1753155008_1753155513",
+          "entity_type": "amount_in_words",
+          "context": "Total amount in words",
+          "relevance": 0.9
+        },
+        {
+          "term": "Aquarium Maintenance Visit",
+          "document_id": "doc_session_1753155008_1753155513",
+          "entity_type": "service",
+          "context": "Invoice item description",
+          "relevance": 0.9
+        },
+        {
+          "term": "8.0",
+          "document_id": "doc_session_1753155008_1753155513",
+          "entity_type": "quantity",
+          "context": "Service quantity for maintenance visit",
+          "relevance": 0.9
+        },
+        {
+          "term": "د.إ 750.00",
+          "document_id": "doc_session_1753155008_1753155513",
+          "entity_type": "currency",
+          "context": "Rate per quantity for maintenance service",
+          "relevance": 0.9
+        },
+        {
+          "term": "AF Power Elixir 2000ml",
+          "document_id": "doc_session_1753155008_1753155513",
+          "entity_type": "product",
+          "context": "Invoice item; chemical product line",
+          "relevance": 0.9
+        },
+        {
+          "term": "Ocean Nutrition Formula One Marine Pellets 100g Small",
+          "document_id": "doc_session_1753155008_1753155513",
+          "entity_type": "product",
+          "context": "Invoice item; fish food",
+          "relevance": 0.9
+        },
+        {
+          "term": "Ocean Nutrition Formula Two Marine Pellets 100g Medium",
+          "document_id": "doc_session_1753155008_1753155513",
+          "entity_type": "product",
+          "context": "Invoice item; fish food",
+          "relevance": 0.9
+        },
+        {
+          "term": "CORAL PRO SALT 25 KG(750 L) COMMERCIAL SACK",
+          "document_id": "doc_session_1753155008_1753155513",
+          "entity_type": "product",
+          "context": "Invoice item; aquarium salt pack",
+          "relevance": 0.9
+        },
+        {
+          "term": "SeaChem Iodine 250ml",
+          "document_id": "doc_session_1753155008_1753155513",
+          "entity_type": "product",
+          "context": "Invoice item; aquarium supplement",
+          "relevance": 0.9
+        },
+        {
+          "term": "KH/ALKALINITY FOUNDATION B - 1L",
+          "document_id": "doc_session_1753155008_1753155513",
+          "entity_type": "product",
+          "context": "Invoice item; alkalinity chemical",
+          "relevance": 0.9
+        },
+        {
+          "term": "SeaChem Reef Glue",
+          "document_id": "doc_session_1753155008_1753155513",
+          "entity_type": "product",
+          "context": "Invoice item; adhesive",
+          "relevance": 0.9
+        },
+        {
+          "term": "25 Meter Hose",
+          "document_id": "doc_session_1753155008_1753155513",
+          "entity_type": "product",
+          "context": "Invoice item; equipment",
+          "relevance": 0.9
+        },
+        {
+          "term": "ICP Water Test",
+          "document_id": "doc_session_1753155008_1753155513",
+          "entity_type": "product",
+          "context": "Invoice item; laboratory test",
+          "relevance": 0.9
+        },
+        {
+          "term": "0.0%",
+          "document_id": "doc_session_1753155008_1753155513",
+          "entity_type": "discount_percentage",
+          "context": "Individual item discount percent",
+          "relevance": 0.9
+        },
+        {
+          "term": "0.00 د.إ",
+          "document_id": "doc_session_1753155008_1753155513",
+          "entity_type": "currency",
+          "context": "Discount amount per item and additional discount listed",
+          "relevance": 0.9
+        },
+        {
+          "term": "Bank Details",
+          "document_id": "doc_session_1753155008_1753155513",
+          "entity_type": "label",
+          "context": "Remittance; payment instructions section",
+          "relevance": 0.9
+        },
+        {
+          "term": "ABU DHABI COMMERCIAL BANK",
+          "document_id": "doc_session_1753155008_1753155513",
+          "entity_type": "organization",
+          "context": "Payee bank name",
+          "relevance": 0.9
+        },
+        {
+          "term": "AE980030014015857920003",
+          "document_id": "doc_session_1753155008_1753155513",
+          "entity_type": "iban",
+          "context": "Vendor IBAN",
+          "relevance": 0.9
+        },
+        {
+          "term": "14015857920003",
+          "document_id": "doc_session_1753155008_1753155513",
+          "entity_type": "bank_account",
+          "context": "Vendor bank account number",
+          "relevance": 0.9
+        },
+        {
+          "term": "ADCBAEAAAXX",
+          "document_id": "doc_session_1753155008_1753155513",
+          "entity_type": "swift_bic",
+          "context": "Vendor bank SWIFT/BIC code",
+          "relevance": 0.9
+        },
+        {
+          "term": "info@royalaquaria.com",
+          "document_id": "doc_session_1753155008_1753155513",
+          "entity_type": "email",
+          "context": "Vendor email contact",
+          "relevance": 0.9
+        },
+        {
+          "term": "+971 50 143 0740",
+          "document_id": "doc_session_1753155008_1753155513",
+          "entity_type": "phone_number",
+          "context": "Vendor phone contact",
+          "relevance": 0.9
+        },
+        {
+          "term": "www.royalaquaria.com",
+          "document_id": "doc_session_1753155008_1753155513",
+          "entity_type": "website",
+          "context": "Vendor website",
+          "relevance": 0.9
+        },
+        {
+          "term": "Customer Signature",
+          "document_id": "doc_session_1753155008_1753155513",
+          "entity_type": "signature_field",
+          "context": "Signature section for customer",
+          "relevance": 0.9
+        },
+        {
+          "term": "Sales Person Signature",
+          "document_id": "doc_session_1753155008_1753155513",
+          "entity_type": "signature_field",
+          "context": "Signature section for sales person",
+          "relevance": 0.9
+        },
+        {
+          "term": "info@royalaquaria.com",
+          "document_id": "doc_session_1753155008_1753155513",
+          "category": "contact_information",
+          "type": "email",
+          "relevance": 0.8
+        },
+        {
+          "term": "mahmoud@mail.com",
+          "document_id": "doc_session_1753155008_1753155513",
+          "category": "contact_information",
+          "type": "email",
+          "relevance": 0.8
+        },
+        {
+          "term": "+971 50 143 0740",
+          "document_id": "doc_session_1753155008_1753155513",
+          "category": "contact_information",
+          "type": "phone",
+          "relevance": 0.8
+        },
+        {
+          "term": "+971-0553793792",
+          "document_id": "doc_session_1753155008_1753155513",
+          "category": "contact_information",
+          "type": "phone",
+          "relevance": 0.8
+        },
+        {
+          "term": "www.royalaquaria.com",
+          "document_id": "doc_session_1753155008_1753155513",
+          "category": "contact_information",
+          "type": "website",
+          "relevance": 0.8
+        },
+        {
+          "term": "د.إ 7,688.80",
+          "document_id": "doc_session_1753155008_1753155513",
+          "category": "financial_data",
+          "type": "total_amount",
+          "relevance": 0.8
+        },
+        {
+          "term": "د.إ 7,688.80",
+          "document_id": "doc_session_1753155008_1753155513",
+          "category": "financial_data",
+          "type": "gross_total",
+          "relevance": 0.8
+        },
+        {
+          "term": "0.00 د.إ",
+          "document_id": "doc_session_1753155008_1753155513",
+          "category": "financial_data",
+          "type": "total_discount",
+          "relevance": 0.8
+        },
+        {
+          "term": "0.00 د.إ",
+          "document_id": "doc_session_1753155008_1753155513",
+          "category": "financial_data",
+          "type": "item_discount",
+          "relevance": 0.8
+        },
+        {
+          "term": "د.إ 6,000.00",
+          "document_id": "doc_session_1753155008_1753155513",
+          "category": "financial_data",
+          "type": "line_total",
+          "relevance": 0.8
+        },
+        {
+          "term": "د.إ 262.50",
+          "document_id": "doc_session_1753155008_1753155513",
+          "category": "financial_data",
+          "type": "line_total",
+          "relevance": 0.8
+        },
+        {
+          "term": "د.إ 50.50",
+          "document_id": "doc_session_1753155008_1753155513",
+          "category": "financial_data",
+          "type": "line_total",
+          "relevance": 0.8
+        },
+        {
+          "term": "د.إ 58.80",
+          "document_id": "doc_session_1753155008_1753155513",
+          "category": "financial_data",
+          "type": "line_total",
+          "relevance": 0.8
+        },
+        {
+          "term": "د.إ 658.00",
+          "document_id": "doc_session_1753155008_1753155513",
+          "category": "financial_data",
+          "type": "line_total",
+          "relevance": 0.8
+        },
+        {
+          "term": "د.إ 86.00",
+          "document_id": "doc_session_1753155008_1753155513",
+          "category": "financial_data",
+          "type": "line_total",
+          "relevance": 0.8
+        },
+        {
+          "term": "د.إ 115.00",
+          "document_id": "doc_session_1753155008_1753155513",
+          "category": "financial_data",
+          "type": "line_total",
+          "relevance": 0.8
+        },
+        {
+          "term": "د.إ 68.00",
+          "document_id": "doc_session_1753155008_1753155513",
+          "category": "financial_data",
+          "type": "line_total",
+          "relevance": 0.8
+        },
+        {
+          "term": "د.إ 150.00",
+          "document_id": "doc_session_1753155008_1753155513",
+          "category": "financial_data",
+          "type": "line_total",
+          "relevance": 0.8
+        },
+        {
+          "term": "د.إ 240.00",
+          "document_id": "doc_session_1753155008_1753155513",
+          "category": "financial_data",
+          "type": "line_total",
+          "relevance": 0.8
+        },
+        {
+          "term": "01-04-2025",
+          "document_id": "doc_session_1753155008_1753155513",
+          "category": "dates_and_deadlines",
+          "type": "document_date",
+          "relevance": 0.8
+        },
+        {
+          "term": "01-04-2025",
+          "document_id": "doc_session_1753155008_1753155513",
+          "category": "dates_and_deadlines",
+          "type": "due_date",
+          "relevance": 0.8
+        },
+        {
+          "term": "ACC-SINV-2025-00064",
+          "document_id": "doc_session_1753155008_1753155513",
+          "category": "identifiers_and_references",
+          "type": "invoice_number",
+          "relevance": 0.8
+        },
+        {
+          "term": "AE980030014015857920003",
+          "document_id": "doc_session_1753155008_1753155513",
+          "category": "identifiers_and_references",
+          "type": "iban",
+          "relevance": 0.8
+        },
+        {
+          "term": "14015857920003",
+          "document_id": "doc_session_1753155008_1753155513",
+          "category": "identifiers_and_references",
+          "type": "bank_account",
+          "relevance": 0.8
+        },
+        {
+          "term": "ADCBAEAAAXX",
+          "document_id": "doc_session_1753155008_1753155513",
+          "category": "identifiers_and_references",
+          "type": "swift_bic",
+          "relevance": 0.8
+        },
+        {
+          "term": "invoice",
+          "document_id": "doc_session_1753155008_1753155513",
+          "keyword_type": "primary",
+          "relevance": 0.7
+        },
+        {
+          "term": "total",
+          "document_id": "doc_session_1753155008_1753155513",
+          "keyword_type": "primary",
+          "relevance": 0.7
+        },
+        {
+          "term": "amount",
+          "document_id": "doc_session_1753155008_1753155513",
+          "keyword_type": "primary",
+          "relevance": 0.7
+        },
+        {
+          "term": "payment",
+          "document_id": "doc_session_1753155008_1753155513",
+          "keyword_type": "primary",
+          "relevance": 0.7
+        },
+        {
+          "term": "customer",
+          "document_id": "doc_session_1753155008_1753155513",
+          "keyword_type": "primary",
+          "relevance": 0.7
+        },
+        {
+          "term": "vendor",
+          "document_id": "doc_session_1753155008_1753155513",
+          "keyword_type": "primary",
+          "relevance": 0.7
+        },
+        {
+          "term": "bank",
+          "document_id": "doc_session_1753155008_1753155513",
+          "keyword_type": "primary",
+          "relevance": 0.7
+        },
+        {
+          "term": "account",
+          "document_id": "doc_session_1753155008_1753155513",
+          "keyword_type": "primary",
+          "relevance": 0.7
+        },
+        {
+          "term": "IBAN",
+          "document_id": "doc_session_1753155008_1753155513",
+          "keyword_type": "primary",
+          "relevance": 0.7
+        },
+        {
+          "term": "SWIFT",
+          "document_id": "doc_session_1753155008_1753155513",
+          "keyword_type": "primary",
+          "relevance": 0.7
+        },
+        {
+          "term": "invoice number",
+          "document_id": "doc_session_1753155008_1753155513",
+          "keyword_type": "primary",
+          "relevance": 0.7
+        },
+        {
+          "term": "issue date",
+          "document_id": "doc_session_1753155008_1753155513",
+          "keyword_type": "primary",
+          "relevance": 0.7
+        },
+        {
+          "term": "due date",
+          "document_id": "doc_session_1753155008_1753155513",
+          "keyword_type": "primary",
+          "relevance": 0.7
+        },
+        {
+          "term": "signature",
+          "document_id": "doc_session_1753155008_1753155513",
+          "keyword_type": "primary",
+          "relevance": 0.7
+        },
+        {
+          "term": "address",
+          "document_id": "doc_session_1753155008_1753155513",
+          "keyword_type": "primary",
+          "relevance": 0.7
+        },
+        {
+          "term": "product",
+          "document_id": "doc_session_1753155008_1753155513",
+          "keyword_type": "primary",
+          "relevance": 0.7
+        },
+        {
+          "term": "service",
+          "document_id": "doc_session_1753155008_1753155513",
+          "keyword_type": "primary",
+          "relevance": 0.7
+        },
+        {
+          "term": "quantity",
+          "document_id": "doc_session_1753155008_1753155513",
+          "keyword_type": "primary",
+          "relevance": 0.7
+        },
+        {
+          "term": "discount",
+          "document_id": "doc_session_1753155008_1753155513",
+          "keyword_type": "primary",
+          "relevance": 0.7
+        },
+        {
+          "term": "maintenance",
+          "document_id": "doc_session_1753155008_1753155513",
+          "keyword_type": "primary",
+          "relevance": 0.7
+        },
+        {
+          "term": "grand total",
+          "document_id": "doc_session_1753155008_1753155513",
+          "keyword_type": "primary",
+          "relevance": 0.7
+        },
+        {
+          "term": "gross",
+          "document_id": "doc_session_1753155008_1753155513",
+          "keyword_type": "secondary",
+          "relevance": 0.6
+        },
+        {
+          "term": "net",
+          "document_id": "doc_session_1753155008_1753155513",
+          "keyword_type": "secondary",
+          "relevance": 0.6
+        },
+        {
+          "term": "item",
+          "document_id": "doc_session_1753155008_1753155513",
+          "keyword_type": "secondary",
+          "relevance": 0.6
+        },
+        {
+          "term": "line total",
+          "document_id": "doc_session_1753155008_1753155513",
+          "keyword_type": "secondary",
+          "relevance": 0.6
+        },
+        {
+          "term": "rate",
+          "document_id": "doc_session_1753155008_1753155513",
+          "keyword_type": "secondary",
+          "relevance": 0.6
+        },
+        {
+          "term": "unit price",
+          "document_id": "doc_session_1753155008_1753155513",
+          "keyword_type": "secondary",
+          "relevance": 0.6
+        },
+        {
+          "term": "contact",
+          "document_id": "doc_session_1753155008_1753155513",
+          "keyword_type": "secondary",
+          "relevance": 0.6
+        },
+        {
+          "term": "website",
+          "document_id": "doc_session_1753155008_1753155513",
+          "keyword_type": "secondary",
+          "relevance": 0.6
+        },
+        {
+          "term": "email",
+          "document_id": "doc_session_1753155008_1753155513",
+          "keyword_type": "secondary",
+          "relevance": 0.6
+        },
+        {
+          "term": "phone",
+          "document_id": "doc_session_1753155008_1753155513",
+          "keyword_type": "secondary",
+          "relevance": 0.6
+        },
+        {
+          "term": "sales",
+          "document_id": "doc_session_1753155008_1753155513",
+          "keyword_type": "secondary",
+          "relevance": 0.6
+        },
+        {
+          "term": "description",
+          "document_id": "doc_session_1753155008_1753155513",
+          "keyword_type": "secondary",
+          "relevance": 0.6
+        },
+        {
+          "term": "currency",
+          "document_id": "doc_session_1753155008_1753155513",
+          "keyword_type": "secondary",
+          "relevance": 0.6
+        },
+        {
+          "term": "words",
+          "document_id": "doc_session_1753155008_1753155513",
+          "keyword_type": "secondary",
+          "relevance": 0.6
+        },
+        {
+          "term": "remittance",
+          "document_id": "doc_session_1753155008_1753155513",
+          "keyword_type": "secondary",
+          "relevance": 0.6
+        },
+        {
+          "term": "delivery",
+          "document_id": "doc_session_1753155008_1753155513",
+          "keyword_type": "secondary",
+          "relevance": 0.6
+        },
+        {
+          "term": "order",
+          "document_id": "doc_session_1753155008_1753155513",
+          "keyword_type": "secondary",
+          "relevance": 0.6
+        },
+        {
+          "term": "percent",
+          "document_id": "doc_session_1753155008_1753155513",
+          "keyword_type": "secondary",
+          "relevance": 0.6
+        },
+        {
+          "term": "test",
+          "document_id": "doc_session_1753155008_1753155513",
+          "keyword_type": "secondary",
+          "relevance": 0.6
+        },
+        {
+          "term": "supplement",
+          "document_id": "doc_session_1753155008_1753155513",
+          "keyword_type": "secondary",
+          "relevance": 0.6
+        }
+      ]
+    }
+  },
+  "background_status": "completed",
+  "combined_available": true
+}

@@ -1,0 +1,321 @@
+{
+  "document_type": "installation_guide",
+  "document_confidence": 0.98,
+  "page_dimensions": {
+    "width": 750,
+    "height": 1003
+  },
+  "text_blocks": [
+    {
+      "id": "block_1",
+      "text": "HG323RGW Quick Installation Guide",
+      "bbox": {
+        "x": 459,
+        "y": 19,
+        "width": 273,
+        "height": 19
+      },
+      "type": "document_title",
+      "confidence": 0.99,
+      "reading_order": 1,
+      "font_properties": {
+        "estimated_size": 13,
+        "bold": false,
+        "italic": false,
+        "alignment": "right"
+      },
+      "semantic_role": "header",
+      "parent_section": "header",
+      "relationships": []
+    },
+    {
+      "id": "block_2",
+      "text": "RST\n1. Press RST button over 10 seconds, onu can restore factory defaults and reboot.\n2. Press RST button quickly, onu reboot.",
+      "bbox": {
+        "x": 41,
+        "y": 53,
+        "width": 667,
+        "height": 66
+      },
+      "type": "table_row",
+      "confidence": 0.98,
+      "reading_order": 2,
+      "font_properties": {
+        "estimated_size": 12,
+        "bold": false,
+        "italic": false,
+        "alignment": "left"
+      },
+      "semantic_role": "table_data",
+      "parent_section": "table_1",
+      "relationships": [
+        "follows:block_1"
+      ]
+    },
+    {
+      "id": "block_3",
+      "text": "PWR\nConnect with power adapter. DC12V, 1A",
+      "bbox": {
+        "x": 44,
+        "y": 102,
+        "width": 665,
+        "height": 33
+      },
+      "type": "table_row",
+      "confidence": 0.97,
+      "reading_order": 3,
+      "font_properties": {
+        "estimated_size": 12,
+        "bold": false,
+        "italic": false,
+        "alignment": "left"
+      },
+      "semantic_role": "table_data",
+      "parent_section": "table_1",
+      "relationships": [
+        "follows:block_2"
+      ]
+    },
+    {
+      "id": "block_4",
+      "text": "Table 2 Interface/Button Panel",
+      "bbox": {
+        "x": 275,
+        "y": 124,
+        "width": 217,
+        "height": 17
+      },
+      "type": "paragraph",
+      "confidence": 0.95,
+      "reading_order": 4,
+      "font_properties": {
+        "estimated_size": 11,
+        "bold": false,
+        "italic": false,
+        "alignment": "center"
+      },
+      "semantic_role": "body",
+      "parent_section": "body",
+      "relationships": [
+        "follows:block_3"
+      ]
+    },
+    {
+      "id": "block_5",
+      "text": "2. Packing List",
+      "bbox": {
+        "x": 41,
+        "y": 145,
+        "width": 166,
+        "height": 29
+      },
+      "type": "heading",
+      "confidence": 0.99,
+      "reading_order": 5,
+      "font_properties": {
+        "estimated_size": 13,
+        "bold": true,
+        "italic": false,
+        "alignment": "left"
+      },
+      "semantic_role": "header",
+      "parent_section": "body",
+      "relationships": [
+        "follows:block_4"
+      ]
+    },
+    {
+      "id": "block_6",
+      "text": "Contents         Quantity                 Contents           Quantity\nHG323RGW   1 pcs                     Power adapter     1 pcs\nUser Manual   1 pcs",
+      "bbox": {
+        "x": 41,
+        "y": 179,
+        "width": 664,
+        "height": 68
+      },
+      "type": "table_header",
+      "confidence": 0.97,
+      "reading_order": 6,
+      "font_properties": {
+        "estimated_size": 12,
+        "bold": false,
+        "italic": false,
+        "alignment": "left"
+      },
+      "semantic_role": "table_data",
+      "parent_section": "table_2",
+      "relationships": [
+        "follows:block_5"
+      ]
+    },
+    {
+      "id": "block_7",
+      "text": "3. Certification",
+      "bbox": {
+        "x": 39,
+        "y": 252,
+        "width": 162,
+        "height": 27
+      },
+      "type": "heading",
+      "confidence": 0.99,
+      "reading_order": 7,
+      "font_properties": {
+        "estimated_size": 13,
+        "bold": true,
+        "italic": false,
+        "alignment": "left"
+      },
+      "semantic_role": "header",
+      "parent_section": "body",
+      "relationships": [
+        "follows:block_6"
+      ]
+    },
+    {
+      "id": "block_8",
+      "text": "CERTIFICATION\nCERTIFICATION\nCHECKER PCA PASS",
+      "bbox": {
+        "x": 42,
+        "y": 282,
+        "width": 271,
+        "height": 97
+      },
+      "type": "table_row",
+      "confidence": 0.95,
+      "reading_order": 8,
+      "font_properties": {
+        "estimated_size": 12,
+        "bold": false,
+        "italic": false,
+        "alignment": "left"
+      },
+      "semantic_role": "table_data",
+      "parent_section": "body",
+      "relationships": [
+        "follows:block_7"
+      ]
+    },
+    {
+      "id": "block_9",
+      "text": "4. Hardware Installation",
+      "bbox": {
+        "x": 43,
+        "y": 390,
+        "width": 293,
+        "height": 30
+      },
+      "type": "heading",
+      "confidence": 0.99,
+      "reading_order": 9,
+      "font_properties": {
+        "estimated_size": 13,
+        "bold": true,
+        "italic": false,
+        "alignment": "left"
+      },
+      "semantic_role": "header",
+      "parent_section": "body",
+      "relationships": [
+        "follows:block_8"
+      ]
+    },
+    {
+      "id": "block_10",
+      "text": "Installation Environment Requirements\nONU equipment must be installed in the interior, and to ensure the following conditions:\n\u2022 Confirmation at the ONU installation at sufficient space to facilitate cooling machine.\n\u2022 ONU suitable operating temperature of -5\u00b0C-55\u00b0C humidity 10% to 90%.\n\u2022 Device workplace should avoid radio transmitters, radar stations, and high-frequency interference from power equipment.",
+      "bbox": {
+        "x": 46,
+        "y": 425,
+        "width": 672,
+        "height": 77
+      },
+      "type": "paragraph",
+      "confidence": 0.98,
+      "reading_order": 10,
+      "font_properties": {
+        "estimated_size": 12,
+        "bold": false,
+        "italic": false,
+        "alignment": "left"
+      },
+      "semantic_role": "body",
+      "parent_section": "body",
+      "relationships": [
+        "follows:block_9"
+      ]
+    },
+    {
+      "id": "block_11",
+      "text": "Equipment Installation\n1. installed on the desktop\nPlace the machine on a clean bench, this installation is relatively simple, you can observe the following operation:\n\u2022 Ensure the smooth workbench.\n\u2022 Give enough space around the device for heat dissipation.\n\u2022 Do not place any object on the device",
+      "bbox": {
+        "x": 48,
+        "y": 511,
+        "width": 664,
+        "height": 75
+      },
+      "type": "paragraph",
+      "confidence": 0.97,
+      "reading_order": 11,
+      "font_properties": {
+        "estimated_size": 12,
+        "bold": false,
+        "italic": false,
+        "alignment": "left"
+      },
+      "semantic_role": "body",
+      "parent_section": "body",
+      "relationships": [
+        "follows:block_10"
+      ]
+    },
+    {
+      "id": "block_12",
+      "text": "2. mounted on the wall\n\u2022 Observation ONU equipment chassis two cruciform recess, in accordance with the position of the groove, installed two screws in the wall.\n\u2022 The original selected two mounting screws gently snap into recesses aligned.\n\u2022 Slowly let go, so that the device under the support of the screw hanging on the wall.",
+      "bbox": {
+        "x": 51,
+        "y": 590,
+        "width": 669,
+        "height": 57
+      },
+      "type": "paragraph",
+      "confidence": 0.97,
+      "reading_order": 12,
+      "font_properties": {
+        "estimated_size": 12,
+        "bold": false,
+        "italic": false,
+        "alignment": "left"
+      },
+      "semantic_role": "body",
+      "parent_section": "body",
+      "relationships": [
+        "follows:block_11"
+      ]
+    },
+    {
+      "id": "block_13",
+      "text": "3. Connect fiber, network cable and power adapter to the corresponding interfaces, and turn on the power.",
+      "bbox": {
+        "x": 49,
+        "y": 652,
+        "width": 652,
+        "height": 32
+      },
+      "type": "paragraph",
+      "confidence": 0.97,
+      "reading_order": 13,
+      "font_properties": {
+        "estimated_size": 12,
+        "bold": false,
+        "italic": false,
+        "alignment": "left"
+      },
+      "semantic_role": "body",
+      "parent_section": "body",
+      "relationships": [
+        "follows:block_12"
+      ]
+    }
+  ],
+  "page_number": 1
+}

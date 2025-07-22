@@ -1,22 +1,7 @@
-"""Enhanced PPQ.ai document processing script with integrated vision extraction.
-
-Features:
-- Complete pipeline: Document → Vision Extraction → Chunk Processing → Database Storage
-- PDF page-by-page processing with compression
-- Image compression for optimal API performance
-- Split processing: Immediate (chunks 1-4) + Background (chunks 5-6)
-- SQLite database with full-text search
-- Semantic search capabilities
-
-Dependencies:
-    pip install requests pillow pymupdf sqlite3
+"""Self-contained PPQ.ai document extraction with chunked processing and built-in prompts.
 
 Usage:
-    # Complete pipeline from PDF/image document
-    python ppq_enhanced_v2.py --document contract.pdf --api-key "your-key" --mode pipeline
-    
-    # Traditional approach with pre-extracted vision data
-    python ppq_enhanced_v2.py --vision @vision.json --api-key "your-key" --mode immediate
+    python ppq_chunked_self_contained.py --vision '@vision_extract.json' --api-key "your-key"
 """
 
 import argparse
@@ -28,24 +13,10 @@ import sys
 import time
 import sqlite3
 import base64
+import mimetypes
 from typing import Dict, List, Optional, Any
 from datetime import datetime
 from pathlib import Path
-
-try:
-    from PIL import Image
-    import io
-except ImportError:
-    print("Error: PIL (Pillow) is required for image processing.")
-    print("Install it with: pip install pillow")
-    sys.exit(1)
-
-try:
-    import fitz  # PyMuPDF
-except ImportError:
-    print("Warning: PyMuPDF not installed. PDF processing will be limited.")
-    print("Install it with: pip install pymupdf")
-    fitz = None
 
 # Configure logging
 logging.basicConfig(
@@ -436,6 +407,39 @@ class ChunkExtractionDB:
             
         return "string"
 
+    def get_session_documents(self, session_id: str) -> List[Dict[str, Any]]:
+        """Get all documents for a session."""
+        conn = sqlite3.connect(self.db_path)
+        cursor = conn.cursor()
+        
+        try:
+            cursor.execute("""
+                SELECT id, document_type, confidence, status, 
+                       immediate_completed_at, background_completed_at
+                FROM document_metadata 
+                WHERE session_id = ?
+                ORDER BY created_at DESC
+            """, (session_id,))
+            
+            results = cursor.fetchall()
+            return [
+                {
+                    'document_id': row[0],
+                    'document_type': row[1],
+                    'confidence': row[2],
+                    'status': row[3],
+                    'immediate_completed_at': row[4],
+                    'background_completed_at': row[5]
+                }
+                for row in results
+            ]
+            
+        except Exception as e:
+            print(f"❌ Error getting session documents: {e}")
+            return []
+        finally:
+            conn.close()
+
 class PPQChunkedClient:
     """PPQ.ai client with chunked processing and self-contained prompts."""
     
@@ -471,582 +475,191 @@ class PPQChunkedClient:
             self.db = None
             self.enable_db = False
     
-    def compress_image(self, image_data: bytes, max_size_mb: float = 2.0, quality: int = 85) -> bytes:
-        """Compress image data to reduce size while maintaining quality."""
+    def extract_vision_data(self, file_path: str) -> Optional[str]:
+        """Extract vision data from document file (PDF, images, etc.)."""
         try:
-            # Load image
-            image = Image.open(io.BytesIO(image_data))
+            print(f"🔍 Starting vision extraction for: {file_path}")
             
-            # Convert to RGB if necessary (for JPEG compression)
-            if image.mode in ('RGBA', 'LA', 'P'):
-                image = image.convert('RGB')
+            # Check if file exists
+            if not os.path.exists(file_path):
+                raise FileNotFoundError(f"File not found: {file_path}")
             
-            # Calculate target size in bytes
-            target_size = max_size_mb * 1024 * 1024
+            # Get file info
+            file_size = os.path.getsize(file_path)
+            mime_type, _ = mimetypes.guess_type(file_path)
             
-            # If image is already small enough, return as is
-            if len(image_data) <= target_size:
-                return image_data
+            print(f"📄 File size: {file_size:,} bytes")
+            print(f"📝 MIME type: {mime_type}")
             
-            # Compress with decreasing quality until size is acceptable
-            for attempt_quality in range(quality, 20, -10):
-                output_buffer = io.BytesIO()
-                image.save(output_buffer, format='JPEG', quality=attempt_quality, optimize=True)
-                compressed_data = output_buffer.getvalue()
-                
-                if len(compressed_data) <= target_size:
-                    print(f"  📦 Compressed image: {len(image_data)} → {len(compressed_data)} bytes (quality: {attempt_quality})")
-                    return compressed_data
+            # Read and encode file
+            with open(file_path, 'rb') as f:
+                file_content = f.read()
             
-            # If still too large, resize the image
-            original_size = image.size
-            scale_factor = 0.8
+            file_base64 = base64.b64encode(file_content).decode('utf-8')
             
-            while len(compressed_data) > target_size and scale_factor > 0.3:
-                new_size = (int(original_size[0] * scale_factor), int(original_size[1] * scale_factor))
-                resized_image = image.resize(new_size, Image.Resampling.LANCZOS)
-                
-                output_buffer = io.BytesIO()
-                resized_image.save(output_buffer, format='JPEG', quality=75, optimize=True)
-                compressed_data = output_buffer.getvalue()
-                
-                scale_factor -= 0.1
+            # Prepare vision extraction request
+            vision_url = f"{self.base_url}/chat/completions"
             
-            print(f"  📦 Resized and compressed: {len(image_data)} → {len(compressed_data)} bytes")
-            return compressed_data
-            
-        except Exception as e:
-            print(f"  ⚠️ Compression failed: {e}, using original")
-            return image_data
-
-    def pdf_to_images(self, pdf_path: str, dpi: int = 150) -> List[bytes]:
-        """Convert PDF pages to compressed images."""
-        if not fitz:
-            raise Exception("PyMuPDF is required for PDF processing. Install with: pip install pymupdf")
-        
-        try:
-            print(f"  📄 Opening PDF: {pdf_path}")
-            pdf_document = fitz.open(pdf_path)
-            page_images = []
-            
-            print(f"  📊 PDF has {len(pdf_document)} pages")
-            
-            for page_num in range(len(pdf_document)):
-                print(f"  🔄 Processing page {page_num + 1}/{len(pdf_document)}...")
-                
-                # Get page
-                page = pdf_document[page_num]
-                
-                # Create transformation matrix for desired DPI
-                mat = fitz.Matrix(dpi / 72, dpi / 72)
-                
-                # Render page to image
-                pix = page.get_pixmap(matrix=mat)
-                img_data = pix.tobytes("png")
-                
-                # Compress the image
-                compressed_img = self.compress_image(img_data, max_size_mb=2.0)
-                page_images.append(compressed_img)
-                
-                print(f"    ✅ Page {page_num + 1} processed: {len(compressed_img)} bytes")
-            
-            pdf_document.close()
-            print(f"  📋 Converted {len(page_images)} pages to images")
-            return page_images
-            
-        except Exception as e:
-            raise Exception(f"PDF conversion failed: {e}")
-
-    def extract_json_from_response(self, response: str) -> str:
-        """Extract JSON from response that might contain extra text."""
-        import re
-        
-        # Remove any markdown formatting
-        response = response.replace('```json', '').replace('```', '').strip()
-        
-        # Try to find JSON pattern - look for content between first { and last }
-        start_idx = response.find('{')
-        end_idx = response.rfind('}')
-        
-        if start_idx != -1 and end_idx != -1 and end_idx > start_idx:
-            potential_json = response[start_idx:end_idx + 1]
-            
-            # Validate it's proper JSON
-            try:
-                json.loads(potential_json)
-                return potential_json
-            except json.JSONDecodeError:
-                pass
-        
-        # If no valid JSON found, return original response
-        return response
-
-    def vision_extract_document(self, document_path: str, document_type: str = "auto", debug_mode: bool = False) -> str:
-        """Extract text and structure from document using PPQ.ai chat/completions with vision capabilities."""
-        print(f"🔍 Starting enhanced vision extraction for: {document_path}")
-        
-        # Determine document type if auto
-        if document_type == "auto":
-            ext = document_path.lower().split('.')[-1]
-            if ext in ['pdf']:
-                document_type = "pdf"
-            elif ext in ['jpg', 'jpeg', 'png', 'tiff', 'bmp']:
-                document_type = "image"
-            else:
-                raise ValueError(f"Unsupported file type: {ext}")
-        
-        try:
-            # Process document based on type
-            if document_type == "pdf":
-                print("  📄 Processing PDF document page by page...")
-                page_images = self.pdf_to_images(document_path)
-                
-                # Process each page and combine results
-                all_vision_data = []
-                
-                for page_num, image_data in enumerate(page_images, 1):
-                    print(f"  🔍 Extracting vision data from page {page_num}...")
-                    
-                    encoded_image = base64.b64encode(image_data).decode('utf-8')
-                    page_vision = self._extract_vision_from_image(encoded_image, page_num)
-                    all_vision_data.append(page_vision)
-                
-                # Combine all pages into single vision data structure
-                combined_vision = self._combine_page_visions(all_vision_data, document_path)
-                
-            elif document_type == "image":
-                print("  🖼️ Processing image document...")
-                
-                with open(document_path, 'rb') as f:
-                    image_data = f.read()
-                
-                # Compress image
-                compressed_image = self.compress_image(image_data)
-                encoded_image = base64.b64encode(compressed_image).decode('utf-8')
-                
-                # Extract vision data
-                combined_vision = self._extract_vision_from_image(encoded_image, 1)
-            
-            vision_json = json.dumps(combined_vision, indent=2)
-            print(f"  ✅ Vision extraction completed ({len(vision_json)} characters)")
-            return vision_json
-            
-        except Exception as e:
-            raise Exception(f"Enhanced vision extraction failed: {e}")
-
-    def _extract_vision_from_image(self, encoded_image: str, page_num: int = 1) -> Dict[str, Any]:
-        """Extract vision data from a single image using chat/completions with proper image transmission."""
-        
-        # Enhanced vision extraction instructions (user's specific prompt)
-        vision_instructions = """Analyze this document image and extract text content organized as logical semantic units (paragraphs, headings, items, etc.) with precise geometric information.
-
-EXTRACTION RULES:
-1. **Semantic Grouping**: Group related words into complete logical units:
-   - Complete paragraphs (not individual words)
-   - Full headings and titles
-   - Document Tables as table_header and table_rows
-   - Complete invoice line items line by line with its quantity and price
-   - Other Sections (Invoice Number, Date, etc.) as single blocks
-   - Entire addresses as single blocks
-   - Full sentences and phrases
-
-2. **Document Type Identification**: Automatically classify document type first
-3. **Bounding Box Calculation**: Calculate encompassing bounding box for each complete logical unit
-4. **Hierarchy Detection**: Identify text hierarchy and relationships
-
-For each semantic text unit, provide:
-1. Complete text content (full paragraphs/sentences/items)
-2. Encompassing bounding box coordinates (x, y, width, height) in pixels
-3. Semantic type classification
-4. Confidence level (0.0-1.0)
-5. Font characteristics and formatting
-6. Reading order sequence
-7. Relationship to other elements
-
-Output format:
-{
-  "document_type": "invoice|receipt|contract|letter|form|report|other",
-  "document_confidence": 0.95,
-  "page_dimensions": {"width": 2480, "height": 3508},
-  "text_blocks": [
-    {
-      "id": "block_1",
-      "text": "complete semantic text unit",
-      "bbox": {"x": 100, "y": 50, "width": 400, "height": 60},
-      "type": "document_title|company_name|address|paragraph|table_header|table_row|invoice_item|total_amount|date|signature|footer",
-      "confidence": 0.95,
-      "reading_order": 1,
-      "font_properties": {
-        "estimated_size": 12,
-        "bold": true,
-        "italic": false,
-        "alignment": "left|center|right"
-      },
-      "semantic_role": "header|body|metadata|table_data|summary",
-      "parent_section": "header|body|footer|table_1|address_block",
-      "relationships": ["follows:block_0", "contains:sub_block_2"]
-    }
-  ]
-}
-
-CRITICAL REQUIREMENTS:
-- Extract COMPLETE semantic units, not fragmented words
-- Calculate accurate encompassing bounding boxes for grouped content
-- Identify document type with confidence score
-- Maintain logical reading flow and hierarchy
-- Group table cells into complete rows/items
-- Preserve formatting context (bold, size, alignment)
-- NO explanatory text - JSON response only"""
-
-        try:
-            print(f"    📡 Calling vision API for page {page_num}...")
-            print(f"    📊 Image data size: {len(encoded_image)} characters")
-            
-            # Verify base64 encoding integrity
-            try:
-                # Test decode to verify integrity
-                import base64
-                decoded_test = base64.b64decode(encoded_image[:100])  # Test first 100 chars
-                print(f"    ✅ Base64 encoding verified")
-            except Exception as e:
-                print(f"    ❌ Base64 encoding issue: {e}")
-                raise
-            
-            # Prepare chat completion request with proper image format
-            url = f"{self.base_url}/chat/completions"
-            
-            system_message = """You are a specialized document vision analysis system. You must analyze the provided document image and extract all text content organized as complete logical semantic units with precise geometric information. Return ONLY valid JSON in the exact format specified in the instructions."""
-            
-            # FIXED: Send the complete base64 image data, not truncated
-            user_message = [
-                {
-                    "type": "text",
-                    "text": vision_instructions
+            vision_data = {
+                "model": "gpt-4.1",  # or appropriate vision model
+                "file_data": file_base64,
+                "file_type": mime_type or "application/octet-stream",
+                "file_name": os.path.basename(file_path),
+                "extraction_options": {
+                    "include_text_blocks": True,
+                    "include_coordinates": True,
+                    "include_confidence": True,
+                    "ocr_language": "auto",
+                    "extract_tables": True,
+                    "extract_forms": True
                 },
-                {
-                    "type": "image_url",
-                    "image_url": {
-                        "url": f"data:image/jpeg;base64,{encoded_image}"
-                    }
-                }
-            ]
-            
-            data = {
-                "model": "gpt-4.1",
-                "messages": [
-                    {"role": "system", "content": system_message},
-                    {"role": "user", "content": user_message}
-                ],
                 "temperature": 0.0,
-                "max_tokens": 20000,  # Increased for detailed extraction
-                "top_p": 1.0
+                "max_tokens": 32000
             }
             
-            print(f"    🔍 Sending vision request to PPQ.ai...")
-            print(f"    📏 Request payload size: ~{len(json.dumps(data))} characters")
+            print("📡 Calling vision extraction API...")
             
-            response = requests.post(url, json=data, headers=self.headers, timeout=self.timeout)
-            
-            # Debug response status
-            print(f"    📡 Response status: {response.status_code}")
-            
-            if not response.ok:
-                print(f"    ❌ API Error: {response.status_code}")
-                print(f"    📄 Error response: {response.text[:500]}...")
-                response.raise_for_status()
+            response = requests.post(
+                vision_url, 
+                json=vision_data, 
+                headers=self.headers, 
+                timeout=self.timeout * 2  # Vision extraction takes longer
+            )
+            response.raise_for_status()
             
             result = response.json()
-            raw_response = result["choices"][0]["message"]["content"]
             
-            print(f"    📄 Raw response length: {len(raw_response)} characters")
-            print(f"    🔍 Response preview: {raw_response[:200]}...")
-            
-            # Clean and parse JSON response
-            clean_json = self.extract_json_from_response(raw_response)
-            
-            # Debug the cleaned JSON
-            print(f"    🧹 Cleaned JSON length: {len(clean_json)} characters")
-            
-            try:
-                vision_data = json.loads(clean_json)
-                print(f"    ✅ JSON parsing successful")
-            except json.JSONDecodeError as e:
-                print(f"    ❌ JSON parsing failed: {e}")
-                print(f"    📄 Problematic JSON preview: {clean_json[:500]}...")
-                raise
-            
-            # Add page number if not present
-            vision_data["page_number"] = page_num
-            
-            # Validate essential fields
-            if "text_blocks" not in vision_data:
-                print(f"    ⚠️ Warning: No text_blocks found in response")
-                vision_data["text_blocks"] = []
-            
-            if "document_type" not in vision_data:
-                print(f"    ⚠️ Warning: No document_type found in response")
-                vision_data["document_type"] = "unknown"
-            
-            text_block_count = len(vision_data.get("text_blocks", []))
-            doc_confidence = vision_data.get("document_confidence", 0.0)
-            
-            print(f"    ✅ Page {page_num} extracted: {text_block_count} text blocks, confidence: {doc_confidence:.2f}")
-            
-            return vision_data
-            
-        except json.JSONDecodeError as e:
-            print(f"    ❌ Invalid JSON response for page {page_num}: {e}")
-            print(f"    📄 Raw response snippet: {raw_response[:1000] if 'raw_response' in locals() else 'No response received'}")
-            
-            # Save problematic response for debugging
-            debug_file = f"debug_page_{page_num}_response.txt"
-            try:
-                with open(debug_file, 'w', encoding='utf-8') as f:
-                    f.write(raw_response if 'raw_response' in locals() else "No response data")
-                print(f"    💾 Debug response saved to: {debug_file}")
-            except:
-                pass
-            
-            # Return minimal structure if JSON parsing fails
-            return {
-                "document_type": "unknown",
-                "page_number": page_num,
-                "document_confidence": 0.0,
-                "page_dimensions": {"width": 0, "height": 0},
-                "text_blocks": [],
-                "error": f"JSON parsing failed: {str(e)}"
-            }
-            
-        except requests.exceptions.RequestException as e:
-            print(f"    ❌ API request failed for page {page_num}: {e}")
-            raise
-            
-        except Exception as e:
-            print(f"    ❌ Vision extraction failed for page {page_num}: {e}")
-            raise
-
-    def _combine_page_visions(self, page_visions: List[Dict[str, Any]], document_path: str) -> Dict[str, Any]:
-        """Combine enhanced vision data from multiple pages into a single structure."""
-        
-        if not page_visions:
-            raise Exception("No page vision data to combine")
-        
-        print(f"  🔄 Combining enhanced vision data from {len(page_visions)} pages...")
-        
-        # Initialize combined structure for enhanced format
-        combined = {
-            "document_type": "pdf",
-            "source_file": os.path.basename(document_path),
-            "total_pages": len(page_visions),
-            "document_confidence": 0.0,
-            "page_dimensions": {"width": 0, "height": 0},
-            "text_blocks": [],
-            "document_structure": {
-                "headers": [],
-                "body_content": [],
-                "tables": [],
-                "metadata_blocks": [],
-                "footer_content": []
-            },
-            "pages": page_visions,  # Keep individual page data
-            "processing_metadata": {
-                "processed_pages": 0,
-                "failed_pages": 0,
-                "average_confidence": 0.0,
-                "total_text_blocks": 0
-            }
-        }
-        
-        # Combine data from all pages
-        total_confidence = 0
-        valid_pages = 0
-        total_text_blocks = 0
-        max_width = 0
-        max_height = 0
-        
-        for page_data in page_visions:
-            page_num = page_data.get("page_number", 1)
-            
-            if page_data.get("error"):
-                print(f"    ⚠️ Skipping page {page_num} due to error: {page_data.get('error')}")
-                combined["processing_metadata"]["failed_pages"] += 1
-                continue
-            
-            valid_pages += 1
-            combined["processing_metadata"]["processed_pages"] += 1
-            
-            # Update document type from first valid page
-            if valid_pages == 1:
-                combined["document_type"] = page_data.get("document_type", "unknown")
-            
-            # Update page dimensions (use maximum dimensions found)
-            page_dims = page_data.get("page_dimensions", {})
-            if page_dims.get("width", 0) > max_width:
-                max_width = page_dims.get("width", 0)
-            if page_dims.get("height", 0) > max_height:
-                max_height = page_dims.get("height", 0)
-            
-            # Combine text blocks with page offset for multi-page documents
-            page_offset = (page_num - 1) * (max_height or 3508)  # Default page height if not available
-            
-            page_text_blocks = page_data.get("text_blocks", [])
-            total_text_blocks += len(page_text_blocks)
-            
-            for text_block in page_text_blocks:
-                # Adjust bbox for multi-page document
-                if "bbox" in text_block and isinstance(text_block["bbox"], dict):
-                    text_block["bbox"]["y"] += page_offset
-                
-                # Add page reference
-                text_block["page"] = page_num
-                text_block["source_page"] = page_num
-                
-                # Add to combined text blocks
-                combined["text_blocks"].append(text_block)
-                
-                # Categorize by semantic role for document structure
-                semantic_role = text_block.get("semantic_role", "body")
-                block_type = text_block.get("type", "paragraph")
-                
-                if semantic_role == "header" or block_type in ["document_title", "company_name"]:
-                    combined["document_structure"]["headers"].append(text_block)
-                elif semantic_role == "metadata" or block_type in ["date", "invoice_item", "total_amount"]:
-                    combined["document_structure"]["metadata_blocks"].append(text_block)
-                elif block_type in ["table_header", "table_row"]:
-                    combined["document_structure"]["tables"].append(text_block)
-                elif semantic_role == "summary" or block_type == "footer":
-                    combined["document_structure"]["footer_content"].append(text_block)
-                else:
-                    combined["document_structure"]["body_content"].append(text_block)
-            
-            # Accumulate confidence
-            page_confidence = page_data.get("document_confidence", 0.0)
-            total_confidence += page_confidence
-            
-            print(f"    ✅ Page {page_num}: {len(page_text_blocks)} blocks, confidence: {page_confidence:.2f}")
-        
-        # Finalize combined data
-        combined["page_dimensions"] = {"width": max_width, "height": max_height}
-        combined["processing_metadata"]["total_text_blocks"] = total_text_blocks
-        
-        if valid_pages > 0:
-            combined["document_confidence"] = total_confidence / valid_pages
-            combined["processing_metadata"]["average_confidence"] = total_confidence / valid_pages
-        
-        # Sort text blocks by reading order and page
-        combined["text_blocks"].sort(key=lambda x: (x.get("page", 1), x.get("reading_order", 999)))
-        
-        print(f"  ✅ Enhanced combination complete:")
-        print(f"    📄 Document type: {combined['document_type']}")
-        print(f"    📊 {valid_pages} pages processed, {total_text_blocks} total text blocks")
-        print(f"    🎯 Average confidence: {combined['document_confidence']:.2f}")
-        print(f"    📏 Document dimensions: {max_width}x{max_height}")
-        
-        return combined
-
-    def get_current_timestamp(self) -> str:
-        """Get current timestamp in ISO format."""
-        return datetime.now().isoformat() + "Z"
-
-    def process_document_from_source(self, document_path: str, document_type: str = "auto", session_id: Optional[str] = None, debug_mode: bool = False) -> Dict[str, Any]:
-        """Complete pipeline: Document → Enhanced Vision Extraction → Immediate Processing."""
-        
-        if not session_id:
-            session_id = f"session_{int(time.time())}"
-        
-        print(f"\n🚀 Starting ENHANCED PIPELINE - Session: {session_id}")
-        print(f"📄 Document: {document_path}")
-        print(f"🔍 Debug mode: {'enabled' if debug_mode else 'disabled'}")
-        
-        try:
-            # Step 1: Enhanced Vision Extraction
-            print("\n" + "="*60)
-            print("🔍 STEP 1: Enhanced Vision Extraction")
-            vision_data = self.vision_extract_document(document_path, document_type, debug_mode)
-            
-            # Save vision extraction result
-            vision_file = f"{session_id}_vision_extraction.json"
-            with open(vision_file, 'w', encoding='utf-8') as f:
-                f.write(vision_data)
-            print(f"💾 Enhanced vision extraction saved: {vision_file}")
-            
-            # Validate vision data
-            try:
-                vision_obj = json.loads(vision_data)
-                text_blocks = len(vision_obj.get("text_blocks", []))
-                doc_type = vision_obj.get("document_type", "unknown")
-                confidence = vision_obj.get("document_confidence", 0.0)
-                
-                print(f"  ✅ Vision validation: {text_blocks} text blocks, type: {doc_type}, confidence: {confidence:.2f}")
-                
-                if text_blocks == 0:
-                    print(f"  ⚠️ WARNING: No text blocks extracted! This may indicate an issue with image processing.")
-                    if debug_mode:
-                        print(f"  🐛 Vision data preview: {vision_data[:500]}...")
-                
-            except json.JSONDecodeError as e:
-                print(f"  ❌ Vision data validation failed: {e}")
-                if debug_mode:
-                    print(f"  🐛 Invalid vision data: {vision_data[:1000]}...")
-                raise
-            
-            # Step 2: Immediate Processing (using enhanced vision data)
-            print("\n" + "="*60)
-            print("🔍 STEP 2: Immediate Processing (Chunks 1-4)")
-            immediate_result = self.process_immediate_chunks(vision_data, session_id)
-            
-            return {
-                "session_id": session_id,
-                "vision_extraction_file": vision_file,
-                "immediate_result": immediate_result,
-                "document_path": document_path,
-                "document_type": document_type,
-                "debug_mode": debug_mode,
-                "vision_validation": {
-                    "text_blocks_count": text_blocks,
-                    "document_type": doc_type,
-                    "confidence": confidence
-                }
-            }
-            
-        except Exception as e:
-            print(f"\n❌ Error in enhanced pipeline: {e}")
-            
-            if debug_mode:
-                import traceback
-                print(f"🐛 Full error traceback:")
-                traceback.print_exc()
-            
-            raise
-
-    def process_document_background_from_source(self, session_id: str, use_saved_vision: bool = True) -> Dict[str, Any]:
-        """Background processing using saved vision data from source processing."""
-        
-        print(f"\n🔄 Starting BACKGROUND processing for source document - Session: {session_id}")
-        
-        try:
-            # Load saved vision data
-            if use_saved_vision:
-                vision_file = f"{session_id}_vision_extraction.json"
+            # Extract the vision data from response
+            if "vision_data" in result:
+                vision_json = result["vision_data"]
+            elif "choices" in result and len(result["choices"]) > 0:
+                # Handle standard OpenAI-like response
+                vision_content = result["choices"][0]["message"]["content"]
                 try:
-                    with open(vision_file, 'r', encoding='utf-8') as f:
-                        vision_data = f.read()
-                    print(f"✅ Loaded saved vision data: {vision_file}")
-                except FileNotFoundError:
-                    raise FileNotFoundError(f"Vision data not found: {vision_file}. Run immediate processing first.")
+                    # Try to parse as JSON if it's a JSON string
+                    vision_json = json.loads(vision_content)
+                except json.JSONDecodeError:
+                    # If not JSON, wrap in a structure
+                    vision_json = {
+                        "document_type": "unknown",
+                        "text_content": vision_content,
+                        "text_blocks": [{"text": vision_content, "bbox": {"x": 0, "y": 0, "width": 100, "height": 100}}],
+                        "extraction_metadata": {
+                            "file_name": os.path.basename(file_path),
+                            "file_size": file_size,
+                            "mime_type": mime_type,
+                            "extracted_at": datetime.now().isoformat()
+                        }
+                    }
             else:
-                raise ValueError("Vision data required for background processing")
+                raise Exception("Unexpected vision API response format")
             
-            # Step 3: Background Processing
-            print("\n" + "="*60)
-            print("🔍 STEP 3: Background Processing (Chunks 5-6)")
-            background_result = self.process_background_chunks(session_id, vision_data)
+            # Convert to JSON string
+            vision_json_str = json.dumps(vision_json, ensure_ascii=False)
             
-            return background_result
+            print(f"✅ Vision extraction complete ({len(vision_json_str)} characters)")
+            
+            # Save vision data for debugging/reuse
+            vision_file = f"vision_extraction_{int(time.time())}.json"
+            with open(vision_file, 'w', encoding='utf-8') as f:
+                f.write(vision_json_str)
+            print(f"💾 Vision data saved to: {vision_file}")
+            
+            return vision_json_str
+            
+        except requests.exceptions.Timeout:
+            print("⏱️ Vision extraction timeout - try reducing file size or increasing timeout")
+            raise
+        except requests.exceptions.HTTPError as e:
+            print(f"🚫 Vision API error: {e}")
+            if e.response.status_code == 413:
+                print("   File too large - try reducing file size")
+            elif e.response.status_code == 415:
+                print("   Unsupported file type")
+            raise
+        except Exception as e:
+            print(f"❌ Vision extraction failed: {e}")
+            raise
+
+    def process_document_from_file(self, file_path: str, session_id: Optional[str] = None, mode: str = "complete") -> Optional[Dict[str, Any]]:
+        """Complete document processing pipeline from file to results."""
+        try:
+            # Step 1: Vision extraction
+            print(f"\n{'='*60}")
+            print("🎯 COMPLETE DOCUMENT PROCESSING PIPELINE")
+            print(f"📄 Input file: {file_path}")
+            print(f"🔄 Processing mode: {mode}")
+            print(f"{'='*60}")
+            
+            vision_data = self.extract_vision_data(file_path)
+            if not vision_data:
+                print("❌ Vision extraction failed")
+                return None
+            
+            # Step 2: Process based on mode
+            if mode == "immediate":
+                print(f"\n{'='*60}")
+                print("⚡ IMMEDIATE PROCESSING (Chunks 1-4)")
+                result = self.process_immediate_chunks(vision_data, session_id)
+                
+                if result:
+                    result['vision_file'] = f"vision_extraction_{int(time.time())}.json"
+                    result['source_file'] = file_path
+                
+                return result
+                
+            elif mode == "complete":
+                print(f"\n{'='*60}")
+                print("📄 COMPLETE PROCESSING (All Chunks)")
+                
+                # First do immediate processing
+                immediate_result = self.process_immediate_chunks(vision_data, session_id)
+                if not immediate_result:
+                    return None
+                
+                session_id = immediate_result.get('session_id')
+                
+                # Then do background processing
+                background_result = self.process_background_chunks(session_id, vision_data)
+                
+                # Combine results
+                if background_result:
+                    final_result = self.get_session_results(session_id, "final")
+                    if final_result:
+                        final_result['vision_file'] = f"vision_extraction_{int(time.time())}.json"
+                        final_result['source_file'] = file_path
+                    return final_result
+                else:
+                    # Return immediate results even if background failed
+                    immediate_result['vision_file'] = f"vision_extraction_{int(time.time())}.json"
+                    immediate_result['source_file'] = file_path
+                    return immediate_result
+            
+            else:
+                print(f"❌ Unsupported processing mode for file input: {mode}")
+                return None
+                
+        except Exception as e:
+            print(f"❌ Document processing pipeline failed: {e}")
+            return None
+    
+    def background_process_from_vision_file(self, session_id: str, vision_file: str) -> Optional[Dict[str, Any]]:
+        """Process background chunks using saved vision file."""
+        try:
+            # Load vision data from file
+            with open(vision_file, 'r', encoding='utf-8') as f:
+                vision_data = f.read()
+            
+            print(f"📂 Loaded vision data from: {vision_file}")
+            
+            # Process background chunks
+            return self.process_background_chunks(session_id, vision_data)
             
         except Exception as e:
-            print(f"\n❌ Error in background processing from source: {e}")
-            raise
+            print(f"❌ Background processing from vision file failed: {e}")
+            return None
+    
+    def get_current_timestamp(self) -> str:
         """Get current timestamp in ISO format."""
         return datetime.now().isoformat() + "Z"
     
@@ -2127,92 +1740,6 @@ Return the complete database_ready_format JSON with ALL extracted data."""
         except Exception as e:
             print(f"⚠️ Could not save progress: {e}")
 
-def process_document_from_source(client: PPQChunkedClient, document_path: str, document_type: str = "auto", session_id: Optional[str] = None, debug_mode: bool = False) -> Optional[Dict[str, Any]]:
-    """Complete pipeline: Document → Enhanced Vision Extraction → Immediate Processing."""
-    print(f"\n=== ENHANCED PIPELINE: Document to Immediate Processing ===")
-    print(f"Document: {document_path}")
-    print(f"Document type: {document_type}")
-    print(f"Debug mode: {'enabled' if debug_mode else 'disabled'}")
-    
-    try:
-        result = client.process_document_from_source(document_path, document_type, session_id, debug_mode)
-        
-        print("\n" + "="*60)
-        print("📄 ENHANCED PIPELINE PROCESSING COMPLETE!")
-        
-        # Display results with enhanced validation
-        immediate_data = result.get('immediate_result', {}).get('immediate_result', {})
-        vision_validation = result.get('vision_validation', {})
-        
-        print(f"📊 Vision Extraction Results:")
-        print(f"    Text blocks: {vision_validation.get('text_blocks_count', 0)}")
-        print(f"    Document type: {vision_validation.get('document_type', 'unknown')}")
-        print(f"    Confidence: {vision_validation.get('confidence', 0.0):.2f}")
-        
-        if 'document_classification' in immediate_data:
-            doc_info = immediate_data['document_classification']
-            print(f"📋 Processing Results:")
-            print(f"    Document: {doc_info.get('specific_type', 'unknown')} (confidence: {doc_info.get('confidence', 0)})")
-        
-        session_id = result.get('session_id')
-        print(f"🆔 Session ID: {session_id}")
-        print(f"📁 Vision extraction saved: {result.get('vision_extraction_file')}")
-        
-        # Save pipeline result
-        output_file = f"enhanced_pipeline_{session_id}.json"
-        with open(output_file, 'w', encoding='utf-8') as f:
-            json.dump(result, f, indent=2, ensure_ascii=False)
-        print(f"💾 Enhanced pipeline result saved to: {output_file}")
-        
-        return result
-        
-    except Exception as e:
-        print(f"\n❌ ENHANCED PIPELINE PROCESSING FAILED: {str(e)}")
-        logger.error("Enhanced pipeline processing failed: %s", str(e), exc_info=True)
-        return None
-
-def process_document_background_from_source(client: PPQChunkedClient, session_id: str) -> Optional[Dict[str, Any]]:
-    """Background processing using saved vision data from pipeline processing."""
-    print(f"\n=== PIPELINE BACKGROUND: Using Saved Vision Data ===")
-    print(f"Session ID: {session_id}")
-    
-    try:
-        result = client.process_document_background_from_source(session_id)
-        
-        print("\n" + "="*60)
-        print("📄 PIPELINE BACKGROUND PROCESSING COMPLETE!")
-        
-        # Display key statistics
-        background_data = result.get('background_result', {})
-        
-        if 'semantic_search_data' in background_data:
-            search_data = background_data['semantic_search_data']
-            if 'searchable_content' in search_data and 'structured_entities' in search_data['searchable_content']:
-                entities_count = len(search_data['searchable_content']['structured_entities'])
-                print(f"🔍 Searchable Entities: {entities_count}")
-        
-        if 'database_ready_format' in background_data:
-            db_format = background_data['database_ready_format']
-            field_count = len(db_format.get('extracted_fields', []))
-            search_count = len(db_format.get('search_index_data', []))
-            print(f"💾 Database Fields: {field_count}, Search Terms: {search_count}")
-        
-        print(f"🔄 Background Status: {result.get('background_status', 'unknown')}")
-        print(f"📁 Combined Result Available: {result.get('combined_available', False)}")
-        
-        # Save background result
-        output_file = f"pipeline_background_{session_id}.json"
-        with open(output_file, 'w', encoding='utf-8') as f:
-            json.dump(result, f, indent=2, ensure_ascii=False)
-        print(f"💾 Pipeline background result saved to: {output_file}")
-        
-        return result
-        
-    except Exception as e:
-        print(f"\n❌ PIPELINE BACKGROUND PROCESSING FAILED: {str(e)}")
-        logger.error("Pipeline background processing failed: %s", str(e), exc_info=True)
-        return None
-
 def process_document_immediate(client: PPQChunkedClient, vision_data: str, session_id: Optional[str] = None) -> Optional[Dict[str, Any]]:
     """Process immediate chunks (1-4) for frontend display."""
     print("\n=== IMMEDIATE Document Extraction (Chunks 1-4) ===")
@@ -2264,6 +1791,98 @@ def process_document_immediate(client: PPQChunkedClient, vision_data: str, sessi
     except Exception as e:
         print(f"\n❌ IMMEDIATE EXTRACTION FAILED: {str(e)}")
         logger.error("Immediate processing failed: %s", str(e), exc_info=True)
+        return None
+
+def process_document_from_file_immediate(client: PPQChunkedClient, file_path: str, session_id: Optional[str] = None) -> Optional[Dict[str, Any]]:
+    """Process document from file - immediate mode (vision + chunks 1-4)."""
+    print("\n=== COMPLETE PIPELINE: Document → Vision → Immediate Processing ===")
+    print(f"Input file: {file_path}")
+    
+    try:
+        result = client.process_document_from_file(file_path, session_id, "immediate")
+        
+        if result:
+            print("\n" + "="*60)
+            print("📄 PIPELINE COMPLETE (IMMEDIATE)!")
+            
+            # Display results similar to original function
+            immediate_data = result.get('immediate_result', {})
+            
+            if 'document_classification' in immediate_data:
+                doc_info = immediate_data['document_classification']
+                print(f"📊 Document: {doc_info.get('specific_type', 'unknown')} (confidence: {doc_info.get('confidence', 0)})")
+            
+            if 'tab3_tables' in immediate_data:
+                tables_count = len(immediate_data['tab3_tables'].get('identified_tables', []))
+                print(f"📋 Tables Extracted: {tables_count}")
+            
+            session_id = result.get('session_id')
+            source_file = result.get('source_file')
+            vision_file = result.get('vision_file')
+            
+            print(f"🆔 Session ID: {session_id}")
+            print(f"📄 Source File: {source_file}")
+            print(f"🔍 Vision File: {vision_file}")
+            
+            # Save readable output
+            output_file = f"immediate_extraction_{session_id}.json"
+            with open(output_file, 'w', encoding='utf-8') as f:
+                json.dump(result, f, indent=2, ensure_ascii=False)
+            print(f"💾 Results saved to: {output_file}")
+        
+        return result
+        
+    except Exception as e:
+        print(f"\n❌ PIPELINE FAILED: {str(e)}")
+        logger.error("Document pipeline failed: %s", str(e), exc_info=True)
+        return None
+
+def process_document_from_file_complete(client: PPQChunkedClient, file_path: str, session_id: Optional[str] = None) -> Optional[Dict[str, Any]]:
+    """Process document from file - complete mode (vision + all chunks)."""
+    print("\n=== COMPLETE PIPELINE: Document → Vision → All Chunks → Database ===")
+    print(f"Input file: {file_path}")
+    
+    try:
+        result = client.process_document_from_file(file_path, session_id, "complete")
+        
+        if result:
+            print("\n" + "="*60)
+            print("📄 COMPLETE PIPELINE FINISHED!")
+            
+            # Display comprehensive results
+            if 'document_classification' in result:
+                doc_info = result['document_classification']
+                print(f"📊 Document: {doc_info.get('specific_type', 'unknown')} (confidence: {doc_info.get('confidence', 0)})")
+            
+            if 'semantic_search_data' in result:
+                search_data = result['semantic_search_data']
+                if 'searchable_content' in search_data and 'structured_entities' in search_data['searchable_content']:
+                    entities_count = len(search_data['searchable_content']['structured_entities'])
+                    print(f"🔍 Searchable Entities: {entities_count}")
+            
+            if 'database_ready_format' in result:
+                db_format = result['database_ready_format']
+                field_count = len(db_format.get('extracted_fields', []))
+                search_count = len(db_format.get('search_index_data', []))
+                print(f"💾 Database Fields: {field_count}, Search Terms: {search_count}")
+            
+            source_file = result.get('source_file')
+            vision_file = result.get('vision_file')
+            
+            print(f"📄 Source File: {source_file}")
+            print(f"🔍 Vision File: {vision_file}")
+            
+            # Save readable output
+            output_file = f"complete_extraction_{int(time.time())}.json"
+            with open(output_file, 'w', encoding='utf-8') as f:
+                json.dump(result, f, indent=2, ensure_ascii=False)
+            print(f"💾 Complete results saved to: {output_file}")
+        
+        return result
+        
+    except Exception as e:
+        print(f"\n❌ COMPLETE PIPELINE FAILED: {str(e)}")
+        logger.error("Complete document pipeline failed: %s", str(e), exc_info=True)
         return None
 
 def process_document_background(client: PPQChunkedClient, session_id: str, vision_data: str) -> Optional[Dict[str, Any]]:
@@ -2367,69 +1986,67 @@ def main():
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Processing Modes:
-  --mode immediate         Process chunks 1-4 with pre-extracted vision data (requires API key + --vision)
-  --mode background        Process chunks 5-6 with pre-extracted vision data (requires API key + --session-id + --vision)  
-  --mode complete          Process all chunks with pre-extracted vision data (requires API key + --vision)
-  --mode pipeline          Complete pipeline: Document → Enhanced Vision → Immediate Processing (requires API key + --document)
-  --mode pipeline-background  Background processing using saved vision data from pipeline mode (requires API key + --session-id)
-  --mode status            Check status of a session (no API key needed)
-  --mode search            Perform semantic search on stored documents (no API key needed)  
-  --mode summary           Get document summary from database (no API key needed)
+  --mode immediate    Process chunks 1-4 for immediate frontend display (requires API key)
+  --mode background   Process chunks 5-6 in background (requires API key + session-id)
+  --mode complete     Process all chunks in sequence (requires API key)
+  --mode vision-only  Extract vision data from document file only (requires API key)
+  --mode status       Check status of a session (no API key needed)
+  --mode search       Perform semantic search on stored documents (no API key needed)  
+  --mode summary      Get document summary from database (no API key needed)
 
-Enhanced Vision Features:
-  • PDF page-by-page processing with automatic compression
-  • Multi-page document support with combined results
-  • Image compression for optimal API performance (max 2MB per page)
-  • Automatic document type detection (PDF/image)
-  • Robust error handling and fallback mechanisms
-  • Preserves individual page data alongside combined results
+Input Options:
+  --document FILE     Process raw document file (PDF, PNG, JPG, etc.) - includes vision extraction
+  --vision @FILE.json Use pre-processed vision JSON file
+  --vision-file FILE  Use saved vision extraction file (for background mode)
 
 Examples:
-  # NEW: Enhanced pipeline from PDF (recommended - processes each page separately)
-  python script.py --document contract.pdf --api-key your-ppq-key --mode pipeline
-  
-  # NEW: Process multi-page PDF with custom DPI
-  python script.py --document large_document.pdf --api-key your-ppq-key --mode pipeline
-  
-  # NEW: Process scanned image with compression
-  python script.py --document invoice_scan.jpg --api-key your-ppq-key --mode pipeline
-  
-  # Background processing after enhanced pipeline
-  python script.py --api-key your-ppq-key --mode pipeline-background --session-id session_123
-  
-  # Traditional: Immediate processing with pre-extracted vision data
-  python script.py --vision @vision.json --api-key your-ppq-key --mode immediate
-  
-  # Search processed documents (works with both enhanced and traditional processing)
-  python script.py --mode search --query "training policy"
-  
-  # Auto-detect document type
-  python script.py --document document.pdf --document-type auto --api-key your-ppq-key --mode pipeline
-  
-  # Force specific document type processing
-  python script.py --document scan.jpg --document-type image --api-key your-ppq-key --mode pipeline
 
-Dependencies:
-  pip install requests pillow pymupdf
+  # COMPLETE PIPELINE: Document file → Vision extraction → All chunks → Database
+  python script.py --document contract.pdf --api-key your-ppq-key --mode complete
+  
+  # TWO-PHASE PROCESSING: Document file → Immediate results (30-60s)
+  python script.py --document contract.pdf --api-key your-ppq-key --mode immediate
+  # Then background processing using the saved vision file:
+  python script.py --vision-file vision_extraction_123.json --api-key your-ppq-key --mode background --session-id session_123
+  
+  # VISION EXTRACTION ONLY: Document → Vision JSON (no chunk processing)
+  python script.py --document contract.pdf --api-key your-ppq-key --mode vision-only
+  
+  # TRADITIONAL: Pre-processed vision JSON → Chunks → Database
+  python script.py --vision @vision.json --api-key your-ppq-key --mode complete
+  
+  # DATABASE OPERATIONS (no API key needed):
+  python script.py --mode status --session-id session_123
+  python script.py --mode search --query "training policy"
+  python script.py --mode summary --document-id doc_session_123
+  
+  # SUPPORTED FILE TYPES:
+  python script.py --document contract.pdf --api-key key --mode complete
+  python script.py --document invoice.png --api-key key --mode immediate  
+  python script.py --document receipt.jpg --api-key key --mode complete
         """
     )
     
     parser.add_argument(
-        "--vision",
-        type=str,
-        help="Vision extraction data file. Use @filename.json to load from file. Required for processing with pre-extracted vision data.",
+        "--version",
+        action="version", 
+        version="PPQ.ai Document Processing Pipeline v2.0.0"
     )
+    
     parser.add_argument(
         "--document",
         type=str,
-        help="Original document file (PDF, image) for complete pipeline with vision extraction. Alternative to --vision.",
+        help="Document file path (PDF, PNG, JPG, etc.) for vision extraction + processing"
     )
     parser.add_argument(
-        "--document-type",
+        "--vision",
         type=str,
-        choices=["auto", "pdf", "image"],
-        default="auto",
-        help="Type of document for vision extraction (default: auto-detect)"
+        help="Pre-processed vision JSON file. Use @filename.json to load from file. Alternative to --document."
+    )
+    parser.add_argument(
+        "--vision-file", 
+        type=str,
+        help="Saved vision extraction file for background processing (alternative to --vision)"
     )
     parser.add_argument(
         "--api-key",
@@ -2440,7 +2057,7 @@ Dependencies:
     parser.add_argument(
         "--mode",
         type=str,
-        choices=["immediate", "background", "complete", "status", "search", "summary", "pipeline", "pipeline-background"],
+        choices=["immediate", "background", "complete", "status", "search", "summary", "vision-only"],
         default="complete",
         help="Processing mode (default: complete)"
     )
@@ -2479,12 +2096,7 @@ Dependencies:
     parser.add_argument(
         "--debug",
         action="store_true",
-        help="Enable debug output and save debug files"
-    )
-    parser.add_argument(
-        "--vision-debug",
-        action="store_true", 
-        help="Enable enhanced vision debugging (saves images and detailed logs)"
+        help="Enable debug output"
     )
     
     args = parser.parse_args()
@@ -2493,7 +2105,7 @@ Dependencies:
         logging.getLogger().setLevel(logging.DEBUG)
     
     # Check if API key is required for this mode
-    api_required_modes = ["immediate", "background", "complete", "pipeline", "pipeline-background"]
+    api_required_modes = ["immediate", "background", "complete", "vision-only"]
     database_only_modes = ["status", "search", "summary"]
     
     if args.mode in api_required_modes and not args.api_key:
@@ -2548,6 +2160,29 @@ Dependencies:
             print(f"❌ Error reading session status: {e}")
             return 1
         return 0
+    
+    # Handle vision-only mode
+    if args.mode == "vision-only":
+        if not args.document:
+            print("❌ Error: --document is required for vision-only mode")
+            return 1
+            
+        try:
+            print(f"\n🔍 VISION EXTRACTION ONLY")
+            vision_data = client.extract_vision_data(args.document)
+            
+            if vision_data:
+                print(f"\n✅ Vision extraction completed successfully!")
+                print(f"📄 Vision data length: {len(vision_data)} characters")
+                print(f"💾 Vision data saved to file for later use")
+                return 0
+            else:
+                print(f"\n❌ Vision extraction failed!")
+                return 1
+                
+        except Exception as e:
+            print(f"\n❌ Vision extraction error: {e}")
+            return 1
     
     # Handle search mode
     if args.mode == "search":
@@ -2614,118 +2249,76 @@ Dependencies:
             conn.close()
         return 0
     
-    # Handle modes that require vision data or document input
-    vision_modes = ["immediate", "background", "complete"]
-    pipeline_modes = ["pipeline"]
-    
-    if args.mode in vision_modes:
-        if not args.vision:
-            print(f"❌ Error: --vision is required for {args.mode} mode")
-            print("   Use --vision @filename.json or provide vision extraction data")
+    # Handle modes that require input data
+    if args.mode in ["immediate", "complete", "vision-only"]:
+        # These modes need either --document or --vision
+        if not args.document and not args.vision:
+            print(f"❌ Error: {args.mode} mode requires either --document (raw file) or --vision (processed JSON)")
             return 1
         
-        # Load vision data
-        try:
-            vision_data = process_file_parameter(args.vision)
-            print(f"✅ Vision data loaded ({len(vision_data)} characters)")
-        except Exception as e:
-            print(f"Error loading vision file: {e}")
+        if args.document and args.vision:
+            print("❌ Error: Cannot specify both --document and --vision. Choose one input method.")
             return 1
-        
-        # Validate vision data is JSON
-        try:
-            json.loads(vision_data)
-            print("✅ Vision data is valid JSON")
-        except json.JSONDecodeError:
-            print("❌ Error: Vision data is not valid JSON")
-            return 1
-    
-    elif args.mode in pipeline_modes:
-        if not args.document:
-            print(f"❌ Error: --document is required for {args.mode} mode")
-            print("   Provide original document file (PDF, image) for vision extraction")
-            return 1
-        
-        # Validate document file exists
-        if not os.path.exists(args.document):
-            print(f"❌ Error: Document file not found: {args.document}")
-            return 1
-        
-        print(f"✅ Document file found: {args.document}")
-    
-    elif args.mode == "pipeline-background":
+            
+    elif args.mode == "background":
+        # Background mode needs vision data and session-id
         if not args.session_id:
-            print("❌ Error: --session-id is required for pipeline-background mode")
+            print("❌ Error: --session-id is required for background mode")
+            return 1
+            
+        if not args.vision and not args.vision_file:
+            print("❌ Error: background mode requires either --vision or --vision-file")
             return 1
     
     # Process based on mode
-    if args.mode == "pipeline":
-        print(f"\n🚀 Starting ENHANCED PIPELINE mode (Document → Vision → Processing)...")
-        result = process_document_from_source(
-            client, 
-            args.document, 
-            args.document_type, 
-            args.session_id,
-            debug_mode=(args.debug or args.vision_debug)
-        )
-        
-        if result:
-            session_id = result.get('session_id')
-            vision_validation = result.get('vision_validation', {})
-            
-            print(f"\n🎉 ENHANCED PIPELINE PROCESSING COMPLETED!")
-            print(f"🆔 Session ID: {session_id}")
-            print(f"📄 Vision extraction saved: {result.get('vision_extraction_file')}")
-            print(f"📊 Extracted {vision_validation.get('text_blocks_count', 0)} text blocks")
-            print(f"📄 Use this session ID for background processing:")
-            print(f"   python {sys.argv[0]} --api-key {args.api_key} --mode pipeline-background --session-id {session_id}")
-            
-            if args.vision_debug:
-                print(f"🐛 Debug files saved in debug_images/ directory")
-                
-            return 0
-        else:
-            print("\n💥 ENHANCED PIPELINE PROCESSING FAILED!")
-            return 1
-            
-    elif args.mode == "pipeline-background":
-        print(f"\n🔄 Starting PIPELINE BACKGROUND mode...")
-        print(f"🆔 Session ID: {args.session_id}")
-        
-        result = process_document_background_from_source(client, args.session_id)
-        
-        if result:
-            print(f"\n🎉 PIPELINE BACKGROUND PROCESSING COMPLETED!")
-            print(f"📁 Final combined result available")
-            return 0
-        else:
-            print("\n💥 PIPELINE BACKGROUND PROCESSING FAILED!")
-            return 1
-            
-    elif args.mode == "immediate":
+    if args.mode == "immediate":
         print(f"\n🚀 Starting IMMEDIATE processing mode...")
-        result = process_document_immediate(client, vision_data, args.session_id)
+        
+        if args.document:
+            # Process raw document file (includes vision extraction)
+            result = client.process_document_from_file(args.document, args.session_id, "immediate")
+        else:
+            # Process pre-existing vision JSON
+            vision_data = process_file_parameter(args.vision)
+            print(f"✅ Vision data loaded ({len(vision_data)} characters)")
+            json.loads(vision_data)  # Validate JSON
+            print("✅ Vision data is valid JSON")
+            
+            result = process_document_immediate(client, vision_data, args.session_id)
         
         if result:
             session_id = result.get('session_id')
             print(f"\n🎉 IMMEDIATE PROCESSING COMPLETED!")
             print(f"🆔 Session ID: {session_id}")
             print(f"📄 Use this session ID for background processing:")
-            print(f"   python {sys.argv[0]} --vision {args.vision} --api-key {args.api_key} --mode background --session-id {session_id}")
+            
+            if args.document:
+                # For document files, background can use saved vision file
+                vision_file = result.get('vision_file', 'vision_extraction_*.json')
+                print(f"   python {sys.argv[0]} --vision-file {vision_file} --api-key {args.api_key} --mode background --session-id {session_id}")
+            else:
+                # For vision JSON files, use the same file
+                print(f"   python {sys.argv[0]} --vision {args.vision} --api-key {args.api_key} --mode background --session-id {session_id}")
             return 0
         else:
             print("\n💥 IMMEDIATE PROCESSING FAILED!")
             return 1
             
     elif args.mode == "background":
-        if not args.session_id:
-            print("❌ Error: --session-id is required for background mode")
-            return 1
-        
         print(f"\n🔄 Starting BACKGROUND processing mode...")
         print(f"🆔 Session ID: {args.session_id}")
         
-        result = process_document_background(client, args.session_id, vision_data)
+        if args.vision_file:
+            # Use saved vision extraction file
+            result = client.background_process_from_vision_file(args.session_id, args.vision_file)
+        else:
+            # Use vision JSON file
+            vision_data = process_file_parameter(args.vision)
+            print(f"✅ Vision data loaded ({len(vision_data)} characters)")
+            json.loads(vision_data)  # Validate JSON
+            print("✅ Vision data is valid JSON")
+            
+            result = process_document_background(client, args.session_id, vision_data)
         
         if result:
             print(f"\n🎉 BACKGROUND PROCESSING COMPLETED!")
@@ -2736,8 +2329,19 @@ Dependencies:
             return 1
             
     elif args.mode == "complete":
-        print(f"\n📄 Starting COMPLETE processing mode (legacy)...")
-        result = process_document_with_validation(client, vision_data)
+        print(f"\n📄 Starting COMPLETE processing mode...")
+        
+        if args.document:
+            # Process raw document file (includes vision extraction + all chunks)
+            result = client.process_document_from_file(args.document, args.session_id, "complete")
+        else:
+            # Process pre-existing vision JSON (legacy mode)
+            vision_data = process_file_parameter(args.vision)
+            print(f"✅ Vision data loaded ({len(vision_data)} characters)")
+            json.loads(vision_data)  # Validate JSON
+            print("✅ Vision data is valid JSON")
+            
+            result = process_document_with_validation(client, vision_data)
         
         if result:
             print("\n🎉 COMPLETE PROCESSING FINISHED!")

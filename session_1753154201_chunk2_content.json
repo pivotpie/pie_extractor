@@ -1,0 +1,123 @@
+{
+  "document_classification": {
+    "primary_type": "general",
+    "specific_type": "installation_guide",
+    "confidence": 0.99,
+    "supported_tabs": [
+      "tab1_content",
+      "tab2_summary",
+      "tab3_tables",
+      "semantic_search"
+    ],
+    "processing_timestamp": "2025-07-22T08:47:17.806862Z"
+  },
+  "tab1_content": {
+    "fields_and_values": {
+      "HG323RGW Quick Installation Guide": {
+        "value": "HG323RGW Quick Installation Guide",
+        "bbox": {
+          "x": 459,
+          "y": 19,
+          "width": 273,
+          "height": 19
+        },
+        "confidence": 0.99
+      }
+    },
+    "financial_dashboard": {},
+    "form_fields": {},
+    "legal_summary": {},
+    "general_summary": {
+      "RST": {
+        "value": "1. Press RST button over 10 seconds, onu can restore factory defaults and reboot. 2. Press RST button quickly, onu reboot.",
+        "bbox": {
+          "x": 41,
+          "y": 53,
+          "width": 667,
+          "height": 66
+        },
+        "confidence": 0.98
+      },
+      "PWR": {
+        "value": "Connect with power adapter. DC12V, 1A",
+        "bbox": {
+          "x": 44,
+          "y": 102,
+          "width": 665,
+          "height": 33
+        },
+        "confidence": 0.97
+      },
+      "Table 2 Interface/Button Panel": {
+        "value": "Table 2 Interface/Button Panel",
+        "bbox": {
+          "x": 275,
+          "y": 124,
+          "width": 217,
+          "height": 17
+        },
+        "confidence": 0.95
+      },
+      "Packing List": {
+        "value": "Contents         Quantity                 Contents           Quantity HG323RGW   1 pcs                     Power adapter     1 pcs User Manual   1 pcs",
+        "bbox": {
+          "x": 41,
+          "y": 179,
+          "width": 664,
+          "height": 68
+        },
+        "confidence": 0.97
+      },
+      "Certification": {
+        "value": "CERTIFICATION CERTIFICATION CHECKER PCA PASS",
+        "bbox": {
+          "x": 42,
+          "y": 282,
+          "width": 271,
+          "height": 97
+        },
+        "confidence": 0.95
+      },
+      "Installation Environment Requirements": {
+        "value": "ONU equipment must be installed in the interior, and to ensure the following conditions: • Confirmation at the ONU installation at sufficient space to facilitate cooling machine. • ONU suitable operating temperature of -5°C-55°C humidity 10% to 90%. • Device workplace should avoid radio transmitters, radar stations, and high-frequency interference from power equipment.",
+        "bbox": {
+          "x": 46,
+          "y": 425,
+          "width": 672,
+          "height": 77
+        },
+        "confidence": 0.98
+      },
+      "Desktop Installation": {
+        "value": "1. installed on the desktop Place the machine on a clean bench, this installation is relatively simple, you can observe the following operation: • Ensure the smooth workbench. • Give enough space around the device for heat dissipation. • Do not place any object on the device",
+        "bbox": {
+          "x": 48,
+          "y": 511,
+          "width": 664,
+          "height": 75
+        },
+        "confidence": 0.97
+      },
+      "Wall Mount Installation": {
+        "value": "2. mounted on the wall • Observation ONU equipment chassis two cruciform recess, in accordance with the position of the groove, installed two screws in the wall. • The original selected two mounting screws gently snap into recesses aligned. • Slowly let go, so that the device under the support of the screw hanging on the wall.",
+        "bbox": {
+          "x": 51,
+          "y": 590,
+          "width": 669,
+          "height": 57
+        },
+        "confidence": 0.97
+      },
+      "Cabling and Power": {
+        "value": "3. Connect fiber, network cable and power adapter to the corresponding interfaces, and turn on the power.",
+        "bbox": {
+          "x": 49,
+          "y": 652,
+          "width": 652,
+          "height": 32
+        },
+        "confidence": 0.97
+      }
+    }
+  }
+}
